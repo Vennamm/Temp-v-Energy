@@ -390,7 +390,7 @@ def weather_energy_cluster():
     st.subheader("Cluster-Based PCA Visualization on Map")
     geojson_path = 'us-states.json'
 
-    n_clusters = st.selectbox("Select Number of Clusters", options=[4, 5], index=0)
+    n_clusters = st.selectbox("Select Number of Clusters", options=[3, 4, 5, 6], index=0)
     plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters)
     
     st.subheader("Weather-Energy Correlation Matrix")   
