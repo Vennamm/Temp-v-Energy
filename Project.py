@@ -236,7 +236,7 @@ def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
     
     pca_df = pd.DataFrame(data=pca_components, columns=['PCA1', 'PCA2','PCA3'], index=corr_matrix.columns)
     
-    random_state=10    
+    random_state=101   
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=UserWarning)
 
