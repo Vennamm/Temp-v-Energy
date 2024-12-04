@@ -17,7 +17,7 @@ from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from sklearn.mixture import GaussianMixture
 import warnings
 
-random_state = 132
+random_state = 133
 state_to_region = {
     'Alabama': 'South', 'Alaska': 'West', 'Arizona': 'West', 'Arkansas': 'South',
     'California': 'West', 'Colorado': 'West', 'Connecticut': 'Northeast', 'Delaware': 'South',
@@ -239,6 +239,8 @@ def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
     pca_df = pd.DataFrame(data=pca_components, columns=['PCA1', 'PCA2'], index=corr_matrix.columns)
     
     # random_state=103
+    if n_clusters==4:
+        random_state = 132
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=UserWarning)
         # gmm = GaussianMixture(n_components=n_clusters, random_state=random_state)
