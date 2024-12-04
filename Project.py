@@ -239,9 +239,11 @@ def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
     pca_df = pd.DataFrame(data=pca_components, columns=['PCA1', 'PCA2'], index=corr_matrix.columns)
     
     
-    random_state=133
+    
     if n_clusters==4:
         random_state = 132
+    else:
+        random_state=133
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=UserWarning)
         # gmm = GaussianMixture(n_components=n_clusters, random_state=random_state)
