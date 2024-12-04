@@ -13,7 +13,8 @@ from sklearn.decomposition import PCA
 from scipy.stats import chi2, spearmanr
 import plotly.express as px
 import geopandas as gpd
-from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN, GaussianMixture
+from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
+from sklearn.mixture import GaussianMixture
 import warnings
 
 state_to_region = {
