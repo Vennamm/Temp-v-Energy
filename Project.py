@@ -240,7 +240,7 @@ def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4, random_state
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=UserWarning)
 
-        dbscan = DBSCAN(eps=0.5, min_samples=2)
+        dbscan = DBSCAN(eps=0.05, min_samples=10)
         pca_df['Cluster'] = dbscan.fit_predict(pca_df[['PCA1', 'PCA2']])
         # hierarchical = AgglomerativeClustering(n_clusters=n_clusters)
         # pca_df['Cluster'] = hierarchical.fit_predict(pca_df[['PCA1', 'PCA2']])
