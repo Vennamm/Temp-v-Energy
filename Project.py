@@ -232,20 +232,20 @@ def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
 
     corr_matrix = corr_df.set_index('state').transpose()  
     corr_matrix_values = corr_matrix.values
-    pca = PCA(n_components=3)
+    pca = PCA(n_components=2)
     pca_components = pca.fit_transform(corr_matrix_values.T) 
     
-    pca_df = pd.DataFrame(data=pca_components, columns=['PCA1', 'PCA2','PCA3'], index=corr_matrix.columns)
+    pca_df = pd.DataFrame(data=pca_components, columns=['PCA1', 'PCA2'], index=corr_matrix.columns)
     
-    random_state=102 
+    random_state=103
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=UserWarning)
         # gmm = GaussianMixture(n_components=n_clusters, random_state=random_state)
-        # pca_df['Cluster'] = gmm.fit_predict(pca_df[['PCA1', 'PCA2', 'PCA3']])
+        # pca_df['Cluster'] = gmm.fit_predict(pca_df[['PCA1', 'PCA2']])
         # hierarchical = AgglomerativeClustering(n_clusters=n_clusters)
-        # pca_df['Cluster'] = hierarchical.fit_predict(pca_df[['PCA1', 'PCA2','PCA3']])
+        # pca_df['Cluster'] = hierarchical.fit_predict(pca_df[['PCA1', 'PCA2']])
         kmeans = KMeans(n_clusters=n_clusters, random_state=random_state)
-        pca_df['Cluster'] = kmeans.fit_predict(pca_df[['PCA1', 'PCA2', 'PCA3']]) 
+        pca_df['Cluster'] = kmeans.fit_predict(pca_df[['PCA1', 'PCA2']]) 
     
     state_cluster_mapping = pca_df['Cluster'].to_dict()
     
