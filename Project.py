@@ -390,38 +390,10 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
     # fig.show()
     st.plotly_chart(fig, use_container_width=True)
 
-def create_frame2(state, month_season, stat, target_column):
-    weather = pd.read_csv(f'collated_data/{state}.csv')[['Date','cdd','hdd','tavg']]
-    weather['Date'] = pd.to_datetime(weather['Date'].astype(str), format='%Y%m')
-    weather['Year'] = weather['Date'].dt.year
-    if month_season == 'Month':
-        mapping = month_mapping
-    else:
-        mapping = season_mapping
-    
-    weather[month_season] = weather['Date'].dt.month.map(mapping)
-    weather_agg = weather.groupby(['Year',month_season])[stat].mean().reset_index()
-    weather_agg = weather.groupby(['Year',month_season])[stat].mean().reset_index()
-    weather_pivot = weather_agg.pivot(index='Year', columns=month_season, values=stat)
-    weather_pivot.columns = ['_'.join(col).strip() for col in weather_pivot.columns.values]
-    energy = pd.read_csv(f'power_consumption/{state}.csv')
-    energy.set_index('Year', inplace=True)
-    weathergy = pd.concat([weather_pivot, energy[['Residential sector', 'Commercial sector', 
-                                                  'Industrial sector', 'Transportation sector', 'Total consumption']]], axis=1)
-    
-    X = weathergy.drop(columns=['Residential sector', 'Commercial sector', 'Industrial sector', 'Transportation sector', 'Total consumption'])
-    y = weathergy[['Residential sector', 'Commercial sector', 'Industrial sector', 'Transportation sector', 'Total consumption']]
-
-    rf = RandomForestRegressor(n_estimators=100, random_state=42)
-    model = XGBRegressor(random_state=43)
-    
-    model.fit(X, y[target_column])
-    feature_importances = model.feature_importances_
-
-    importance_df = pd.DataFrame({
-        "Feature": X.columns,
-        "Importance": feature_importances
-    }).sort_values(by="Importance", ascending=True)
+def create_frame2(state, target_column):
+    importance_df = pd.read_csv('feature_importance_results.csv')
+    importance_df = importance_df[(importance_df['State'] == state) & importance_df['Target Column'] == target_column]
+    importance_df = importance_df[['Feature','Importance']]
 
     return importance_df, state, target_column
 
@@ -667,7 +639,7 @@ There is a lot of process behind this. But let me make it straightforward:
     else:
         col_name = 'Total consumption'
 
-    importance_df, state_name, target_column = create_frame2(state_name, 'Season', ['cdd', 'hdd'], col_name)
+    importance_df, state_name, target_column = create_frame2(state_name, col_name)
 
     aggregate_and_rank(importance_df, state_name, target_column)
     
