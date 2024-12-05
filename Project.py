@@ -655,10 +655,10 @@ There is a lot of process behind this. But let me make it straightforward:
     
     sectors = ['Residential', 'Commercial', 'Industrial', 'Transportation', 'Total Consumption']
     col1, col2 = st.columns(2)
-        with col1:
-            state_name = st.selectbox("Select State:", options=state_list)
-        with col2:
-            col_name = st.selectbox("Select Sector:", options=sectors)
+    with col1:
+        state_name = st.selectbox("Select State:", options=state_list)
+    with col2:
+        col_name = st.selectbox("Select Sector:", options=sectors)
 
     importance_df, state_name, target_column = create_frame(state_name, 'Season', ['cdd', 'hdd'], col_name)
 
