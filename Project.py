@@ -466,11 +466,13 @@ def temperature_forecasting():
         if (var1!=var2):
             plot_granger_causality(weather_data, var1, var2)
         
-        st.markdown("""For temperature forecasting, since there is already a very consistent seasonality and very little noise within the temperature data, it becomes less worth it to use the impact of another variable. 
-        Feel free to look at the seasonal decomposition.""")
+        
         # Row 3: Seasonal Decomposition
         st.subheader('Seasonal Decomposition')
-    
+
+        st.markdown("""For temperature forecasting, since there is already a very consistent seasonality and very little noise within the temperature data, it becomes less worth it to use the impact of another variable. 
+        Feel free to look at the seasonal decomposition.""")
+        
         fig_x = go.Figure()
         fig_x.add_trace(go.Scatter(x=seasonal_result.trend.index, y=seasonal_result.trend, mode='lines', name='Trend', line=dict(color='blue')))
         fig_x.add_trace(go.Scatter(x=seasonal_result.seasonal.index, y=seasonal_result.seasonal, mode='lines', name='Seasonal', line=dict(color='orange')))
@@ -486,13 +488,21 @@ def temperature_forecasting():
         # fig.write_image("trend_seasonal_residual.png")
         
         st.plotly_chart(fig_x, use_container_width=True)
-    
+        
         # Row 4: ACF and PACF
         st.subheader('ACF and PACF')
-        fig_y, ax = plt.subplots(1, 2, figsize=(12, 6))
+
+        st.markdown("""Earlier, we check if a previous foreign variable had any impact on the current predictor variable. Now, we are looking if previous values of our predictor variable have any impact on our current values. 
+        We need to look at the Auto-Correlation and Partial Auto-Correlation Functions to understand the seasonality of the temperature data so that we can train our model on it. 
+        The graph shows that the functions repeat themselves after every 12 months approximately. That is to say that last year's temperature have an impact on current year's average temperature.""")
+        
+        fig_y, ax = plt.subplots(2, 1, figsize=(12, 6))
         plot_acf(train_data, lags=48, ax=ax[0])
         plot_pacf(train_data, lags=48, ax=ax[1])
         st.pyplot(fig_y)
+
+        st.markdown("""We worked with a SARIMAX model with the common values as $p=1, d=0, q=1, P=1, D=0, Q=0,\\text{ and seasonality}=12$. In a complex scenario, the PACF and ACF graphs help us determine more than just the seasonality 
+        and help us even reassess the remaining parameters of the SARIMAX model.""")
     
         st.subheader('Most Recent Year in the Dataset')
         st.dataframe(weather_data.tail(12), use_container_width=True)
