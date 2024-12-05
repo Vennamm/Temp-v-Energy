@@ -35,6 +35,14 @@ state_to_region = {
     'Wisconsin': 'Midwest', 'Wyoming': 'West'
 }
 
+season_mapping = {
+    1: 'Winter', 2: 'Winter', 12: 'Winter', 
+    3: 'Spring', 4: 'Spring', 5: 'Spring', 
+    6: 'Summer', 7: 'Summer', 8: 'Summer', 
+    9: 'Fall', 10: 'Fall', 11: 'Fall'
+}
+
+
 def create_frame(state):
     weather = pd.read_csv(f'collated_data/{state}.csv')
     energy = pd.read_csv(f'power_consumption/{state}.csv')
@@ -379,6 +387,117 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
     # Show the figure
     # fig.show()
     st.plotly_chart(fig, use_container_width=True)
+
+def create_frame(state, month_season, stat, target_column):
+    weather = pd.read_csv(f'collated_data/{state}.csv')[['Date','cdd','hdd','tavg']]
+    weather['Date'] = pd.to_datetime(weather['Date'].astype(str), format='%Y%m')
+    weather['Year'] = weather['Date'].dt.year
+    if month_season == 'Month':
+        mapping = month_mapping
+    else:
+        mapping = season_mapping
+    
+    weather[month_season] = weather['Date'].dt.month.map(mapping)
+    weather_agg = weather.groupby(['Year',month_season])[stat].mean().reset_index()
+    weather_agg = weather.groupby(['Year',month_season])[stat].mean().reset_index()
+    weather_pivot = weather_agg.pivot(index='Year', columns=month_season, values=stat)
+    weather_pivot.columns = ['_'.join(col).strip() for col in weather_pivot.columns.values]
+    energy = pd.read_csv(f'power_consumption/{state}.csv')
+    energy.set_index('Year', inplace=True)
+    weathergy = pd.concat([weather_pivot, energy[['Residential sector', 'Commercial sector', 
+                                                  'Industrial sector', 'Transportation sector', 'Total consumption']]], axis=1)
+    
+    X = weathergy.drop(columns=['Residential sector', 'Commercial sector', 'Industrial sector', 'Transportation sector', 'Total consumption'])
+    y = weathergy[['Residential sector', 'Commercial sector', 'Industrial sector', 'Transportation sector', 'Total consumption']]
+
+    rf = RandomForestRegressor(n_estimators=100, random_state=42)
+    model = XGBRegressor(random_state=43)
+    
+    model.fit(X, y[target_column])
+    feature_importances = model.feature_importances_
+
+    importance_df = pd.DataFrame({
+        "Feature": X.columns,
+        "Importance": feature_importances
+    }).sort_values(by="Importance", ascending=True)
+
+    return importance_df, state, target_column
+
+def aggregate_and_rank(df, state, target_column):
+    season_map = {
+        "Winter": ["cdd_Winter", "hdd_Winter"],
+        "Spring": ["cdd_Spring", "hdd_Spring"],
+        "Summer": ["cdd_Summer", "hdd_Summer"],
+        "Fall": ["cdd_Fall", "hdd_Fall"]
+    }
+    season_totals = {season: df[df["Feature"].isin(features)]["Importance"].sum() for season, features in season_map.items()}
+    season_df = pd.DataFrame(list(season_totals.items()), columns=["Season", "Contribution"]).sort_values(by="Contribution", ascending=False)
+
+
+    top_contributor = season_df.iloc[0]
+    second_contributor = season_df.iloc[1] if len(season_df) > 1 else None
+
+    co_dominance_threshold = 0.05 
+
+    TEXT = ''
+
+    if second_contributor is not None:
+        diff = top_contributor["Contribution"] - second_contributor["Contribution"]
+
+        if diff <= co_dominance_threshold:
+            TEXT = f"For {state}, {top_contributor['Season']} and {second_contributor['Season']} contribute the most"
+        else:
+            TEXT = f"For {state}, {top_contributor['Season']} contributes the most to the {target_column.lower()}."
+
+    else:
+        TEXT = f"For {state}, {top_contributor['Season']} is the only major contributor to the {target_column.lower()}."
+
+    fig1 = px.pie(season_df, names='Season', values='Contribution', title="Seasonal Energy Consumption Contributions")
+
+    df["Category"] = df["Feature"].apply(lambda x: "Hot " + x.split("_")[1] if "cdd" in x else "Cold " + x.split("_")[1])
+
+    min_importance_blue = df[df['Category'].str.startswith('Cold')]['Importance'].min()
+    max_importance_blue = df[df['Category'].str.startswith('Cold')]['Importance'].max()
+    min_importance_red = df[df['Category'].str.startswith('Hot')]['Importance'].min()
+    max_importance_red = df[df['Category'].str.startswith('Hot')]['Importance'].max()
+    min_color_value = 100
+    
+    df["Color"] = df.apply(
+        lambda row: f"rgb({min(255,int((row['Importance'] - min_importance_red) / (max_importance_red - min_importance_red) * (255 - min_color_value)
+                               + min_color_value))}, 0, 0)" if "Hot" in row["Category"] 
+        else f"rgb(0, 0, {min(255,int((row['Importance'] - min_importance_blue) / (max_importance_blue - min_importance_blue) * (255 - min_color_value)
+                              + min_color_value))})", axis=1
+    )
+    
+    df_sorted = df.sort_values(by="Importance", ascending=False)
+
+    
+    fig2 = go.Figure()
+
+    # Add Hot features (Red gradient)
+    fig2.add_trace(go.Bar(
+        x=df_sorted["Category"],  # Feature names
+        y=df_sorted["Importance"],  # Importance values
+        # text=df_sorted["Category"],  # Show Category as text
+        hoverinfo="text",  # Show category on hover
+        marker=dict(
+            color=df_sorted["Color"],  # Color based on importance and category
+        )
+    ))
+
+    fig2.update_layout(
+        title="Individual Contributions by Feature",
+        xaxis_title="Feature",
+        yaxis_title="Importance",
+        showlegend=False
+    )
+
+    # Show both plots
+    # fig1.show()
+    # fig2.show()
+    st.markdown(TEXT)
+    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig2, use_container_width=True)
     
 
 def temperature_forecasting():
@@ -529,6 +648,22 @@ There is a lot of process behind this. But let me make it straightforward:
     n_clusters = st.selectbox("Select Number of Groups", options=[3, 4, 5, 6], index=0)
     plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters)
 
+    st.subheader("Season-Energy Contributions")
+    st.markdown("""Understanding which seasons contribute the highest to which sector for each state.""")
+
+    state_list = [f.replace('.csv', '') for f in os.listdir('collated_data')]
+    
+    sectors = ['Residential', 'Commercial', 'Industrial', 'Transportation', 'Total Consumption']
+    col1, col2 = st.columns(2)
+        with col1:
+            state_name = st.selectbox("Select State:", options=state_list)
+        with col2:
+            col_name = st.selectbox("Select Sector:", options=sectors)
+
+    importance_df, state_name, target_column = create_frame(state_name, 'Season', ['cdd', 'hdd'], col_name)
+
+    aggregate_and_rank(importance_df, state_name, target_column)
+    
     st.subheader("Weather-Energy Correlation Matrix")   
     
     visualize_corr(corr_df)
