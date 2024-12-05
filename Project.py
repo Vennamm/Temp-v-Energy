@@ -624,6 +624,7 @@ There is a lot of process behind this. But let me make it straightforward:
     st.markdown("""Understanding which seasons contribute the highest to which sector for each state.""")
 
     state_list = [f.replace('.csv', '') for f in os.listdir('collated_data')]
+    state_list.sort()
     
     sectors = ['Residential', 'Commercial', 'Industrial', 'Transportation', 'Total Consumption']
     col1, col2 = st.columns(2)
@@ -640,6 +641,13 @@ There is a lot of process behind this. But let me make it straightforward:
     importance_df, state_name, target_column = create_frame2(state_name, col_name)
 
     aggregate_and_rank(importance_df, state_name, target_column)
+    
+    st.subheader("Look at how the data behaves")
+    col1, col2 = st.columns(2)
+    with col1:
+        cdd_hdd = st.selectbox('Select CDD or HDD:', options=['cdd','hdd'])
+    with col2:
+        col_name = st.selectbox("Select Sector:", options=sectors)
     
     st.subheader("Weather-Energy Correlation Matrix")   
     
