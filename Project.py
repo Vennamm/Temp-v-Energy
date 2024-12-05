@@ -362,6 +362,14 @@ def temperature_forecasting():
 
     with st.expander('Advanced Options'):
 
+        st.subheader("Granger Causality:")
+        var1 = st.selectbox("Will", options=weather_data.columns)
+        var2 = st.selectbox("Cause", options=weather_data.columns)
+
+        if not(var1 is None or var1=='') and (var1==var2):
+            st.warning("You are a data scientist, you can not do that :)")
+        
+
         # Row 3: Seasonal Decomposition
         st.subheader('Seasonal Decomposition')
     
