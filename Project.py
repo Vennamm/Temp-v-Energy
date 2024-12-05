@@ -485,7 +485,7 @@ def temperature_forecasting():
         )
         # fig.write_image("trend_seasonal_residual.png")
         
-        st.pyplot(fig_x)
+        st.plotly_chart(fig_x, use_container_width=True)
     
         # Row 4: ACF and PACF
         st.subheader('ACF and PACF')
