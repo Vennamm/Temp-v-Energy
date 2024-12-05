@@ -483,6 +483,7 @@ def temperature_forecasting():
             legend_title='Components',
             template='plotly_dark'  # Optional: Adjust the theme
         )
+        fig.write_image("trend_seasonal_residual.png")
         
         st.pyplot(fig)
     
