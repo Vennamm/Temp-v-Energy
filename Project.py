@@ -662,6 +662,11 @@ There is a lot of process behind this. But let me make it straightforward:
     with col2:
         col_name = st.selectbox("Select Sector:", options=sectors)
 
+    if col_name in ['Residential', 'Commercial', 'Industrial', 'Transportation']:
+        col_name = col_name += ' sector'
+    else:
+        col_name = 'Total consumption'
+
     importance_df, state_name, target_column = create_frame2(state_name, 'Season', ['cdd', 'hdd'], col_name)
 
     aggregate_and_rank(importance_df, state_name, target_column)
