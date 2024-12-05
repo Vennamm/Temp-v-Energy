@@ -360,33 +360,35 @@ def temperature_forecasting():
     fig.add_trace(go.Scatter(x=output_series.index, y=output_series, mode='lines', name='Forecast', line=dict(color='green')))
     st.plotly_chart(fig, use_container_width=True)
 
-    # Row 3: Seasonal Decomposition
-    st.subheader('Seasonal Decomposition')
+    with st.expander('Advanced Options'):
 
-    # Create the figure and axes for plotting
-    fig, ax = plt.subplots(3, 1, figsize=(10, 6))
+        # Row 3: Seasonal Decomposition
+        st.subheader('Seasonal Decomposition')
     
-    # Plot the Trend, Seasonal, and Residual components in subplots
-    ax[0].plot(seasonal_result.trend, label='Trend', color='blue')
-    ax[0].set_title('Trend')
-    ax[1].plot(seasonal_result.seasonal, label='Seasonal', color='orange')
-    ax[1].set_title('Seasonal')
-    ax[2].plot(seasonal_result.resid, label='Residual', color='green')
-    ax[2].set_title('Residual')
+        # Create the figure and axes for plotting
+        fig, ax = plt.subplots(3, 1, figsize=(10, 6))
+        
+        # Plot the Trend, Seasonal, and Residual components in subplots
+        ax[0].plot(seasonal_result.trend, label='Trend', color='blue')
+        ax[0].set_title('Trend')
+        ax[1].plot(seasonal_result.seasonal, label='Seasonal', color='orange')
+        ax[1].set_title('Seasonal')
+        ax[2].plot(seasonal_result.resid, label='Residual', color='green')
+        ax[2].set_title('Residual')
+        
+        # Adjust the layout and display the plot
+        plt.tight_layout()
+        st.pyplot(fig)
     
-    # Adjust the layout and display the plot
-    plt.tight_layout()
-    st.pyplot(fig)
-
-    # Row 4: ACF and PACF
-    st.subheader('ACF and PACF')
-    fig, ax = plt.subplots(1, 2, figsize=(12, 6))
-    plot_acf(train_data, lags=48, ax=ax[0])
-    plot_pacf(train_data, lags=48, ax=ax[1])
-    st.pyplot(fig)
-
-    st.subheader('Most Recent Year in the Dataset')
-    st.dataframe(weather_data.tail(12), use_container_width=True)
+        # Row 4: ACF and PACF
+        st.subheader('ACF and PACF')
+        fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+        plot_acf(train_data, lags=48, ax=ax[0])
+        plot_pacf(train_data, lags=48, ax=ax[1])
+        st.pyplot(fig)
+    
+        st.subheader('Most Recent Year in the Dataset')
+        st.dataframe(weather_data.tail(12), use_container_width=True)
 
 def weather_energy_cluster():
     st.title("Weather Energy Clustering")
