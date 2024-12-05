@@ -466,23 +466,24 @@ def temperature_forecasting():
         if (var1!=var2):
             plot_granger_causality(weather_data, var1, var2)
         
-
+        st.markdown("""For temperature forecasting, since there is already a very consistent seasonality and very little noise within the temperature data, it becomes less worth it to use the impact of another variable. 
+        Feel free to look at the seasonal decomposition.""")
         # Row 3: Seasonal Decomposition
         st.subheader('Seasonal Decomposition')
     
-        # Create the figure and axes for plotting
-        fig, ax = plt.subplots(3, 1, figsize=(10, 6))
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=seasonal_result.trend.index, y=seasonal_result.trend, mode='lines', name='Trend', line=dict(color='blue')))
+        fig.add_trace(go.Scatter(x=seasonal_result.seasonal.index, y=seasonal_result.seasonal, mode='lines', name='Seasonal', line=dict(color='orange')))
+        fig.add_trace(go.Scatter(x=seasonal_result.resid.index, y=seasonal_result.resid, mode='lines', name='Residual', line=dict(color='green')))
+
+        fig.update_layout(
+            title='Trend, Seasonal, and Residual Components',
+            xaxis_title='Date',
+            yaxis_title='Value',
+            legend_title='Components',
+            template='plotly_dark'  # Optional: Adjust the theme
+        )
         
-        # Plot the Trend, Seasonal, and Residual components in subplots
-        ax[0].plot(seasonal_result.trend, label='Trend', color='blue')
-        ax[0].set_title('Trend')
-        ax[1].plot(seasonal_result.seasonal, label='Seasonal', color='orange')
-        ax[1].set_title('Seasonal')
-        ax[2].plot(seasonal_result.resid, label='Residual', color='green')
-        ax[2].set_title('Residual')
-        
-        # Adjust the layout and display the plot
-        plt.tight_layout()
         st.pyplot(fig)
     
         # Row 4: ACF and PACF
