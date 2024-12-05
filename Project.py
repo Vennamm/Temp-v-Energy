@@ -347,7 +347,8 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
             y=[f_score],
             mode='markers',
             name=f'{col1} → {col2} (p=0)' if lag == p_zero_points_col1_to_col2[0][0] else "",
-            marker=dict(color='red', size=10)
+            marker=dict(color='red', size=10),
+            showlegend=False
         ))
     
     # Scatter plot for p_zero_points_col2_to_col1
@@ -357,7 +358,8 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
             y=[f_score],
             mode='markers',
             name=f'{col2} → {col1} (p=0)' if lag == p_zero_points_col2_to_col1[0][0] else "",
-            marker=dict(color='green', size=10)
+            marker=dict(color='green', size=10),
+            showlegend=False
         ))
     
     # Update the layout
