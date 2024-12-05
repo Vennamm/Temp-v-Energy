@@ -489,10 +489,10 @@ def temperature_forecasting():
     
         # Row 4: ACF and PACF
         st.subheader('ACF and PACF')
-        fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+        fig_y, ax = plt.subplots(1, 2, figsize=(12, 6))
         plot_acf(train_data, lags=48, ax=ax[0])
         plot_pacf(train_data, lags=48, ax=ax[1])
-        st.pyplot(fig)
+        st.pyplot(fig_y)
     
         st.subheader('Most Recent Year in the Dataset')
         st.dataframe(weather_data.tail(12), use_container_width=True)
