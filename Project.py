@@ -456,7 +456,7 @@ def temperature_forecasting():
         st.subheader("Granger Causality:")
 
         st.markdown("""Granger Causality checks where one variable causes the other variable in a timeseries. But the issue is that true causality is a hard thing to prove even with such a test.
-        But it gives us insight on how each state behaves. The following graph shows if last month's column $\rho=1$ causes effects in current month's another column.""")
+        But it gives us insight on how each state behaves. The following graph shows if last month's column $\\rho=1$ causes effects in current month's another column.""")
         col1, col2 = st.columns(2)
         with col1:
             var1 = st.selectbox("Will", options=weather_data.columns)
