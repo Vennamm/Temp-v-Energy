@@ -516,7 +516,7 @@ def weather_energy_cluster():
     
     st.subheader("Cluster-Based PCA Visualization on Map")
     st.markdown("""
-- There is a lot of process behind this. But let me make it straightforward.
+There is a lot of process behind this. But let me make it straightforward:
 - We analyzed the relationships between 'Average Temperature', 'Cooling Degree Days', and 'Heating Degree Days' to see their impact on all types of energy consumption (Residential, Commercial, Industrial, Transportation, and all combined).
 - We captured similar behaviors (energy consumption vs temperature) between the states and projected those behaviors onto a map, by dividing these behaviors into different groups.
 - And voila, these behaviors formed these interesting borders, indicating that there is a regional pattern in energy consumption.
