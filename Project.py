@@ -644,17 +644,20 @@ There is a lot of process behind this. But let me make it straightforward:
     
     with st.expander('Advanced Options'):
         st.subheader("Weather-Energy Correlation Matrix")   
-        st.markdown("""Well, how do I explain this? You see the really cool map at the beginning? So for that to happen, it was a two-step process. 
-        - This is the first step. I checked the Spearman Correlation for each state between each weather stat (Average Temperature, CDD, and HDD) between all the sectors. Now that is a lot of columns vs a lot of countries and 
-        I did not want to manually read through each one of them to understand the relationships.
-        - So I created a pretty heatmap of all the correlations, but I also sorted them by their weird relationships. That is why you see all the reds and blues sticking to each other.""")
+        st.markdown("""
+    Well, how do I explain this? You see the really cool map at the beginning? So for that to happen, it was a two-step process. 
+    - **First step**: I checked the Spearman Correlation for each state between each weather stat (Average Temperature, CDD, and HDD) and all the sectors. Now, that is a lot of columns versus a lot of states, and I did not want to manually read through each one of them to understand the relationships.
+    - **Second step**: I created a pretty heatmap of all the correlations, but I also sorted them by their unusual relationships. That is why you see all the reds and blues sticking to each other.
+        """)
         visualize_corr(corr_df)
         st.subheader("PCA Clustering Visualization")
 
-        st.markdown("""Now that we did have our pretty heatmap, that is still a lot to collect and create similar behaviors out of. 
-        - So I reduced the dimensions using our good old PCA dimension reduction. And it worked like a charm, because most of the columns do not explain any variance for a certain state (CDD_Winter usually does not do much for some state, you won't require cooling in Winters for most states).
-        - Then we started seeing these pretty little patterns in our principal components. Now how do I put this all on a map? kNN. 
-        - We ran a kNN on the resulting PCA components to assign a cluster to each state, and then we mapped them all on, well, the map and we could see patterns on how each state behaved.""")
+        st.markdown("""
+    Now that we had our pretty heatmap, there's still a lot to collect and create similar behaviors out of.
+    - **First step**: I reduced the dimensions using our good old PCA (Principal Component Analysis) dimension reduction. And it worked like a charm because most of the columns do not explain any variance for a certain state (for example, CDD_Winter usually does not do much for some states, as you won’t require cooling in Winters for most states).
+    - **Second step**: Then we started seeing these pretty little patterns in our principal components. Now, how do I put this all on a map? The answer: kNN (k-Nearest Neighbors).
+    - **Third step**: We ran a kNN on the resulting PCA components to assign a cluster to each state, and then we mapped them all on, well, the map. This helped us see patterns on how each state behaved.
+        """)
         ellipse_rad = st.slider("Select Confidence Level", 0.5, 0.99, 0.95, 0.01)
         plot_pca_with_ellipses(corr_df, ellipse_rad)
 
