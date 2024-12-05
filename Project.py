@@ -647,7 +647,8 @@ There is a lot of process behind this. But let me make it straightforward:
         st.markdown("""
     Well, how do I explain this? You see the really cool map at the beginning? So for that to happen, it was a two-step process. 
     - **First step**: I checked the Spearman Correlation for each state between each weather stat (Average Temperature, CDD, and HDD) and all the sectors. Now, that is a lot of columns versus a lot of states, and I did not want to manually read through each one of them to understand the relationships.
-    - **Second step**: I created a pretty heatmap of all the correlations, but I also sorted them by their unusual relationships. That is why you see all the reds and blues sticking to each other.
+    - **Second step**: I created a pretty heatmap of all the correlations, but I also sorted them by their unusual relationships. That is why you see all the reds and blues sticking to each other. Sometimes, the correlation heatmap does 
+    something stupid and does not load, please reload. I am still trying to figure out what is wrong with this app.
         """)
         visualize_corr(corr_df)
         st.subheader("PCA Clustering Visualization")
