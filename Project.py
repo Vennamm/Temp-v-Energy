@@ -406,7 +406,7 @@ def aggregate_and_rank(df, state, target_column):
     }
     season_totals = {season: df[df["Feature"].isin(features)]["Importance"].sum() for season, features in season_map.items()}
     season_df = pd.DataFrame(list(season_totals.items()), columns=["Season", "Contribution"]).sort_values(by="Contribution", ascending=False)
-
+    st.dataframe(df)
 
     top_contributor = season_df.iloc[0]
     second_contributor = season_df.iloc[1] if len(season_df) > 1 else None
