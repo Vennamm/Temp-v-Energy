@@ -504,8 +504,8 @@ def temperature_forecasting():
         st.markdown("""We worked with a SARIMAX model with the common values as $p=1, d=0, q=1, P=1, D=0, Q=0,\\text{ and seasonality}=12$. In a complex scenario, the PACF and ACF graphs help us determine more than just the seasonality 
         and help us even reassess the remaining parameters of the SARIMAX model.""")
     
-        st.subheader('Most Recent Year in the Dataset')
-        st.dataframe(weather_data.tail(12), use_container_width=True)
+    st.subheader('Most Recent Year in the Dataset')
+    st.dataframe(weather_data.tail(12), use_container_width=True)
 
 def weather_energy_cluster():
     st.title("Weather Energy Clustering")
