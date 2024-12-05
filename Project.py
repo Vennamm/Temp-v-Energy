@@ -16,6 +16,8 @@ import plotly.express as px
 import geopandas as gpd
 from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from sklearn.mixture import GaussianMixture
+from sklearn.ensemble import RandomForestRegressor
+from xgboost import XGBRegressor
 import warnings
 
 
