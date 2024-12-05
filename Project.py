@@ -392,8 +392,8 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
 
 def create_frame2(state, target_column):
     importance_df = pd.read_csv('feature_importance_results.csv')
-    st.dataframe(importance_df)
     importance_df = importance_df[(importance_df['State'] == state) & importance_df['Target Column'] == target_column]
+    st.dataframe(importance_df)
     importance_df = importance_df[['Feature','Importance']]
     
     return importance_df, state, target_column
