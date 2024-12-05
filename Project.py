@@ -639,13 +639,19 @@ There is a lot of process behind this. But let me make it straightforward:
         col_name = 'Total consumption'
 
     importance_df, state_name, target_column = create_frame2(state_name, col_name)
-
+    
     aggregate_and_rank(importance_df, state_name, target_column)
-
+    
     st.markdown("""I know some of the things you see above might be hard to believe but trust me, check it out. If you see something like Hot Winters - you check for CDD, and when they say Cold Summers - you check for HDD. 
     Look at the relationships.""")
-    cdd_hdd = st.selectbox('Select CDD or HDD:', options=['cdd','hdd'])
-    
+
+    col3, col4, col5 = st.columns(3)
+    with col3:
+        cdd_hdd = st.selectbox('Select CDD or HDD:', options=['cdd','hdd'])
+    with col4:
+        st.markdown('vs')
+    with col5:
+        st.markdown(col_name)
     
     st.subheader("Weather-Energy Correlation Matrix")   
     
