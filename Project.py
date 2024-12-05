@@ -284,7 +284,9 @@ def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
         ),
         margin={"r": 0, "t": 50, "l": 0, "b": 0},  
         height=600,
-        width=1000
+        width=1000,
+        dragmode='zoom',
+        scrollZoom=False
     )
     # fig.show()
     st.plotly_chart(fig, use_container_width=True)
