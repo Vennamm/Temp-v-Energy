@@ -471,12 +471,12 @@ def temperature_forecasting():
         # Row 3: Seasonal Decomposition
         st.subheader('Seasonal Decomposition')
     
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=seasonal_result.trend.index, y=seasonal_result.trend, mode='lines', name='Trend', line=dict(color='blue')))
-        fig.add_trace(go.Scatter(x=seasonal_result.seasonal.index, y=seasonal_result.seasonal, mode='lines', name='Seasonal', line=dict(color='orange')))
-        fig.add_trace(go.Scatter(x=seasonal_result.resid.index, y=seasonal_result.resid, mode='lines', name='Residual', line=dict(color='green')))
+        fig_x = go.Figure()
+        fig_x.add_trace(go.Scatter(x=seasonal_result.trend.index, y=seasonal_result.trend, mode='lines', name='Trend', line=dict(color='blue')))
+        fig_x.add_trace(go.Scatter(x=seasonal_result.seasonal.index, y=seasonal_result.seasonal, mode='lines', name='Seasonal', line=dict(color='orange')))
+        fig_x.add_trace(go.Scatter(x=seasonal_result.resid.index, y=seasonal_result.resid, mode='lines', name='Residual', line=dict(color='green')))
 
-        fig.update_layout(
+        fig_x.update_layout(
             title='Trend, Seasonal, and Residual Components',
             xaxis_title='Date',
             yaxis_title='Value',
@@ -485,7 +485,7 @@ def temperature_forecasting():
         )
         # fig.write_image("trend_seasonal_residual.png")
         
-        st.pyplot(fig)
+        st.pyplot(fig_x)
     
         # Row 4: ACF and PACF
         st.subheader('ACF and PACF')
