@@ -346,7 +346,7 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
             x=[lag],
             y=[f_score],
             mode='markers',
-            name=f'{col1} → {col2} (p=0)' if lag == p_zero_points_col1_to_col2[0][0] else "",
+            name=f'{col1} → {col2} (p<0.05)' if lag == p_zero_points_col1_to_col2[0][0] else "",
             marker=dict(color='red', size=10),
             showlegend=False
         ))
@@ -357,7 +357,7 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
             x=[lag],
             y=[f_score],
             mode='markers',
-            name=f'{col2} → {col1} (p=0)' if lag == p_zero_points_col2_to_col1[0][0] else "",
+            name=f'{col2} → {col1} (p<0.05)' if lag == p_zero_points_col2_to_col1[0][0] else "",
             marker=dict(color='green', size=10),
             showlegend=False
         ))
@@ -454,6 +454,9 @@ def temperature_forecasting():
     with st.expander('Advanced Options'):
 
         st.subheader("Granger Causality:")
+
+        st.markdown("Granger Causality checks where one variable causes the other variable in a timeseries. But the issue is that true causality is a hard thing to prove even with such a test. 
+        But it gives us insight on how each state behaves. The following graph shows if last month's column $\rho=1$ causes effects in current month's another column.")
         col1, col2 = st.columns(2)
         with col1:
             var1 = st.selectbox("Will", options=weather_data.columns)
