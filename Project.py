@@ -663,7 +663,7 @@ There is a lot of process behind this. But let me make it straightforward:
         col_name = st.selectbox("Select Sector:", options=sectors)
 
     if col_name in ['Residential', 'Commercial', 'Industrial', 'Transportation']:
-        col_name = col_name += ' sector'
+        col_name = col_name + ' sector'
     else:
         col_name = 'Total consumption'
 
