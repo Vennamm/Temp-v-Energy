@@ -394,7 +394,7 @@ def create_frame2(state, target_column):
     importance_df = pd.read_csv('feature_importance_results.csv')
     importance_df = importance_df[(importance_df['State'] == state) & importance_df['Target Column'] == target_column]
     importance_df = importance_df[['Feature','Importance']]
-
+    
     return importance_df, state, target_column
 
 def aggregate_and_rank(df, state, target_column):
@@ -639,7 +639,7 @@ There is a lot of process behind this. But let me make it straightforward:
         col_name = 'Total consumption'
 
     importance_df, state_name, target_column = create_frame2(state_name, col_name)
-
+    st.dataframe(importance_df)
     aggregate_and_rank(importance_df, state_name, target_column)
     
     st.subheader("Weather-Energy Correlation Matrix")   
