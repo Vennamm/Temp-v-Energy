@@ -675,6 +675,11 @@ if section == "Documentation":
 
 This project explores the relationships between weather patterns (Average Temperature, Cooling Degree Days (CDD), Heating Degree Days (HDD)) and energy consumption across different sectors (Residential, Commercial, Industrial, Transportation, and Total Consumption). It uses various data science techniques, such as Principal Component Analysis (PCA), Random Forests, and XGBoost, to create insights into regional energy consumption patterns based on weather factors. The analysis is visualized using interactive maps, graphs, and charts on a Streamlit-based app.
 
+### **Sources**
+- [**Weather Data**](https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series/): This is official weather data from NCEI. **Granularity:** Monthly, State. 
+- [**Energy Data**](https://www.eia.gov/state/seds/seds-data-complete.php?sid=MI#Keystatisticsrankings): This is the energy consumption data sourced from U.S. Energy Information Administration. **Granularity:** Yearly, State.
+- [GeoJSON for Mapping](https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/us-states.json): MappingAPI's GitHub Repository.
+- There are a few other sources that have not been used but have potential to explore: [Monthly Energy Consumption - Nationwide](https://www.eia.gov/totalenergy/data/browser/index.php?tbl=T01.01#/?f=M&start=199701&end=202407&charted=6-7-14-1-2-3-4-8-11-12-13), [Wildfire Data](https://www.nifc.gov/fire-information/statistics/wildfires)
 ## **Project Overview**
 
 The project is divided into three main sections:
