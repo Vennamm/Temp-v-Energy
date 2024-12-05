@@ -393,7 +393,6 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
 def create_frame2(state, target_column):
     importance_df = pd.read_csv('feature_importance_results.csv')
     importance_df = importance_df[(importance_df['State'] == state) & (importance_df['Target Column'] == target_column)]
-    st.dataframe(importance_df)
     importance_df = importance_df[['Feature','Importance']]
     
     return importance_df, state, target_column
@@ -407,7 +406,6 @@ def aggregate_and_rank(df, state, target_column):
     }
     season_totals = {season: df[df["Feature"].isin(features)]["Importance"].sum() for season, features in season_map.items()}
     season_df = pd.DataFrame(list(season_totals.items()), columns=["Season", "Contribution"]).sort_values(by="Contribution", ascending=False)
-    st.dataframe(df)
 
     top_contributor = season_df.iloc[0]
     second_contributor = season_df.iloc[1] if len(season_df) > 1 else None
@@ -640,7 +638,7 @@ There is a lot of process behind this. But let me make it straightforward:
         col_name = 'Total consumption'
 
     importance_df, state_name, target_column = create_frame2(state_name, col_name)
-    st.dataframe(importance_df)
+
     aggregate_and_rank(importance_df, state_name, target_column)
     
     st.subheader("Weather-Energy Correlation Matrix")   
