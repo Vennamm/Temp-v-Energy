@@ -641,11 +641,11 @@ There is a lot of process behind this. But let me make it straightforward:
     importance_df, state_name, target_column = create_frame2(state_name, col_name)
 
     aggregate_and_rank(importance_df, state_name, target_column)
-    
-    # st.subheader("Look at how the data behaves")
-    
-    # cdd_hdd = st.selectbox('Select CDD or HDD:', options=['cdd','hdd'])
 
+    st.markdown("""I know some of the things you see above might be hard to believe but trust me, check it out. If you see something like Hot Winters - you check for CDD, and when they say Cold Summers - you check for HDD. 
+    Look at the relationships."""
+    cdd_hdd = st.selectbox('Select CDD or HDD:', options=['cdd','hdd'])
+    
     
     st.subheader("Weather-Energy Correlation Matrix")   
     
