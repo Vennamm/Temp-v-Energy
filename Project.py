@@ -670,7 +670,60 @@ section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Fo
 
 if section == "Documentation":
     st.title("Documentation")
-    st.write("This section will contain documentation. (Under construction!)")
+    st.markdown("""
+# **Weather-Energy Relationship Analysis and Forecasting**
+
+This project explores the relationships between weather patterns (Average Temperature, Cooling Degree Days (CDD), Heating Degree Days (HDD)) and energy consumption across different sectors (Residential, Commercial, Industrial, Transportation, and Total Consumption). It uses various data science techniques, such as Principal Component Analysis (PCA), Random Forests, and XGBoost, to create insights into regional energy consumption patterns based on weather factors. The analysis is visualized using interactive maps, graphs, and charts on a Streamlit-based app.
+
+## **Project Overview**
+
+The project is divided into three main sections:
+
+### **Section 1: Temperature Forecasting**
+- **Objective**: Forecast average temperatures using time-series analysis to help predict energy consumption based on temperature trends.
+- **Model**: SARIMAX (Seasonal Autoregressive Integrated Moving Average with Exogenous Regressors).
+- **Process**: 
+    - **Data Preparation**: Loading temperature data for different states.
+    - **Granger Causality**: Checking dependencies between temperature and other weather factors.
+    - **Seasonal Decomposition**: Breaking down the temperature data into trend, seasonal, and residual components.
+    - **Forecasting**: Using SARIMAX to predict future temperatures.
+    - **Visualization**: Graphs displaying predicted and actual temperatures, model performance metrics, and seasonal components.
+
+- **Streamlit Features**:
+    - Temperature forecasting for selected states, years, and months.
+    - Performance metrics and visualizations.
+
+### **Section 2: Weather-Energy Relationships**
+- **Objective**: Investigate how temperature (CDD, HDD, and Average Temperature) influences energy consumption in various sectors across different states.
+- **Techniques**:
+    - **Principal Component Analysis (PCA)**: Used to reduce the dimensionality of the data and identify key components driving energy consumption.
+    - **Clustering**: k-Nearest Neighbors (kNN) clustering algorithm used to assign states to different groups based on their behavior in energy consumption related to weather patterns.
+    - **Feature Importance**: Random Forest and XGBoost regression models are trained to determine which weather-related features (e.g., CDD, HDD) are the most important predictors for energy consumption in each sector.
+
+- **Process**:
+    1. **Data Aggregation**: Collating weather data (CDD, HDD) and energy consumption data (Residential, Commercial, Industrial, etc.) for each state.
+    2. **PCA and Clustering**: Reducing dimensionality and grouping states based on similar energy behaviors.
+    3. **Visualization**: 
+        - Cluster-based PCA visualizations are shown on an interactive map.
+        - Two side-by-side bar graphs display energy consumption across seasons.
+        - Feature importance analysis identifies the key weather factors influencing energy consumption.
+    4. **Correlation Analysis**: Checking the relationship between weather variables (Temperature, CDD, HDD) and energy consumption sectors for each state.
+    5. **Modeling**: Using regression models to predict energy consumption and determine feature importance.
+
+- **Streamlit Features**:
+    - Interactive selection of states and energy sectors.
+    - Visualize cluster maps based on PCA.
+    - Seasonal energy consumption comparison through bar graphs.
+    - Relationship visualizations between weather variables and energy consumption.
+
+### **Section 3: Advanced Features**
+- **Objective**: Provide more granular insights into how specific weather patterns (seasonal or monthly) influence energy consumption.
+- **Process**:
+    1. **Energy Consumption Forecasting**: Using machine learning models to predict future energy consumption based on weather data.
+    2. **Advanced Visualizations**: Creating detailed plots to explore how different weather factors impact energy consumption on a more granular level (e.g., by month, by state).
+    3. **Customization**: Allowing the user to tweak the number of clusters or groups when examining seasonal or monthly energy consumption patterns.
+""")
+
 
 elif section == "Temperature Forecasting":
     temperature_forecasting()
