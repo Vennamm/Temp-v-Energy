@@ -515,13 +515,13 @@ def weather_energy_cluster():
     corr_df = compute_spearmanr(weather_stats, consumption_stats)
     
     st.subheader("Cluster-Based PCA Visualization on Map")
-    st.markdown("""There is a lot of process behind this. But let me make it straightforward. 
-    
-    We analyzed the relationships between 'Average Temperature', 'Cooling Degree Days', 'Heating Degree Days' to see their impact on all types of energy consumptions (Residential, Commercial, Industrial, Transportation, and all combined). 
-    
-    We captured similar behaviors (energy consumption vs temperature) between the states and projected those behaviors onto map, by dividing these behaviours into different groups. 
-    
-    And voila, these behaviours formed these interesting borders, indicating that there is regional pattern in energy consumptions. I ideally would love the divided groups to be 4, but I would love for you to play around and see what happens if you split these behaviors into 3 or 5 or 6 groups. :)""")
+    st.markdown("""
+- There is a lot of process behind this. But let me make it straightforward.
+- We analyzed the relationships between 'Average Temperature', 'Cooling Degree Days', and 'Heating Degree Days' to see their impact on all types of energy consumption (Residential, Commercial, Industrial, Transportation, and all combined).
+- We captured similar behaviors (energy consumption vs temperature) between the states and projected those behaviors onto a map, by dividing these behaviors into different groups.
+- And voila, these behaviors formed these interesting borders, indicating that there is a regional pattern in energy consumption.
+- I ideally would love the divided groups to be 4, but I would love for you to play around and see what happens if you split these behaviors into 3, 5, or 6 groups. :)
+""")
     geojson_path = 'us-states.json'
 
     n_clusters = st.selectbox("Select Number of Groups", options=[3, 4, 5, 6], index=0)
