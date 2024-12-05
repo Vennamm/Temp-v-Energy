@@ -288,6 +288,94 @@ def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
     # fig.show()
     st.plotly_chart(fig, use_container_width=True)
 
+def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        test_results = grangercausalitytests(df[[col1, col2]], maxlag=max_lag, verbose=False)
+        test_results_2 = grangercausalitytests(df[[col2, col1]], maxlag=max_lag, verbose=False)
+    lags = []
+    f_scores_col1_to_col2 = []
+    p_zero_points_col1_to_col2 = []
+    f_scores_col2_to_col1 = []
+    p_zero_points_col2_to_col1 = []
+    for lag, result in test_results.items():
+        f_score_col1_to_col2 = result[0]['ssr_ftest'][0]
+        p_value_col1_to_col2 = result[0]['ssr_ftest'][1]
+        f_scores_col1_to_col2.append(f_score_col1_to_col2)
+        if p_value_col1_to_col2 < 0.05:
+            p_zero_points_col1_to_col2.append((lag, f_score_col1_to_col2))
+    for lag, result in test_results_2.items():
+        f_score_col2_to_col1 = result[0]['ssr_ftest'][0]
+        p_value_col2_to_col1 = result[0]['ssr_ftest'][1]
+        lags.append(lag)
+        f_scores_col2_to_col1.append(f_score_col2_to_col1)
+        if p_value_col2_to_col1 < 0.05:
+            p_zero_points_col2_to_col1.append((lag, f_score_col2_to_col1))
+    f_scores_data = pd.DataFrame({
+        'Lag': lags,
+        f'{col1} → {col2} F-score': f_scores_col1_to_col2,
+        f'{col2} → {col1} F-score': f_scores_col2_to_col1
+    })
+    
+
+    # Create the figure
+    fig = go.Figure()
+    
+    # Line plot for col1 → col2
+    fig.add_trace(go.Scatter(
+        x=f_scores_data['Lag'],
+        y=f_scores_data[f'{col1} → {col2} F-score'],
+        mode='lines',
+        name=f'{col1} → {col2}',
+        line=dict(color='blue')
+    ))
+    
+    # Line plot for col2 → col1
+    fig.add_trace(go.Scatter(
+        x=f_scores_data['Lag'],
+        y=f_scores_data[f'{col2} → {col1} F-score'],
+        mode='lines',
+        name=f'{col2} → {col1}',
+        line=dict(color='orange')
+    ))
+    
+    # Scatter plot for p_zero_points_col1_to_col2
+    for lag, f_score in p_zero_points_col1_to_col2:
+        fig.add_trace(go.Scatter(
+            x=[lag],
+            y=[f_score],
+            mode='markers',
+            name=f'{col1} → {col2} (p=0)' if lag == p_zero_points_col1_to_col2[0][0] else "",
+            marker=dict(color='red', size=10)
+        ))
+    
+    # Scatter plot for p_zero_points_col2_to_col1
+    for lag, f_score in p_zero_points_col2_to_col1:
+        fig.add_trace(go.Scatter(
+            x=[lag],
+            y=[f_score],
+            mode='markers',
+            name=f'{col2} → {col1} (p=0)' if lag == p_zero_points_col2_to_col1[0][0] else "",
+            marker=dict(color='green', size=10)
+        ))
+    
+    # Update the layout
+    fig.update_layout(
+        title=f'Granger Causality F-scores: {col1} vs {col2}',
+        xaxis_title='Lag',
+        yaxis_title='F-score',
+        legend_title="Causality",
+        template="plotly",
+        showlegend=True,
+        xaxis=dict(showgrid=True),
+        yaxis=dict(showgrid=True)
+    )
+    
+    # Show the figure
+    # fig.show()
+    st.plotly_chart(fig, use_container_width=True)
+    
+
 def temperature_forecasting():
     st.title('Temperature Forecasting')
 
@@ -363,11 +451,14 @@ def temperature_forecasting():
     with st.expander('Advanced Options'):
 
         st.subheader("Granger Causality:")
-        var1 = st.selectbox("Will", options=weather_data.columns)
-        var2 = st.selectbox("Cause", options=weather_data.columns)
-
-        if not(var1 is None or var1=='') and (var1==var2):
-            st.warning("You are a data scientist, you can not do that :)")
+        col1, col2 = st.columns(2)
+        with col1:
+            var1 = st.selectbox("Will", options=weather_data.columns)
+        with col2:
+            var2 = st.selectbox("Cause", options=weather_data.columns)
+            
+        if (var1!=var2):
+            plot_granger_causality(weather_data, var1, var2)
         
 
         # Row 3: Seasonal Decomposition
