@@ -596,6 +596,10 @@ def temperature_forecasting():
 
         st.markdown("""We worked with a SARIMAX model with the common values as $p=1, d=0, q=1, P=1, D=0, Q=0,\\text{ and seasonality}=12$. In a complex scenario, the PACF and ACF graphs help us determine more than just the seasonality 
         and help us even reassess the remaining parameters of the SARIMAX model.""")
+
+        st.subheader("LSTM Impact")
+        st.markdown("""LSTM was trained to predict CDD and HDD based on lags 1, 3, 6 based on causality inferences from the Granger Causality tests. But the model performed just as decently as not having the causality dependencies. 
+        The references to this can be found both on CDD-HDD Forecasting and Temp Forecasting notebooks on my [GitHub](https://github.com/Vennamm/Temp-v-Energy/tree/main).""")
     
     st.subheader('Most Recent Year in the Dataset')
     st.dataframe(weather_data.tail(12), use_container_width=True)
