@@ -4,6 +4,7 @@ import os
 import plotly.graph_objects as go
 import numpy as np
 from statsmodels.tsa.statespace.sarimax import SARIMAX
+from statsmodels.tsa.stattools import grangercausalitytests
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from statsmodels.tsa.seasonal import STL
 import matplotlib.pyplot as plt
