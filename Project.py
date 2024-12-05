@@ -643,11 +643,10 @@ There is a lot of process behind this. But let me make it straightforward:
     aggregate_and_rank(importance_df, state_name, target_column)
     
     st.subheader("Look at how the data behaves")
-    col1, col2 = st.columns(2)
-    with col1:
-        cdd_hdd = st.selectbox('Select CDD or HDD:', options=['cdd','hdd'])
-    with col2:
-        col_name = st.selectbox("Select Sector:", options=sectors)
+    
+    cdd_hdd = st.selectbox('Select CDD or HDD:', options=['cdd','hdd'])
+
+    
     
     st.subheader("Weather-Energy Correlation Matrix")   
     
