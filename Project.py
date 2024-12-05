@@ -388,7 +388,7 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
     # fig.show()
     st.plotly_chart(fig, use_container_width=True)
 
-def create_frame(state, month_season, stat, target_column):
+def create_frame2(state, month_season, stat, target_column):
     weather = pd.read_csv(f'collated_data/{state}.csv')[['Date','cdd','hdd','tavg']]
     weather['Date'] = pd.to_datetime(weather['Date'].astype(str), format='%Y%m')
     weather['Year'] = weather['Date'].dt.year
@@ -660,7 +660,7 @@ There is a lot of process behind this. But let me make it straightforward:
     with col2:
         col_name = st.selectbox("Select Sector:", options=sectors)
 
-    importance_df, state_name, target_column = create_frame(state_name, 'Season', ['cdd', 'hdd'], col_name)
+    importance_df, state_name, target_column = create_frame2(state_name, 'Season', ['cdd', 'hdd'], col_name)
 
     aggregate_and_rank(importance_df, state_name, target_column)
     
