@@ -437,10 +437,9 @@ def aggregate_and_rank(df, state, target_column):
     min_color_value = 100
     
     df["Color"] = df.apply(
-        lambda row: f"rgb({min(255,int((row['Importance'] - min_importance_red) / (max_importance_red - min_importance_red) * (255 - min_color_value)
-                               + min_color_value))}, 0, 0)" if "Hot" in row["Category"] 
-        else f"rgb(0, 0, {min(255,int((row['Importance'] - min_importance_blue) / (max_importance_blue - min_importance_blue) * (255 - min_color_value)
-                              + min_color_value))})", axis=1
+        lambda row: f"rgb({min(255, int((row['Importance'] - min_importance_red) / (max_importance_red - min_importance_red) * (255 - min_color_value) + min_color_value))}, 0, 0)"
+        if "Hot" in row["Category"]
+        else f"rgb(0, 0, {min(255, int((row['Importance'] - min_importance_blue) / (max_importance_blue - min_importance_blue) * (255 - min_color_value) + min_color_value))})", axis=1
     )
     
     df_sorted = df.sort_values(by="Importance", ascending=False)
