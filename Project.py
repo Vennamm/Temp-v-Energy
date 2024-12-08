@@ -736,16 +736,13 @@ The project is divided into three main sections:
 
 elif section == "Temperature Forecasting":
     temperature_forecasting()
-    col1, col2, col3 = st.columns([1, 1, 1])
-    with col1:
-        if st.button("Forecasting"):
-            st.write("Forecasting content")
-    with col2:
-        if st.button("Clustering"):
-            st.write("Clustering content")
-    with col3:
-        if st.button("Relationships"):
-            st.write("Relationships content")
+    section = st.selectbox("Choose a Section", ["Forecasting", "Clustering", "Relationships"])
+    if section == "Forecasting":
+        st.write("Forecasting content")
+    elif section == "Clustering":
+        st.write("Clustering content")
+    elif section == "Relationships":
+        st.write("Relationships content")
 
 elif section == "Weather-Energy Relationship":
     weather_energy_cluster()
