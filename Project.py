@@ -736,13 +736,6 @@ The project is divided into three main sections:
 
 elif section == "Temperature Forecasting":
     temperature_forecasting()
-    tab1, tab2, tab3 = st.tabs(["Forecasting", "Clustering", "Relationships"])
-    with tab1:
-        st.write("Forecasting content")
-    with tab2:
-        st.write("Clustering content")
-    with tab3:
-        st.write("Relationships content")
 
 elif section == "Weather-Energy Relationship":
     weather_energy_cluster()
