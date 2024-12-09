@@ -397,27 +397,52 @@ def create_frame2(state, target_column):
     
     return importance_df, state, target_column
 
-def aggregate_and_rank(df, state, target_column):
+def create_frame3(state, target_column):
+    importance_df_m = pd.read_csv('feature_importance_results_monthly.csv')
+    importance_df_m = importance_df_m[(importance_df_m['State'] == state) & (importance_df_m['Target Column'] == target_column)]
+    importance_df_m = importance_df_m[['Feature', 'Importance']]
+
+    return importance_df_m, state, target_column
+
+def aggregate_and_rank(df, df_m, state, target_column):
     season_map = {
         "Winter": ["cdd_Winter", "hdd_Winter"],
         "Spring": ["cdd_Spring", "hdd_Spring"],
         "Summer": ["cdd_Summer", "hdd_Summer"],
         "Fall": ["cdd_Fall", "hdd_Fall"]
     }
+
     season_totals = {season: df[df["Feature"].isin(features)]["Importance"].sum() for season, features in season_map.items()}
     season_df = pd.DataFrame(list(season_totals.items()), columns=["Season", "Contribution"]).sort_values(by="Contribution", ascending=False)
+
+    month_totals = {month: df_m[df_m["Feature"].str.contains(f"_{month}")]["Importance"].sum() for month in df_m["Feature"].str.split("_").str[1].unique()}
+    month_df = pd.DataFrame(list(month_totals.items()), columns=["Month", "Contribution"]).sort_values(by="Contribution", ascending=False)
 
     top_contributor = season_df.iloc[0]
     second_contributor = season_df.iloc[1] if len(season_df) > 1 else None
 
-    co_dominance_threshold = 0.05 
+    top_contributor_m = month_df.iloc[0]
+    second_contributor_m = month_df.iloc[1] if len(month_df) > 1 else None
+
+    co_dominance_threshold_s = 0.1 
+    co_dominance_threshold = 0.05
 
     TEXT = ''
+    TEXT_m = ''
+
+    if second_contributor_m is not None:
+        diff_m = top_contributor_m["Contribution"] - second_contributor_m["Contribution"]
+        if diff_m <= co_dominance_threshold:
+            TEXT_m = f"And, {top_contributor_m['Season']} and {second_contributor_m['Season']} contribute the most"
+        else:
+            TEXT_m = f"And, {top_contributor_m['Season']} contributes the most"
+    else:
+        TEXT_m = f"And, {top_contributor_m['Season']} is the major contributor to the {target_column.lower()}."
 
     if second_contributor is not None:
         diff = top_contributor["Contribution"] - second_contributor["Contribution"]
 
-        if diff <= co_dominance_threshold:
+        if diff <= co_dominance_threshold_s:
             TEXT = f"For {state}, {top_contributor['Season']} and {second_contributor['Season']} contribute the most"
         else:
             TEXT = f"For {state}, {top_contributor['Season']} contributes the most to the {target_column.lower()}."
@@ -426,15 +451,28 @@ def aggregate_and_rank(df, state, target_column):
         TEXT = f"For {state}, {top_contributor['Season']} is the only major contributor to the {target_column.lower()}."
 
     fig1 = px.pie(season_df, names='Season', values='Contribution', title="Seasonal Energy Consumption Contributions")
+    fig3 = px.pie(month_df, names='Month', values='Contribution', title = "Monthly Energy Consumption Contributions")
 
     df["Category"] = df["Feature"].apply(lambda x: "Hot " + x.split("_")[1] if "cdd" in x else "Cold " + x.split("_")[1])
-
+    df_m["Category"] = df_m["Feature"].apply(lambda x: "Hot " + x.split("_")[1] if "cdd" in x else "Cold " + x.split("_")[1])
+    
     min_importance_blue = df[df['Category'].str.startswith('Cold')]['Importance'].min()
     max_importance_blue = df[df['Category'].str.startswith('Cold')]['Importance'].max()
     min_importance_red = df[df['Category'].str.startswith('Hot')]['Importance'].min()
     max_importance_red = df[df['Category'].str.startswith('Hot')]['Importance'].max()
+
+    min_importance_blue_m = df_m[df_m['Category'].str.startswith('Cold')]['Importance'].min()
+    max_importance_blue_m = df_m[df_m['Category'].str.startswith('Cold')]['Importance'].max()
+    min_importance_red_m = df_m[df_m['Category'].str.startswith('Hot')]['Importance'].min())
+    max_importance_red_m = df_m[df_m['Category'].str.startswith('Hot')]['Importance'].max()
     min_color_value = 100
+
     
+    df_m["Color"] = df_m.apply(
+        lambda row: f"rgb({min(255, int((row['Importance'] -  min_importance_red_m/ (max_importance_red_m - min_importance_red_m) * (255 - min_color_value) + min_color_value))}, 0, 0)"
+        if "Hot" in row["Category"]
+        else f"rgb(0, 0, {min(255, int((row['Importance'] - min_importance_blue_m) / (max_importance_blue_m - min_importance_blue_m) * (255 - min_color_value) + min_color_value))})", axis=1
+    )
     df["Color"] = df.apply(
         lambda row: f"rgb({min(255, int((row['Importance'] - min_importance_red) / (max_importance_red - min_importance_red) * (255 - min_color_value) + min_color_value))}, 0, 0)"
         if "Hot" in row["Category"]
@@ -442,9 +480,10 @@ def aggregate_and_rank(df, state, target_column):
     )
     
     df_sorted = df.sort_values(by="Importance", ascending=False)
-
+    df_sorted_m = df_m.sort_values(by="Importance", ascending=False)
     
     fig2 = go.Figure()
+    fig4 = go.Figure()
 
     # Add Hot features (Red gradient)
     fig2.add_trace(go.Bar(
@@ -458,8 +497,25 @@ def aggregate_and_rank(df, state, target_column):
     ))
 
     fig2.update_layout(
-        title="Individual Contributions by Feature",
-        xaxis_title="Feature",
+        title="Individual Contributions by Season",
+        xaxis_title="Season",
+        yaxis_title="Importance",
+        showlegend=False
+    )
+
+    fig4.add_trace(go.Bar(
+        x=df_sorted_m["Category"],  # Feature names
+        y=df_sorted_m["Importance"],  # Importance values
+        # text=df_sorted_m["Category"],  # Show Category as text
+        hoverinfo="text",  # Show category on hover
+        marker=dict(
+            color=df_sorted_m["Color"],  # Color based on importance and category
+        )
+    ))
+
+    fig4.update_layout(
+        title="Individual Contributions by Month",
+        xaxis_title="Month",
         yaxis_title="Importance",
         showlegend=False
     )
@@ -467,9 +523,14 @@ def aggregate_and_rank(df, state, target_column):
     # Show both plots
     # fig1.show()
     # fig2.show()
-    st.markdown(TEXT)
-    st.plotly_chart(fig1, use_container_width=True)
-    st.plotly_chart(fig2, use_container_width=True)
+    st.markdown(TEXT + " " + TEXT_m)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.plotly_chart(fig1, use_container_width=True)
+        st.plotly_chart(fig3, use_container_width=True)
+    with col2:
+        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig4, use_container_width=True)
     
 
 def temperature_forecasting():
@@ -643,8 +704,9 @@ There is a lot of process behind this. But let me make it straightforward:
         col_name = 'Total consumption'
 
     importance_df, state_name, target_column = create_frame2(state_name, col_name)
+    importance_df_m, state_name, target_column = create_frame3(state_name, col_name)
     
-    aggregate_and_rank(importance_df, state_name, target_column)
+    aggregate_and_rank(importance_df, importance_df_m, state_name, target_column)
     
     with st.expander('Advanced Options'):
         st.subheader("Weather-Energy Correlation Matrix")   
