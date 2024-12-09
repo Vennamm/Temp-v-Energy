@@ -568,8 +568,12 @@ def aggregate_and_rank(df, df_m, state, target_column):
         border: 1px solid #ddd; 
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
         margin-bottom: 20px;
+        text-align: center; 
+        display: inline-block;
+        max-width: 90%; 
+        word-wrap: break-word;
     ">
-        <p style="font-size: 16px; line-height: 1.6; color: #333; font-family: Arial, sans-serif;">
+        <p style="font-size: 16px; line-height: 1.6; color: #333; font-family: Arial, sans-serif; font-weight: bold;">
             {TEXT} {TEXT_m}
         </p>
     </div>
