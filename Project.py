@@ -418,8 +418,8 @@ def aggregate_and_rank(df, df_m, state, target_column):
         energy_rates,
         x="Year",
         y=target_column,
-        title=f"{selected_column}'s Energy Consumption over years",
-        labels={"Year": "Year", selected_column: "Energy Consumption"},
+        title=f"{target_column}'s Energy Consumption over years",
+        labels={"Year": "Year", target_column: "Energy Consumption"},
     )
     
     
