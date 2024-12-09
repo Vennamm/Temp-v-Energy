@@ -674,9 +674,9 @@ st.markdown(
     """
     <style>
     .centered-title {
-        font-size: 32px;
+        font-size: 40px;
         font-weight: bold;
-        color: #003366; /* Custom color */
+        color: #003366;
         text-align: center;
         margin-bottom: 20px;
     }
@@ -691,11 +691,11 @@ st.markdown(
     """
     <style>
     div.stTabs button {
-        flex-grow: 1; /* Make all tabs equally wide */
-        margin: 0 5px; /* Add spacing between tabs */
+        flex-grow: 1; 
+        margin: 0 5px;
     }
     div.stTabs button div {
-        justify-content: center; /* Center-align the content inside each tab */
+        justify-content: center; 
     }
     </style>
     """,
