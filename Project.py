@@ -48,11 +48,11 @@ def get_season_color(TEXT):
     color = "#f9f9f9"
     if "Spring" in TEXT:
         color = "#e0f7fa"
-    elif "Summer" in text:
+    elif "Summer" in TEXT:
         color = "#ffeb3b"
-    elif "Winter" in text:
+    elif "Winter" in TEXT:
         color = "#b3e5fc" 
-    elif "Fall" in text:
+    elif "Fall" in TEXT:
         color = "#ff7043"
     return color
 
