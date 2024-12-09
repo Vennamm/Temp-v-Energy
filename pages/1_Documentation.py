@@ -1,6 +1,6 @@
 # st.set_page_config(page_title="Documentation", layout='wide')
 
-st.title("Documentation")
+# st.title("Documentation")
 st.markdown("""
 # **Weather-Energy Relationship Analysis and Forecasting**
 
