@@ -688,7 +688,7 @@ st.markdown(
     </style>
     """,
     unsafe_allow_html=True
-)
+) 
 # section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
 t1, t2, t3 = st.tabs(["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
 with t1:
