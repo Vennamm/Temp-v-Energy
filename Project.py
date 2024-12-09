@@ -670,6 +670,25 @@ There is a lot of process behind this. But let me make it straightforward:
 
 st.set_page_config(page_title="Weathergy", page_icon='https://media.istockphoto.com/id/1337173750/photo/solar-and-wind-power.jpg?s=612x612&w=0&k=20&c=krNUQVFMq4DDPDvhKhW4SwL06NlmZ7dcHWWGDsxZzKI=', layout="wide")
 
+st.markdown(
+    """
+    <style>
+    div.stTabs {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    div.stTabs button {
+        flex-grow: 1;
+        margin: 0;
+    }
+    div.stTabs button div {
+        justify-content: center;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 # section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
 t1, t2, t3 = st.tabs(["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
 with t1:
