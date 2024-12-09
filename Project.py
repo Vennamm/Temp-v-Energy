@@ -676,7 +676,7 @@ st.markdown(
     /* Scope the styling specifically to the tabs container */
     div.stTabs {
         display: flex;
-        justify-content: space-evenly; /* Center-align tabs while spacing them evenly */
+        justify-content: space-between; /* Center-align tabs while spacing them evenly */
         width: 100%; /* Let it adapt naturally to its content */
     }
     div.stTabs button {
