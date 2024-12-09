@@ -673,24 +673,28 @@ st.set_page_config(page_title="Weathergy", page_icon='https://media.istockphoto.
 st.markdown(
     """
     <style>
-    /* Scope the styling specifically to the tabs container */
+    /* Apply specific styling only to the tabs container */
     div.stTabs {
         display: flex;
-        justify-content: space-between; /* Center-align tabs while spacing them evenly */
-        width: 100%; /* Let it adapt naturally to its content */
+        justify-content: space-between; /* Space tabs evenly across the full width */
+        width: 100%; /* Ensure the tabs container spans the full width of the screen */
     }
     div.stTabs button {
-        flex-grow: 1; /* Prevent tabs from growing disproportionately */
-        margin: 0 5px; /* Add small margins between buttons for visual clarity */
+        flex-grow: 1; /* Make all tabs equally wide */
+        margin: 0 5px; /* Add spacing between tabs */
     }
     div.stTabs button div {
-        justify-content: center; /* Ensure content inside tabs stays centered */
+        justify-content: center; /* Center-align the content inside each tab */
+    }
+    
+    /* Prevent any shrinking of the content within tabs */
+    div.stTabsContent {
+        width: 100% !important; /* Force content area to occupy full width */
     }
     </style>
     """,
     unsafe_allow_html=True
 )
-
 # section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
 t1, t2, t3, t4 = st.tabs(["Documentation", "Temperature Forecasting", "Weather-Energy Relationship", "Future Goals"])
 with t1:
