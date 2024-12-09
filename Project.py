@@ -677,7 +677,7 @@ st.markdown(
     div.stTabs {
         display: flex;
         justify-content: space-evenly; /* Center-align tabs while spacing them evenly */
-        width: auto; /* Let it adapt naturally to its content */
+        width: 100%; /* Let it adapt naturally to its content */
     }
     div.stTabs button {
         flex-grow: 1; /* Prevent tabs from growing disproportionately */
