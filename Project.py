@@ -66,7 +66,7 @@ def create_frame(state):
     weathergy = pd.concat([weatherly[['tavg','cdd','hdd','tmax','tmin']], energy], axis=1)
     return weathergy
 
-=@st.cache
+@st.cache
 def read_data(state):
     weather = pd.read_csv(f'collated_data/{state}.csv')
     weather['Date'] = pd.to_datetime(weather['Date'].astype(str), format='%Y%m')
