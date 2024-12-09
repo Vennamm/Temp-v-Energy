@@ -563,17 +563,18 @@ def aggregate_and_rank(df, df_m, state, target_column):
     st.markdown(f"""
     <div style="
         background-color: {season_color}; 
-        padding: 15px; 
+        padding: 20px; 
         border-radius: 10px; 
         border: 1px solid #ddd; 
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
         margin-bottom: 20px;
         text-align: center; 
-        display: inline-block;
-        max-width: 90%; 
-        word-wrap: break-word;
+        display: block;
+        width: 100%; 
+        height: auto;
+        box-sizing: border-box;
     ">
-        <p style="font-size: 16px; line-height: 1.6; color: #333; font-family: Arial, sans-serif; font-weight: bold;">
+        <p style="font-size: 16px; line-height: 1.6; color: #333; font-family: Arial, sans-serif; font-weight: bold; margin: 0; padding: 0;">
             {TEXT} {TEXT_m}
         </p>
     </div>
