@@ -472,137 +472,137 @@ def aggregate_and_rank(df, state, target_column):
     st.plotly_chart(fig2, use_container_width=True)
     
 
-# def temperature_forecasting():
-#     st.title('Temperature Forecasting')
+def temperature_forecasting():
+    st.title('Temperature Forecasting')
 
-#     state_list = [f.replace('.csv', '') for f in os.listdir('collated_data')]
-#     state = st.selectbox("Select a state:", state_list)
-#     weather_data, state_name = read_data(state)
+    state_list = [f.replace('.csv', '') for f in os.listdir('collated_data')]
+    state = st.selectbox("Select a state:", state_list)
+    weather_data, state_name = read_data(state)
     
-#     st.write(f"Displaying data for {state_name}:")
+    st.write(f"Displaying data for {state_name}:")
     
 
-#     col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-#     with col1:
-#         year = st.number_input('Select Year', min_value=2019, max_value=2024, value=2019, step=1)
+    with col1:
+        year = st.number_input('Select Year', min_value=2019, max_value=2024, value=2019, step=1)
 
-#     with col2:
-#         month = st.number_input('Select Month', min_value=1, max_value=12, value=6, step=1)
-#     forecast_date = pd.to_datetime(f'{year}-{month:02d}-01') + pd.offsets.MonthEnd(0)
+    with col2:
+        month = st.number_input('Select Month', min_value=1, max_value=12, value=6, step=1)
+    forecast_date = pd.to_datetime(f'{year}-{month:02d}-01') + pd.offsets.MonthEnd(0)
     
-#     test_size = 48
-#     train_data, test_data, cleaned_data, seasonal_result = seasonal_dc(weather_data, 'tavg', state_name, test_size=test_size)
+    test_size = 48
+    train_data, test_data, cleaned_data, seasonal_result = seasonal_dc(weather_data, 'tavg', state_name, test_size=test_size)
 
-#     sarimax_fitted, forecast_series, mae, rmse = forecast_weather(train_data, test_data, 'tavg', steps=len(test_data))
+    sarimax_fitted, forecast_series, mae, rmse = forecast_weather(train_data, test_data, 'tavg', steps=len(test_data))
 
-#     st.markdown(f"""
-# <div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
-#     <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
-#     <div style="font-size: 18px; color: #003366; text-align: center;">
-#         <p><strong>Mean Absolute Error (MAE):</strong> <span style="color: #FF6347;">{mae:.2f} °F</span></p>
-#         <p><strong>Root Mean Squared Error (RMSE):</strong> <span style="color: #32CD32;">{rmse:.2f} °F</span></p>
-#     </div>
-# </div>
-# """, unsafe_allow_html=True)
+    st.markdown(f"""
+<div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
+    <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
+    <div style="font-size: 18px; color: #003366; text-align: center;">
+        <p><strong>Mean Absolute Error (MAE):</strong> <span style="color: #FF6347;">{mae:.2f} °F</span></p>
+        <p><strong>Root Mean Squared Error (RMSE):</strong> <span style="color: #32CD32;">{rmse:.2f} °F</span></p>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-#     # Row 1: Predicted and Actual Temperatures
-#     st.subheader('Predicted and Actual Temperatures')
-#     train_end_date = train_data.index[-1]
-#     steps_ = (forecast_date.year - train_end_date.year) * 12 + (forecast_date.month - train_end_date.month)
-#     # st.write(steps_)
-#     output_series = sarimax_fitted.forecast(steps= steps_)
+    # Row 1: Predicted and Actual Temperatures
+    st.subheader('Predicted and Actual Temperatures')
+    train_end_date = train_data.index[-1]
+    steps_ = (forecast_date.year - train_end_date.year) * 12 + (forecast_date.month - train_end_date.month)
+    # st.write(steps_)
+    output_series = sarimax_fitted.forecast(steps= steps_)
 
-#     if steps_ <=48:
-#         fc = output_series[output_series.index == forecast_date].values[0]
-#         ac = weather_data['tavg'][weather_data.index == forecast_date].values[0]
-#         st.markdown(f"""
-#     <div style="background-color: #D1E8FF; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between;">
-#         <div style="font-size: 18px; font-weight: bold;">
-#             <strong>Forecasted Temperature:</strong> {fc:.2f} °F
-#         </div>
-#         <div style="font-size: 18px; font-weight: bold;">
-#             <strong>Actual Temperature:</strong> {ac:.2f} °F
-#         </div>
-#     </div>
-#     """, unsafe_allow_html=True)
-#     else:
-#         fc = output_series[output_series.index == forecast_date].values[0]
-#         st.markdown(f"""
-#     <div style="background-color: #D1E8FF; padding: 10px; border-radius: 10px; display: flex; justify-content: center;">
-#         <div style="font-size: 18px; font-weight: bold;">
-#             <strong>Forecasted Temperature:</strong> {fc:.2f} °F
-#         </div>
-#     </div>
-#     """, unsafe_allow_html=True)
+    if steps_ <=48:
+        fc = output_series[output_series.index == forecast_date].values[0]
+        ac = weather_data['tavg'][weather_data.index == forecast_date].values[0]
+        st.markdown(f"""
+    <div style="background-color: #D1E8FF; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between;">
+        <div style="font-size: 18px; font-weight: bold;">
+            <strong>Forecasted Temperature:</strong> {fc:.2f} °F
+        </div>
+        <div style="font-size: 18px; font-weight: bold;">
+            <strong>Actual Temperature:</strong> {ac:.2f} °F
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    else:
+        fc = output_series[output_series.index == forecast_date].values[0]
+        st.markdown(f"""
+    <div style="background-color: #D1E8FF; padding: 10px; border-radius: 10px; display: flex; justify-content: center;">
+        <div style="font-size: 18px; font-weight: bold;">
+            <strong>Forecasted Temperature:</strong> {fc:.2f} °F
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     
-#     # Row 2: Actual Data Trend + Forecast
-#     st.subheader('Actual Data Trend + Forecast')
-#     fig = go.Figure()
-#     fig.add_trace(go.Scatter(x=train_data.index, y=train_data, mode='lines', name='Train Data'))
-#     fig.add_trace(go.Scatter(x=test_data.index, y=test_data, mode='lines', name='Test Data', line=dict(color='orange')))
-#     fig.add_trace(go.Scatter(x=output_series.index, y=output_series, mode='lines', name='Forecast', line=dict(color='green')))
-#     st.plotly_chart(fig, use_container_width=True)
+    # Row 2: Actual Data Trend + Forecast
+    st.subheader('Actual Data Trend + Forecast')
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=train_data.index, y=train_data, mode='lines', name='Train Data'))
+    fig.add_trace(go.Scatter(x=test_data.index, y=test_data, mode='lines', name='Test Data', line=dict(color='orange')))
+    fig.add_trace(go.Scatter(x=output_series.index, y=output_series, mode='lines', name='Forecast', line=dict(color='green')))
+    st.plotly_chart(fig, use_container_width=True)
 
-#     with st.expander('Advanced Options'):
+    with st.expander('Advanced Options'):
 
-#         st.subheader("Granger Causality:")
+        st.subheader("Granger Causality:")
 
-#         st.markdown("""Granger Causality checks where one variable causes the other variable in a timeseries. But the issue is that true causality is a hard thing to prove even with such a test.
-#         But it gives us insight on how each state behaves. The following graph shows if last month's column $\\rho=1$ causes effects in current month's another column.""")
-#         col1, col2 = st.columns(2)
-#         with col1:
-#             var1 = st.selectbox("Will", options=weather_data.columns)
-#         with col2:
-#             var2 = st.selectbox("Cause", options=weather_data.columns)
+        st.markdown("""Granger Causality checks where one variable causes the other variable in a timeseries. But the issue is that true causality is a hard thing to prove even with such a test.
+        But it gives us insight on how each state behaves. The following graph shows if last month's column $\\rho=1$ causes effects in current month's another column.""")
+        col1, col2 = st.columns(2)
+        with col1:
+            var1 = st.selectbox("Will", options=weather_data.columns)
+        with col2:
+            var2 = st.selectbox("Cause", options=weather_data.columns)
             
-#         if (var1!=var2):
-#             plot_granger_causality(weather_data, var1, var2)
+        if (var1!=var2):
+            plot_granger_causality(weather_data, var1, var2)
         
         
-#         # Row 3: Seasonal Decomposition
-#         st.subheader('Seasonal Decomposition')
+        # Row 3: Seasonal Decomposition
+        st.subheader('Seasonal Decomposition')
 
-#         st.markdown("""For temperature forecasting, since there is already a very consistent seasonality and very little noise within the temperature data, it becomes less worth it to use the impact of another variable. 
-#         Feel free to look at the seasonal decomposition.""")
+        st.markdown("""For temperature forecasting, since there is already a very consistent seasonality and very little noise within the temperature data, it becomes less worth it to use the impact of another variable. 
+        Feel free to look at the seasonal decomposition.""")
         
-#         fig_x = go.Figure()
-#         fig_x.add_trace(go.Scatter(x=seasonal_result.trend.index, y=seasonal_result.trend, mode='lines', name='Trend', line=dict(color='blue')))
-#         fig_x.add_trace(go.Scatter(x=seasonal_result.seasonal.index, y=seasonal_result.seasonal, mode='lines', name='Seasonal', line=dict(color='orange')))
-#         fig_x.add_trace(go.Scatter(x=seasonal_result.resid.index, y=seasonal_result.resid, mode='lines', name='Residual', line=dict(color='green')))
+        fig_x = go.Figure()
+        fig_x.add_trace(go.Scatter(x=seasonal_result.trend.index, y=seasonal_result.trend, mode='lines', name='Trend', line=dict(color='blue')))
+        fig_x.add_trace(go.Scatter(x=seasonal_result.seasonal.index, y=seasonal_result.seasonal, mode='lines', name='Seasonal', line=dict(color='orange')))
+        fig_x.add_trace(go.Scatter(x=seasonal_result.resid.index, y=seasonal_result.resid, mode='lines', name='Residual', line=dict(color='green')))
 
-#         fig_x.update_layout(
-#             title='Trend, Seasonal, and Residual Components',
-#             xaxis_title='Date',
-#             yaxis_title='Value',
-#             legend_title='Components',
-#             template='plotly_dark'  # Optional: Adjust the theme
-#         )
-#         # fig.write_image("trend_seasonal_residual.png")
+        fig_x.update_layout(
+            title='Trend, Seasonal, and Residual Components',
+            xaxis_title='Date',
+            yaxis_title='Value',
+            legend_title='Components',
+            template='plotly_dark'  # Optional: Adjust the theme
+        )
+        # fig.write_image("trend_seasonal_residual.png")
         
-#         st.plotly_chart(fig_x, use_container_width=True)
+        st.plotly_chart(fig_x, use_container_width=True)
         
-#         # Row 4: ACF and PACF
-#         st.subheader('ACF and PACF')
+        # Row 4: ACF and PACF
+        st.subheader('ACF and PACF')
 
-#         st.markdown("""Earlier, we check if a previous foreign variable had any impact on the current predictor variable. Now, we are looking if previous values of our predictor variable have any impact on our current values. 
-#         We need to look at the Auto-Correlation and Partial Auto-Correlation Functions to understand the seasonality of the temperature data so that we can train our model on it. 
-#         The graph shows that the functions repeat themselves after every 12 months approximately. That is to say that last year's temperature have an impact on current year's average temperature.""")
+        st.markdown("""Earlier, we check if a previous foreign variable had any impact on the current predictor variable. Now, we are looking if previous values of our predictor variable have any impact on our current values. 
+        We need to look at the Auto-Correlation and Partial Auto-Correlation Functions to understand the seasonality of the temperature data so that we can train our model on it. 
+        The graph shows that the functions repeat themselves after every 12 months approximately. That is to say that last year's temperature have an impact on current year's average temperature.""")
         
-#         fig_y, ax = plt.subplots(2, 1, figsize=(12, 6))
-#         plot_acf(train_data, lags=48, ax=ax[0])
-#         plot_pacf(train_data, lags=48, ax=ax[1])
-#         st.pyplot(fig_y)
+        fig_y, ax = plt.subplots(2, 1, figsize=(12, 6))
+        plot_acf(train_data, lags=48, ax=ax[0])
+        plot_pacf(train_data, lags=48, ax=ax[1])
+        st.pyplot(fig_y)
 
-#         st.markdown("""We worked with a SARIMAX model with the common values as $p=1, d=0, q=1, P=1, D=0, Q=0,\\text{ and seasonality}=12$. In a complex scenario, the PACF and ACF graphs help us determine more than just the seasonality 
-#         and help us even reassess the remaining parameters of the SARIMAX model.""")
+        st.markdown("""We worked with a SARIMAX model with the common values as $p=1, d=0, q=1, P=1, D=0, Q=0,\\text{ and seasonality}=12$. In a complex scenario, the PACF and ACF graphs help us determine more than just the seasonality 
+        and help us even reassess the remaining parameters of the SARIMAX model.""")
 
-#         st.subheader("LSTM Impact")
-#         st.markdown("""LSTM was trained to predict CDD and HDD based on lags 1, 3, 6 based on causality inferences from the Granger Causality tests. But the model performed just as decently as not having the causality dependencies. 
-#         The references to this can be found both on CDD-HDD Forecasting and Temp Forecasting notebooks on my [GitHub](https://github.com/Vennamm/Temp-v-Energy/tree/main).""")
+        st.subheader("LSTM Impact")
+        st.markdown("""LSTM was trained to predict CDD and HDD based on lags 1, 3, 6 based on causality inferences from the Granger Causality tests. But the model performed just as decently as not having the causality dependencies. 
+        The references to this can be found both on CDD-HDD Forecasting and Temp Forecasting notebooks on my [GitHub](https://github.com/Vennamm/Temp-v-Energy/tree/main).""")
     
-#     st.subheader('Most Recent Year in the Dataset')
-#     st.dataframe(weather_data.tail(12), use_container_width=True)
+    st.subheader('Most Recent Year in the Dataset')
+    st.dataframe(weather_data.tail(12), use_container_width=True)
 
 def weather_energy_cluster():
     st.title("Weather Energy Clustering")
@@ -670,74 +670,72 @@ There is a lot of process behind this. But let me make it straightforward:
 
 st.set_page_config(page_title="Weathergy", page_icon='https://media.istockphoto.com/id/1337173750/photo/solar-and-wind-power.jpg?s=612x612&w=0&k=20&c=krNUQVFMq4DDPDvhKhW4SwL06NlmZ7dcHWWGDsxZzKI=', layout="wide")
 
-# section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
-
-# if pages == 'Temperature Forecasting':
+section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
     
-# if section == "Documentation":
-#     st.title("Documentation")
-#     st.markdown("""
-# # **Weather-Energy Relationship Analysis and Forecasting**
+if section == "Documentation":
+    st.title("Documentation")
+    st.markdown("""
+# **Weather-Energy Relationship Analysis and Forecasting**
 
-# This project explores the relationships between weather patterns (Average Temperature, Cooling Degree Days (CDD), Heating Degree Days (HDD)) and energy consumption across different sectors (Residential, Commercial, Industrial, Transportation, and Total Consumption). It uses various data science techniques, such as Principal Component Analysis (PCA), Random Forests, and XGBoost, to create insights into regional energy consumption patterns based on weather factors. The analysis is visualized using interactive maps, graphs, and charts on a Streamlit-based app.
+This project explores the relationships between weather patterns (Average Temperature, Cooling Degree Days (CDD), Heating Degree Days (HDD)) and energy consumption across different sectors (Residential, Commercial, Industrial, Transportation, and Total Consumption). It uses various data science techniques, such as Principal Component Analysis (PCA), Random Forests, and XGBoost, to create insights into regional energy consumption patterns based on weather factors. The analysis is visualized using interactive maps, graphs, and charts on a Streamlit-based app.
 
-# ### **Sources**
-# - [**Weather Data**](https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series/): This is official weather data from NCEI. **Granularity:** Monthly, State. 
-# - [**Energy Data**](https://www.eia.gov/state/seds/seds-data-complete.php?sid=MI#Keystatisticsrankings): This is the energy consumption data sourced from U.S. Energy Information Administration. **Granularity:** Yearly, State.
-# - [GeoJSON for Mapping](https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/us-states.json): MappingAPI's GitHub Repository.
-# - There are a few other sources that have not been used but have potential to explore: [Monthly Energy Consumption - Nationwide](https://www.eia.gov/totalenergy/data/browser/index.php?tbl=T01.01#/?f=M&start=199701&end=202407&charted=6-7-14-1-2-3-4-8-11-12-13), [Wildfire Data](https://www.nifc.gov/fire-information/statistics/wildfires)
-# ## **Project Overview**
+### **Sources**
+- [**Weather Data**](https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series/): This is official weather data from NCEI. **Granularity:** Monthly, State. 
+- [**Energy Data**](https://www.eia.gov/state/seds/seds-data-complete.php?sid=MI#Keystatisticsrankings): This is the energy consumption data sourced from U.S. Energy Information Administration. **Granularity:** Yearly, State.
+- [GeoJSON for Mapping](https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/us-states.json): MappingAPI's GitHub Repository.
+- There are a few other sources that have not been used but have potential to explore: [Monthly Energy Consumption - Nationwide](https://www.eia.gov/totalenergy/data/browser/index.php?tbl=T01.01#/?f=M&start=199701&end=202407&charted=6-7-14-1-2-3-4-8-11-12-13), [Wildfire Data](https://www.nifc.gov/fire-information/statistics/wildfires)
+## **Project Overview**
 
-# The project is divided into three main sections:
+The project is divided into three main sections:
 
-# ### **Section 1: Temperature Forecasting**
-# - **Objective**: Forecast average temperatures using time-series analysis to help predict energy consumption based on temperature trends.
-# - **Model**: SARIMAX (Seasonal Autoregressive Integrated Moving Average with Exogenous Regressors).
-# - **Process**: 
-#     - **Data Preparation**: Loading temperature data for different states.
-#     - **Granger Causality**: Checking dependencies between temperature and other weather factors.
-#     - **Seasonal Decomposition**: Breaking down the temperature data into trend, seasonal, and residual components.
-#     - **Forecasting**: Using SARIMAX to predict future temperatures.
-#     - **Visualization**: Graphs displaying predicted and actual temperatures, model performance metrics, and seasonal components.
+### **Section 1: Temperature Forecasting**
+- **Objective**: Forecast average temperatures using time-series analysis to help predict energy consumption based on temperature trends.
+- **Model**: SARIMAX (Seasonal Autoregressive Integrated Moving Average with Exogenous Regressors).
+- **Process**: 
+    - **Data Preparation**: Loading temperature data for different states.
+    - **Granger Causality**: Checking dependencies between temperature and other weather factors.
+    - **Seasonal Decomposition**: Breaking down the temperature data into trend, seasonal, and residual components.
+    - **Forecasting**: Using SARIMAX to predict future temperatures.
+    - **Visualization**: Graphs displaying predicted and actual temperatures, model performance metrics, and seasonal components.
 
-# - **Streamlit Features**:
-#     - Temperature forecasting for selected states, years, and months.
-#     - Performance metrics and visualizations.
+- **Streamlit Features**:
+    - Temperature forecasting for selected states, years, and months.
+    - Performance metrics and visualizations.
 
-# ### **Section 2: Weather-Energy Relationships**
-# - **Objective**: Investigate how temperature (CDD, HDD, and Average Temperature) influences energy consumption in various sectors across different states.
-# - **Techniques**:
-#     - **Principal Component Analysis (PCA)**: Used to reduce the dimensionality of the data and identify key components driving energy consumption.
-#     - **Clustering**: k-Nearest Neighbors (kNN) clustering algorithm used to assign states to different groups based on their behavior in energy consumption related to weather patterns.
-#     - **Feature Importance**: Random Forest and XGBoost regression models are trained to determine which weather-related features (e.g., CDD, HDD) are the most important predictors for energy consumption in each sector.
+### **Section 2: Weather-Energy Relationships**
+- **Objective**: Investigate how temperature (CDD, HDD, and Average Temperature) influences energy consumption in various sectors across different states.
+- **Techniques**:
+    - **Principal Component Analysis (PCA)**: Used to reduce the dimensionality of the data and identify key components driving energy consumption.
+    - **Clustering**: k-Nearest Neighbors (kNN) clustering algorithm used to assign states to different groups based on their behavior in energy consumption related to weather patterns.
+    - **Feature Importance**: Random Forest and XGBoost regression models are trained to determine which weather-related features (e.g., CDD, HDD) are the most important predictors for energy consumption in each sector.
 
-# - **Process**:
-#     1. **Data Aggregation**: Collating weather data (CDD, HDD) and energy consumption data (Residential, Commercial, Industrial, etc.) for each state.
-#     2. **PCA and Clustering**: Reducing dimensionality and grouping states based on similar energy behaviors.
-#     3. **Visualization**: 
-#         - Cluster-based PCA visualizations are shown on an interactive map.
-#         - Two side-by-side bar graphs display energy consumption across seasons.
-#         - Feature importance analysis identifies the key weather factors influencing energy consumption.
-#     4. **Correlation Analysis**: Checking the relationship between weather variables (Temperature, CDD, HDD) and energy consumption sectors for each state.
-#     5. **Modeling**: Using regression models to predict energy consumption and determine feature importance.
+- **Process**:
+    1. **Data Aggregation**: Collating weather data (CDD, HDD) and energy consumption data (Residential, Commercial, Industrial, etc.) for each state.
+    2. **PCA and Clustering**: Reducing dimensionality and grouping states based on similar energy behaviors.
+    3. **Visualization**: 
+        - Cluster-based PCA visualizations are shown on an interactive map.
+        - Two side-by-side bar graphs display energy consumption across seasons.
+        - Feature importance analysis identifies the key weather factors influencing energy consumption.
+    4. **Correlation Analysis**: Checking the relationship between weather variables (Temperature, CDD, HDD) and energy consumption sectors for each state.
+    5. **Modeling**: Using regression models to predict energy consumption and determine feature importance.
 
-# - **Streamlit Features**:
-#     - Interactive selection of states and energy sectors.
-#     - Visualize cluster maps based on PCA.
-#     - Seasonal energy consumption comparison through bar graphs.
-#     - Relationship visualizations between weather variables and energy consumption.
+- **Streamlit Features**:
+    - Interactive selection of states and energy sectors.
+    - Visualize cluster maps based on PCA.
+    - Seasonal energy consumption comparison through bar graphs.
+    - Relationship visualizations between weather variables and energy consumption.
 
-# ### **Section 3: Advanced Features**
-# - **Objective**: Provide more granular insights into how specific weather patterns (seasonal or monthly) influence energy consumption.
-# - **Process**:
-#     1. **Energy Consumption Forecasting**: Using machine learning models to predict future energy consumption based on weather data.
-#     2. **Advanced Visualizations**: Creating detailed plots to explore how different weather factors impact energy consumption on a more granular level (e.g., by month, by state).
-#     3. **Customization**: Allowing the user to tweak the number of clusters or groups when examining seasonal or monthly energy consumption patterns.
-# """)
+### **Section 3: Advanced Features**
+- **Objective**: Provide more granular insights into how specific weather patterns (seasonal or monthly) influence energy consumption.
+- **Process**:
+    1. **Energy Consumption Forecasting**: Using machine learning models to predict future energy consumption based on weather data.
+    2. **Advanced Visualizations**: Creating detailed plots to explore how different weather factors impact energy consumption on a more granular level (e.g., by month, by state).
+    3. **Customization**: Allowing the user to tweak the number of clusters or groups when examining seasonal or monthly energy consumption patterns.
+""")
 
 
-# elif section == "Temperature Forecasting":
-#     temperature_forecasting()
+elif section == "Temperature Forecasting":
+    temperature_forecasting()
 
-# elif section == "Weather-Energy Relationship":
-#     weather_energy_cluster()
+elif section == "Weather-Energy Relationship":
+    weather_energy_cluster()
