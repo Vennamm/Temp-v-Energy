@@ -412,6 +412,18 @@ def aggregate_and_rank(df, df_m, state, target_column):
         "Fall": ["cdd_Fall", "hdd_Fall"]
     }
 
+    energy_rates = pd.read_csv(f'power_consumption/{state}.csv')
+    
+    fig4 = px.line(
+        energy_rates,
+        x="Year",
+        y=target_column,
+        title=f"{selected_column}'s Energy Consumption over years",
+        labels={"Year": "Year", selected_column: "Energy Consumption"},
+    )
+    
+    
+
     season_totals = {season: df[df["Feature"].isin(features)]["Importance"].sum() for season, features in season_map.items()}
     season_df = pd.DataFrame(list(season_totals.items()), columns=["Season", "Contribution"]).sort_values(by="Contribution", ascending=False)
 
@@ -540,9 +552,10 @@ def aggregate_and_rank(df, df_m, state, target_column):
     col1, col2 = st.columns(2)
     with col1:
         st.plotly_chart(fig1, use_container_width=True)
-    with col2:
         st.plotly_chart(fig2, use_container_width=True)
-    st.plotly_chart(fig3, use_container_width=True)
+    with col2:
+        st.plotly_chart(fig4, use_container_width=True)
+        st.plotly_chart(fig3, use_container_width=True)
     
 
 def temperature_forecasting():
