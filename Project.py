@@ -674,11 +674,11 @@ st.markdown(
     """
     <style>
     /* Apply specific styling only to the tabs container */
-    div.stTabs {
-        display: flex;
-        justify-content: space-between; /* Space tabs evenly across the full width */
-        width: 100%; /* Ensure the tabs container spans the full width of the screen */
-    }
+    # div.stTabs {
+    #     display: flex;
+    #     justify-content: space-between; /* Space tabs evenly across the full width */
+    #     width: 100%; /* Ensure the tabs container spans the full width of the screen */
+    # }
     div.stTabs button {
         flex-grow: 1; /* Make all tabs equally wide */
         margin: 0 5px; /* Add spacing between tabs */
@@ -687,11 +687,11 @@ st.markdown(
         justify-content: center; /* Center-align the content inside each tab */
     }
     
-    /* Prevent any shrinking of the content within tabs */
-    div.stTabsContent {
-        flex-grow: 1;
-        width: 100% !important; /* Force content area to occupy full width */
-    }
+    # /* Prevent any shrinking of the content within tabs */
+    # div.stTabsContent {
+    #     flex-grow: 1;
+    #     width: 100% !important; /* Force content area to occupy full width */
+    # }
     </style>
     """,
     unsafe_allow_html=True
