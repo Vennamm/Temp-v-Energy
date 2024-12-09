@@ -1,4 +1,4 @@
-st.set_page_config(page_title="Documentation", layout='wide')
+# st.set_page_config(page_title="Documentation", layout='wide')
 
 st.title("Documentation")
 st.markdown("""
