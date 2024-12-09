@@ -685,15 +685,12 @@ st.markdown(
     div.stTabs button div {
         justify-content: center;
     }
-    div.stTabsContent {
-        min-height: 400px; /* Adjust to set a consistent height */
-    }
     </style>
     """,
     unsafe_allow_html=True
 )
 # section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
-t1, t2, t3, t4 = st.tabs(["Documentation", "Temperature Forecasting", "Weather-Energy Relationship", "Future Goals"])
+t1, t2, t3 = st.tabs(["Documentation", "Temperature Forecasting", "Weather-Energy Relationship", "Future Goals"])
 with t1:
 # if section == "Documentation":
     st.title("Documentation")
@@ -762,5 +759,5 @@ with t2:
 with t3:
 # elif section == "Weather-Energy Relationship":
     weather_energy_cluster()
-with t4:
-    st.markdown('Future Goals')
+# with t4:
+#     st.markdown('Future Goals')
