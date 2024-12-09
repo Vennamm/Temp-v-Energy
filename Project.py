@@ -451,28 +451,17 @@ def aggregate_and_rank(df, df_m, state, target_column):
         TEXT = f"For {state}, {top_contributor['Season']} is the only major contributor to the {target_column.lower()}."
 
     fig1 = px.pie(season_df, names='Season', values='Contribution', title="Seasonal Energy Consumption Contributions")
-    fig3 = px.pie(month_df, names='Month', values='Contribution', title = "Monthly Energy Consumption Contributions")
-
+    
     df["Category"] = df["Feature"].apply(lambda x: "Hot " + x.split("_")[1] if "cdd" in x else "Cold " + x.split("_")[1])
-    df_m["Category"] = df_m["Feature"].apply(lambda x: "Hot " + x.split("_")[1] if "cdd" in x else "Cold " + x.split("_")[1])
+    
     
     min_importance_blue = df[df['Category'].str.startswith('Cold')]['Importance'].min()
     max_importance_blue = df[df['Category'].str.startswith('Cold')]['Importance'].max()
     min_importance_red = df[df['Category'].str.startswith('Hot')]['Importance'].min()
     max_importance_red = df[df['Category'].str.startswith('Hot')]['Importance'].max()
-
-    min_importance_blue_m = df_m[df_m['Category'].str.startswith('Cold')]['Importance'].min()
-    max_importance_blue_m = df_m[df_m['Category'].str.startswith('Cold')]['Importance'].max()
-    min_importance_red_m = df_m[df_m['Category'].str.startswith('Hot')]['Importance'].min()
-    max_importance_red_m = df_m[df_m['Category'].str.startswith('Hot')]['Importance'].max()
     min_color_value = 100
-
     
-    df_m["Color"] = df_m.apply(
-        lambda row: f"rgb({min(255, int((row['Importance'] -  min_importance_red_m)/ (max_importance_red_m - min_importance_red_m) * (255 - min_color_value) + min_color_value))}, 0, 0)"
-        if "Hot" in row["Category"]
-        else f"rgb(0, 0, {min(255, int((row['Importance'] - min_importance_blue_m) / (max_importance_blue_m - min_importance_blue_m) * (255 - min_color_value) + min_color_value))})", axis=1
-    )
+
     df["Color"] = df.apply(
         lambda row: f"rgb({min(255, int((row['Importance'] - min_importance_red) / (max_importance_red - min_importance_red) * (255 - min_color_value) + min_color_value))}, 0, 0)"
         if "Hot" in row["Category"]
@@ -480,10 +469,50 @@ def aggregate_and_rank(df, df_m, state, target_column):
     )
     
     df_sorted = df.sort_values(by="Importance", ascending=False)
-    df_sorted_m = df_m.sort_values(by="Importance", ascending=False)
+
+    df_m["Month"] = df_m["Feature"].str.split("_").str[1]
+    df_m["Category"] = df_m["Feature"].str.split("_").str[0]
+
+    pivot_df = df_m.pivot_table(
+        index="Month",
+        columns="Category",
+        values="Importance",
+        aggfunc="sum",
+        fill_value=0
+    ).reset_index()
+
+    months_order = [
+        "January", "February", "March", "April", "May", "June", 
+        "July", "August", "September", "October", "November", "December"
+    ]
+    pivot_df["Month"] = pd.Categorical(pivot_df["Month"], categories=months_order, ordered=True)
+    pivot_df = pivot_df.sort_values("Month")
+    fig3 = go.Figure()
+
+    fig3.add_trace(go.Bar(
+        x=pivot_df["Month"],
+        y=pivot_df["cdd"],
+        name="CDD",
+        marker_color="red"
+    ))
+
+    fig3.add_trace(go.Bar(
+        x=pivot_df["Month"],
+        y=pivot_df["hdd"],
+        name="HDD",
+        marker_color="blue"
+    ))
+
+    fig3.update_layout(
+        barmode="stack",
+        title="Stacked Bar Chart of Importance by Month",
+        xaxis_title="Month",
+        yaxis_title="Importance",
+        legend_title="Category"
+    )
     
     fig2 = go.Figure()
-    fig4 = go.Figure()
+    
 
     # Add Hot features (Red gradient)
     fig2.add_trace(go.Bar(
@@ -503,22 +532,6 @@ def aggregate_and_rank(df, df_m, state, target_column):
         showlegend=False
     )
 
-    fig4.add_trace(go.Bar(
-        x=df_sorted_m["Category"],  # Feature names
-        y=df_sorted_m["Importance"],  # Importance values
-        # text=df_sorted_m["Category"],  # Show Category as text
-        hoverinfo="text",  # Show category on hover
-        marker=dict(
-            color=df_sorted_m["Color"],  # Color based on importance and category
-        )
-    ))
-
-    fig4.update_layout(
-        title="Individual Contributions by Month",
-        xaxis_title="Month",
-        yaxis_title="Importance",
-        showlegend=False
-    )
 
     # Show both plots
     # fig1.show()
@@ -527,10 +540,9 @@ def aggregate_and_rank(df, df_m, state, target_column):
     col1, col2 = st.columns(2)
     with col1:
         st.plotly_chart(fig1, use_container_width=True)
-        st.plotly_chart(fig3, use_container_width=True)
     with col2:
         st.plotly_chart(fig2, use_container_width=True)
-        st.plotly_chart(fig4, use_container_width=True)
+    st.plotly_chart(fig3, use_container_width=True)
     
 
 def temperature_forecasting():
