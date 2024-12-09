@@ -670,7 +670,23 @@ There is a lot of process behind this. But let me make it straightforward:
 
 st.set_page_config(page_title="Weathergy", page_icon='https://media.istockphoto.com/id/1337173750/photo/solar-and-wind-power.jpg?s=612x612&w=0&k=20&c=krNUQVFMq4DDPDvhKhW4SwL06NlmZ7dcHWWGDsxZzKI=', layout="wide")
 
-st.title("Weather-Energy Relationship Analysis")
+st.markdown(
+    """
+    <style>
+    .centered-title {
+        font-size: 32px;
+        font-weight: bold;
+        color: #003366; /* Custom color */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+st.markdown('<div class="centered-title">Weather-Energy Relationship Analysis</div>', unsafe_allow_html=True)
+
 st.markdown(
     """
     <style>
