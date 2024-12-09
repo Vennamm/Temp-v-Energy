@@ -597,7 +597,7 @@ def aggregate_and_rank(df, df_m, state, target_column):
         st.plotly_chart(fig4, use_container_width=True)
         st.plotly_chart(fig3, use_container_width=True)
     
-@st.cache
+
 def temperature_forecasting():
     # st.title('Temperature Forecasting')
 
@@ -730,7 +730,7 @@ def temperature_forecasting():
     st.subheader('Most Recent Year in the Dataset')
     st.dataframe(weather_data.tail(12), use_container_width=True)
 
-@st.cache
+
 def weather_energy_cluster():
     # st.title("Weather Energy Clustering")
 
