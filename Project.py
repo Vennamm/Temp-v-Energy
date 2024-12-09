@@ -473,7 +473,7 @@ def aggregate_and_rank(df, state, target_column):
     
 
 def temperature_forecasting():
-    st.title('Temperature Forecasting')
+    # st.title('Temperature Forecasting')
 
     state_list = [f.replace('.csv', '') for f in os.listdir('collated_data')]
     state = st.selectbox("Select a state:", state_list)
@@ -605,7 +605,7 @@ def temperature_forecasting():
     st.dataframe(weather_data.tail(12), use_container_width=True)
 
 def weather_energy_cluster():
-    st.title("Weather Energy Clustering")
+    # st.title("Weather Energy Clustering")
 
     weather_stats = ['tavg', 'cdd', 'hdd']
     consumption_stats = ['Residential sector', 'Commercial sector', 'Industrial sector', 'Transportation sector', 'Total consumption']
@@ -688,7 +688,7 @@ st.markdown(
 t1, t2, t3, t4 = st.tabs(["Documentation", "Temperature Forecasting", "Weather-Energy Relationship", "Future Goals"])
 with t1:
 # if section == "Documentation":
-    st.title("Documentation")
+    # st.title("Documentation")
     st.markdown("""
 # **Weather-Energy Relationship Analysis and Forecasting**
 
