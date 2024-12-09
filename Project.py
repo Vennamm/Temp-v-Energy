@@ -689,6 +689,7 @@ st.markdown(
     
     /* Prevent any shrinking of the content within tabs */
     div.stTabsContent {
+        flex-grow: 1;
         width: 100% !important; /* Force content area to occupy full width */
     }
     </style>
