@@ -463,13 +463,13 @@ def aggregate_and_rank(df, df_m, state, target_column):
 
     min_importance_blue_m = df_m[df_m['Category'].str.startswith('Cold')]['Importance'].min()
     max_importance_blue_m = df_m[df_m['Category'].str.startswith('Cold')]['Importance'].max()
-    min_importance_red_m = df_m[df_m['Category'].str.startswith('Hot')]['Importance'].min())
+    min_importance_red_m = df_m[df_m['Category'].str.startswith('Hot')]['Importance'].min()
     max_importance_red_m = df_m[df_m['Category'].str.startswith('Hot')]['Importance'].max()
     min_color_value = 100
 
     
     df_m["Color"] = df_m.apply(
-        lambda row: f"rgb({min(255, int((row['Importance'] -  min_importance_red_m/ (max_importance_red_m - min_importance_red_m) * (255 - min_color_value) + min_color_value))}, 0, 0)"
+        lambda row: f"rgb({min(255, int((row['Importance'] -  min_importance_red_m)/ (max_importance_red_m - min_importance_red_m) * (255 - min_color_value) + min_color_value))}, 0, 0)"
         if "Hot" in row["Category"]
         else f"rgb(0, 0, {min(255, int((row['Importance'] - min_importance_blue_m) / (max_importance_blue_m - min_importance_blue_m) * (255 - min_color_value) + min_color_value))})", axis=1
     )
