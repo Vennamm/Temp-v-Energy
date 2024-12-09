@@ -670,9 +670,10 @@ There is a lot of process behind this. But let me make it straightforward:
 
 st.set_page_config(page_title="Weathergy", page_icon='https://media.istockphoto.com/id/1337173750/photo/solar-and-wind-power.jpg?s=612x612&w=0&k=20&c=krNUQVFMq4DDPDvhKhW4SwL06NlmZ7dcHWWGDsxZzKI=', layout="wide")
 
-section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
-    
-if section == "Documentation":
+# section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
+t1, t2, t3 = st.tabs(["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
+with t1:
+# if section == "Documentation":
     st.title("Documentation")
     st.markdown("""
 # **Weather-Energy Relationship Analysis and Forecasting**
@@ -733,9 +734,9 @@ The project is divided into three main sections:
     3. **Customization**: Allowing the user to tweak the number of clusters or groups when examining seasonal or monthly energy consumption patterns.
 """)
 
-
-elif section == "Temperature Forecasting":
+with t2:
+# elif section == "Temperature Forecasting":
     temperature_forecasting()
-
-elif section == "Weather-Energy Relationship":
+with t3:
+# elif section == "Weather-Energy Relationship":
     weather_energy_cluster()
