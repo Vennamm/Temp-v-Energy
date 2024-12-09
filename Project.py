@@ -669,6 +669,7 @@ There is a lot of process behind this. But let me make it straightforward:
     
 
 st.set_page_config(page_title="Weathergy", page_icon='https://media.istockphoto.com/id/1337173750/photo/solar-and-wind-power.jpg?s=612x612&w=0&k=20&c=krNUQVFMq4DDPDvhKhW4SwL06NlmZ7dcHWWGDsxZzKI=', layout="wide")
+
 st.markdown(
     """
     <style>
@@ -679,7 +680,7 @@ st.markdown(
         width: auto; /* Let it adapt naturally to its content */
     }
     div.stTabs button {
-        flex-grow: 0; /* Prevent tabs from growing disproportionately */
+        flex-grow: 1; /* Prevent tabs from growing disproportionately */
         margin: 0 5px; /* Add small margins between buttons for visual clarity */
     }
     div.stTabs button div {
