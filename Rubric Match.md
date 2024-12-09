@@ -1,0 +1,118 @@
+# Project Assessment Based on Rubric
+
+## 1. Data Collection and Preparation
+- **Use at least three distinct data sources**:  
+  Three distinct data sources have been used:  
+  1. Weather data (from three different CSV files: TAVG, CDD, HDD).  
+  2. Energy data (from yearly CSV files).  
+  3. GeoJSON file for mapping.
+
+- **Perform advanced data cleaning and preprocessing**:  
+  Data cleaning steps included converting state abbreviations to full names, converting date formats, and capping outlier values to 3 standard deviations. There were no missing values in the dataset.
+
+- **Demonstrate complex data integration techniques**:  
+  Integration of weather data (monthly) with energy data (yearly) was achieved by aggregating weather data into seasonal averages. The weather data was also transformed to align with energy data by creating season-based columns (e.g., Winter, Summer) for each year.
+
+---
+
+## 2. Exploratory Data Analysis and Visualization
+- **Create at least 5 different types of visualizations, including advanced types**:  
+  Several visualizations were created, including:  
+  1. PCA clustering with mapping.  
+  2. Granger Causality analysis.  
+  3. ACF and PACF graphs.  
+  4. Seasonal decomposition.  
+  5. Correlation heatmaps.  
+  6. Pie charts and bar charts showing seasonal contributions.
+
+- **Provide comprehensive statistical analysis of the dataset**:  
+  Statistical analyses included, but not limited to, Granger Causality tests, F-scores, statistical significance analysis, ACF/PACF, and seasonal analysis.
+
+---
+
+## 3. Data Processing and Feature Engineering
+- **Implement multiple feature engineering techniques**:  
+  Feature engineering techniques applied include:  
+  1. Transformation of monthly data to yearly data.  
+  2. Creation of new features based on seasonal data, and regions out of state names.  
+  3. Aggregation of weather data into seasonal averages to align with energy data.
+
+- **Demonstrate advanced data transformation methods**:  
+  Advanced data transformations included creating new columns for each season, aggregating data by season, and performing PCA to reduce dimensionality for clustering.
+
+---
+
+## 4. Model Development and Evaluation
+- **Implement at least two different ML models**:  
+  Three models were implemented:  
+  1. SARIMAX (time-series model) for weather forecast.  
+  2. LSTM (deep learning model) for predicting CDD and HDD based on Average Temperature to determine the impact of exogenous variables.  
+  3. XGBoost (ensemble model) for understanding feature importances in the seasonal analysis to determine which seasons were mostly responsible for the energy consumption.
+
+- **Perform thorough model evaluation and comparison**:  
+  Evaluation metrics include MAE and RMSE for SARIMAX and LSTM models. Parameter tuning for XGBoost was planned using GridSearch.
+
+- **Demonstrate understanding of model selection and validation techniques**:  
+  Model selection was based on suitability for time-series forecasting. Evaluation was performed using MAE and RMSE for model validation. Cross-validation was not applied to SARIMAX due to its state-by-state nature, but this was justified.
+
+---
+
+## 5. Streamlit App Development
+- **Create a comprehensive Streamlit app with at least 5 interactive elements**:  
+  Except for Documentation and Correlation Heatmap, every element is interactive.
+
+- **Include detailed documentation and user guide within the app**:  
+  Includes a tutorial, tooltips, and detailed documentation for user guidance.
+
+- **Implement advanced Streamlit features (e.g., caching, session-state)**:  
+  `st.cache` has been implemented for performance optimization, with `st.session_state` not being required.
+
+- **Deploy the app and ensure it's robust and user-friendly**:  
+  I tried my best to ensure it is.
+
+---
+
+## 6. Above and Beyond
+- **Advanced Modeling Techniques**:  
+  LSTM (deep learning model) and XGBoost (ensemble model) were implemented for advanced modeling techniques.
+
+- **Specialized Data Science Applications**:  
+  Techniques were applied to specialized time-series forecasting and weather-energy domain-specific methods such as Granger Causality, seasonal decomposition, and energy consumption forecasting.
+
+- **High-Performance Computing**:  
+  High-performance computing techniques, such as parallel processing or cloud computing, were not implemented since there is no intent to scale the application for larger data. While I intend to make the app scalable, the older data will be replaced with new data. In case of weather data and energy data, older data loses its significance. 
+
+- **Real World Application and Impact**:  
+  The main intent of the project is to be able to estimate the energy demand for each state for the future. The initial idea involved a pipeline where the information from the forecast will be forwarded to make an estimate of how much yearly and seasonal energy demand one can expect to ensure the systems can handle a hotter summer or a colder winter based on the forecasted energy. The project still does a good estimate by telling the user that a certain season's hot or cold weather has the highest impact on the state's energy consumption. 
+
+- **Exceptional Presentation and Visualization**:  
+  Advanced and interactive visualizations have been created. Publication-quality visualizations can be further enhanced for better aesthetics and interactivity.
+
+---
+
+## 7. To-Do List
+- **PCA Variance**: Add the percentage of variance explained in PCA to provide more insights into the dimensionality reduction process.
+- **Scatter Plot Relationship with Regression Line**: Allow users to explore the relationship between two variables with regression lines and provide insights on interesting years.
+- **Future Goals Section**: Add a section for future improvements and potential developments.
+
+---
+
+## 8. Summary of Rubric Compliance:
+- **Satisfactory**:
+  - Data Collection, Cleaning, and Integration
+  - Exploratory Data Analysis and Visualization
+  - Model Development and Evaluation
+  - Streamlit App Development
+  - Real-world application of forecasting and its impact on energy consumption.
+  
+- **Above and Beyond**:
+  - Advanced techniques in modeling (LSTM, XGBoost)
+  - Specialized domain-specific methodologies (weather-energy forecasting)
+  
+- **Not Fully Covered**:
+  - **High-Performance Computing**: Can be explored in the future if scaling or cloud deployment is needed.
+  - **Enhancements in Visualization**: Could be improved to make visualizations publication-quality.
+
+---
+
+This project meets the majority of the rubric's criteria and includes both standard and advanced techniques. The remaining areas of improvement involve exploring high-performance computing for larger datasets and refining the visualizations for publication quality.
