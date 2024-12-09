@@ -445,17 +445,17 @@ def aggregate_and_rank(df, df_m, state, target_column):
     if second_contributor_m is not None:
         diff_m = top_contributor_m["Contribution"] - second_contributor_m["Contribution"]
         if diff_m <= co_dominance_threshold:
-            TEXT_m = f"And, {top_contributor_m['Month']} and {second_contributor_m['Month']} contribute the most"
+            TEXT_m = f"In a monthly perspective, {top_contributor_m['Month']} and {second_contributor_m['Month']} contribute the most."
         else:
-            TEXT_m = f"And, {top_contributor_m['Month']} contributes the most"
+            TEXT_m = f"In a monthly perspective, {top_contributor_m['Month']} contributes the most."
     else:
-        TEXT_m = f"And, {top_contributor_m['Month']} is the major contributor to the {target_column.lower()}."
+        TEXT_m = f"In a monthly perspective, {top_contributor_m['Month']} is the major contributor to the {target_column.lower()}."
 
     if second_contributor is not None:
         diff = top_contributor["Contribution"] - second_contributor["Contribution"]
 
         if diff <= co_dominance_threshold_s:
-            TEXT = f"For {state}, {top_contributor['Season']} and {second_contributor['Season']} contribute the most"
+            TEXT = f"For {state}, {top_contributor['Season']} and {second_contributor['Season']} contribute the most."
         else:
             TEXT = f"For {state}, {top_contributor['Season']} contributes the most to the {target_column.lower()}."
 
@@ -548,7 +548,14 @@ def aggregate_and_rank(df, df_m, state, target_column):
     # Show both plots
     # fig1.show()
     # fig2.show()
-    st.markdown(TEXT + " " + TEXT_m)
+    st.markdown(f"""
+    <div style="font-size:20px; font-weight:bold; margin-bottom:10px;">
+        {TEXT}
+    </div>
+    <div style="font-size:16px; color:gray;">
+        {TEXT_m}
+    </div>
+    """, unsafe_allow_html=True)
     col1, col2 = st.columns(2)
     with col1:
         st.plotly_chart(fig1, use_container_width=True)
