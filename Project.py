@@ -690,7 +690,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 # section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
-t1, t2, t3 = st.tabs(["Documentation", "Temperature Forecasting", "Weather-Energy Relationship", "Future Goals"])
+t1, t2, t3 = st.tabs(["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
 with t1:
 # if section == "Documentation":
     st.title("Documentation")
