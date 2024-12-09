@@ -549,11 +549,21 @@ def aggregate_and_rank(df, df_m, state, target_column):
     # fig1.show()
     # fig2.show()
     st.markdown(f"""
-    <div style="font-size:20px; font-weight:bold; margin-bottom:10px;">
-        {TEXT}
-    </div>
-    <div style="font-size:16px; color:gray;">
-        {TEXT_m}
+    <div style="
+        background-color: #f9f9f9; 
+        padding: 15px; 
+        border-radius: 10px; 
+        border: 1px solid #ddd; 
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+        margin-bottom: 20px;
+    ">
+        <p style="font-size: 16px; line-height: 1.6; color: #333; font-family: Arial, sans-serif;">
+            {TEXT}
+        </p>
+        <hr style="border: none; border-top: 1px solid #ddd; margin: 15px 0;">
+        <p style="font-size: 16px; line-height: 1.6; color: #555; font-family: Arial, sans-serif;">
+            {TEXT_m}
+        </p>
     </div>
     """, unsafe_allow_html=True)
     col1, col2 = st.columns(2)
