@@ -56,6 +56,7 @@ def get_season_color(TEXT):
         color = "#ff7043"
     return color
 
+@st.cache
 def create_frame(state):
     weather = pd.read_csv(f'collated_data/{state}.csv')
     energy = pd.read_csv(f'power_consumption/{state}.csv')
@@ -65,7 +66,7 @@ def create_frame(state):
     weathergy = pd.concat([weatherly[['tavg','cdd','hdd','tmax','tmin']], energy], axis=1)
     return weathergy
 
-# Function to read and preprocess data
+=@st.cache
 def read_data(state):
     weather = pd.read_csv(f'collated_data/{state}.csv')
     weather['Date'] = pd.to_datetime(weather['Date'].astype(str), format='%Y%m')
@@ -74,7 +75,7 @@ def read_data(state):
     weather = weather.asfreq('ME')
     return weather, state
 
-# Function for seasonal decomposition and outlier removal
+@st.cache
 def seasonal_dc(weather, column, state, test_size=48):
     train_size = len(weather) - test_size
     train = weather[column][:train_size]
@@ -95,7 +96,7 @@ def seasonal_dc(weather, column, state, test_size=48):
     
     return train, test, cleaned, result
 
-# SARIMAX forecasting function
+@st.cache
 def forecast_weather(train, test, col, steps=None, seasonality=12, p=1, d=0, q=1, P=1, D=0, Q=1):
     sarimax_model = SARIMAX(train, 
                             order=(p, d, q),  # AR, I, MA orders
@@ -117,6 +118,7 @@ def forecast_weather(train, test, col, steps=None, seasonality=12, p=1, d=0, q=1
     
     return sarimax_fitted, forecast_series, mae, rmse
 
+@st.cache
 def compute_spearmanr(weather_stats, consumption_stats):
     results = []
     for state in os.listdir('collated_data'):
@@ -131,6 +133,7 @@ def compute_spearmanr(weather_stats, consumption_stats):
         results.append(row)
     return pd.DataFrame(results)
 
+@st.cache
 def add_ellipse(ax, data, color):
     # Covariance matrix and mean calculation
     cov_matrix = np.cov(data.T)
@@ -152,6 +155,7 @@ def add_ellipse(ax, data, color):
                                          angle=angle, color=color, fill=False, linewidth=2)
     ax.add_patch(ell)
 
+@st.cache
 def plot_pca_with_ellipses(corr_df, ellipse=0.95):
     corr_matrix = corr_df.set_index('state').transpose()
     corr_matrix_values = corr_matrix.values
@@ -228,6 +232,7 @@ def plot_pca_with_ellipses(corr_df, ellipse=0.95):
 
     st.plotly_chart(fig, use_container_width=True)
 
+@st.cache
 def visualize_corr(corr_df):
     melt_df = corr_df.melt(id_vars='state', var_name='Pair', value_name='Correlation')
 
@@ -251,6 +256,7 @@ def visualize_corr(corr_df):
     plt.show()
     st.pyplot(plt)
 
+@st.cache
 def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
 
     corr_matrix = corr_df.set_index('state').transpose()  
@@ -312,6 +318,7 @@ def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
     # fig.show()
     st.plotly_chart(fig, use_container_width=True)
 
+@st.cache
 def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -401,6 +408,7 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
     # fig.show()
     st.plotly_chart(fig, use_container_width=True)
 
+@st.cache
 def create_frame2(state, target_column):
     importance_df = pd.read_csv('feature_importance_results.csv')
     importance_df = importance_df[(importance_df['State'] == state) & (importance_df['Target Column'] == target_column)]
@@ -408,6 +416,7 @@ def create_frame2(state, target_column):
     
     return importance_df, state, target_column
 
+@st.cache
 def create_frame3(state, target_column):
     importance_df_m = pd.read_csv('feature_importance_results_monthly.csv')
     importance_df_m = importance_df_m[(importance_df_m['State'] == state) & (importance_df_m['Target Column'] == target_column)]
@@ -415,6 +424,7 @@ def create_frame3(state, target_column):
 
     return importance_df_m, state, target_column
 
+@st.cache
 def aggregate_and_rank(df, df_m, state, target_column):
     season_map = {
         "Winter": ["cdd_Winter", "hdd_Winter"],
@@ -587,7 +597,7 @@ def aggregate_and_rank(df, df_m, state, target_column):
         st.plotly_chart(fig4, use_container_width=True)
         st.plotly_chart(fig3, use_container_width=True)
     
-
+@st.cache
 def temperature_forecasting():
     # st.title('Temperature Forecasting')
 
@@ -720,6 +730,7 @@ def temperature_forecasting():
     st.subheader('Most Recent Year in the Dataset')
     st.dataframe(weather_data.tail(12), use_container_width=True)
 
+@st.cache
 def weather_energy_cluster():
     # st.title("Weather Energy Clustering")
 
