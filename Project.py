@@ -44,6 +44,17 @@ season_mapping = {
     9: 'Fall', 10: 'Fall', 11: 'Fall'
 }
 
+def get_season_color(TEXT):
+    color = "#f9f9f9"
+    if "Spring" in TEXT:
+        color = "#e0f7fa"
+    elif "Summer" in text:
+        color = "#ffeb3b"
+    elif "Winter" in text:
+        color = "#b3e5fc" 
+    elif "Fall" in text:
+        color = "#ff7043"
+    return color
 
 def create_frame(state):
     weather = pd.read_csv(f'collated_data/{state}.csv')
@@ -548,9 +559,10 @@ def aggregate_and_rank(df, df_m, state, target_column):
     # Show both plots
     # fig1.show()
     # fig2.show()
+    season_color = get_season_color(TEXT)
     st.markdown(f"""
     <div style="
-        background-color: #f9f9f9; 
+        background-color: {season_color}; 
         padding: 15px; 
         border-radius: 10px; 
         border: 1px solid #ddd; 
@@ -558,11 +570,7 @@ def aggregate_and_rank(df, df_m, state, target_column):
         margin-bottom: 20px;
     ">
         <p style="font-size: 16px; line-height: 1.6; color: #333; font-family: Arial, sans-serif;">
-            {TEXT}
-        </p>
-        <hr style="border: none; border-top: 1px solid #ddd; margin: 15px 0;">
-        <p style="font-size: 16px; line-height: 1.6; color: #555; font-family: Arial, sans-serif;">
-            {TEXT_m}
+            {TEXT} {TEXT_m}
         </p>
     </div>
     """, unsafe_allow_html=True)
