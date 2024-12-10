@@ -651,7 +651,7 @@ def temperature_forecasting():
                 if st.button("◀"):
                     decrement_month()
             with col2_:
-                st.markdown(f"<div style='text-align: center; border: 2px solid #0099ff; padding: 10px; border-radius: 10px;'><h3 style='font-weight: bold;'>{months[st.session_state.selected_month_index]}</h3></div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='text-align: center; border: 2px solid #0099ff; padding: 0px; border-radius: 10px;'><h3 style='font-weight: bold;'>{months[st.session_state.selected_month_index]}</h3></div>", unsafe_allow_html=True)
                 
             with col3_:
                 if st.button("▶"):
