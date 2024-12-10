@@ -868,7 +868,7 @@ with t1:
     This project explores the relationships between weather patterns (Average Temperature, Cooling Degree Days (CDD), Heating Degree Days (HDD)) and energy consumption across different sectors (Residential, Commercial, Industrial, Transportation, and Total Consumption). It uses various data science techniques, such as Principal Component Analysis (PCA), Random Forests, and XGBoost, to create insights into regional energy consumption patterns based on weather factors. The analysis is visualized using interactive maps, graphs, and charts on a Streamlit-based app.
     """)
     
-    st.markdown("### **Sources**"):
+    st.markdown("### **Sources**")
     st.markdown("""
     - [**Weather Data**](https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series/): This is official weather data from National Centers for Environmental Information. **Granularity:** Monthly, State. 
     - [**Energy Data**](https://www.eia.gov/state/seds/seds-data-complete.php?sid=MI#Keystatisticsrankings): This is the energy consumption data sourced from U.S. Energy Information Administration. **Granularity:** Yearly, State.
@@ -921,7 +921,7 @@ with t1:
             5. **Modeling**: Using regression models to predict energy consumption and determine feature importance.
         """)
     
-    st.markdown("### **For the Data Scientist: Advanced Options**"):
+    st.markdown("### **For the Data Scientist: Advanced Options**")
     st.markdown("""
     - **Description**: This window is hidden under an expander. This window holds the data science process behind what the normal user sees on the widgets. 
     """)
