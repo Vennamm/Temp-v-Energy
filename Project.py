@@ -698,13 +698,13 @@ def temperature_forecasting():
             st.markdown("<div style='text-align: right; font-weight: bold;'>Will</div>", unsafe_allow_html=True)
         
         with col2:
-            var1 = st.selectbox("", options=['tavg', 'cdd', 'hdd'], index=0, label_visibility="collapsed")
+            var1 = st.selectbox(".", options=['tavg', 'cdd', 'hdd'], index=0, label_visibility="collapsed")
         
         with col3:
             st.markdown("<div style='text-align: center; font-weight: bold;'>Cause</div>", unsafe_allow_html=True)
         
         with col4:
-            var2 = st.selectbox("", options=['tavg', 'cdd', 'hdd'], index=1, label_visibility="collapsed")
+            var2 = st.selectbox(".", options=['tavg', 'cdd', 'hdd'], index=1, label_visibility="collapsed")
         
         with col5:
             st.markdown("<div style='text-align: left; font-weight: bold;'>or vice-versa?</div>", unsafe_allow_html=True)
