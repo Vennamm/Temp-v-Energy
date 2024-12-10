@@ -687,13 +687,12 @@ def temperature_forecasting():
             var2 = st.selectbox("", options=['tavg', 'cdd', 'hdd'], index=1) 
         with col5:
             st.markdown("**or vice-versa?**")
-        var3_selected = False
+        var3_selected = ['tavg', 'cdd', 'hdd'].index(var1)
         if (var1 == var2):
-            st.warning(f"To see if past values of {var1} has impact on itself, you need to look at the Auto-Correlation and Partial Auto-Correlation Graphs (they are below)")
-            var3_selected = True
-        if (var1!=var2):
+            st.warning(f"To see if past values of {var1} has impact on its current value, you need to look at the Auto-Correlation and Partial Auto-Correlation Graphs (they are below)")
+        if (var1 != var2):
             plot_granger_causality(weather_data, var1, var2)
-            var3_selected = False
+
         
         
         # Row 3: Seasonal Decomposition
@@ -722,14 +721,11 @@ def temperature_forecasting():
         st.subheader('ACF and PACF')
 
         st.markdown("""Earlier, we check if a previous foreign variable had any impact on the current predictor variable. Now, we are looking if previous values of our predictor variable have any impact on our current values. 
-        We need to look at the Auto-Correlation and Partial Auto-Correlation Functions to understand the seasonality of the temperature data so that we can train our model on it. 
-        The graph shows that the functions repeat themselves after every 12 months approximately. That is to say that last year's temperature have an impact on current year's average temperature.""")
+        For example, we need to look at the Auto-Correlation and Partial Auto-Correlation Functions to understand the seasonality of the temperature data so that we can train our model on it. 
+        And the graph shows that the functions repeat themselves after every 12 months approximately. That is to say that last year's temperature has an impact on current year's average temperature.""")
 
-        if var3_selected:
-            var3 = var1
-        else:
-            var3 = st.selectbox("Will the variable cause itself?", options=['cdd','hdd','tavg'], index=2)
-            var3_selected=False
+        var3 = st.selectbox("Will the variable cause itself?", options=['tavg', 'cdd', 'hdd'], index=var3_selected)
+        
         fig_y, ax = plt.subplots(2, 1, figsize=(12, 6))
         plot_acf(weather_data[var3], lags=48, ax=ax[0])
         plot_pacf(weather_data[var3], lags=48, ax=ax[1])
