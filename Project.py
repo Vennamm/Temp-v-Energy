@@ -863,63 +863,72 @@ st.markdown(
 # section = st.sidebar.radio("Select a section", ["Documentation", "Temperature Forecasting", "Weather-Energy Relationship"])
 t1, t2, t3, t4 = st.tabs(["Documentation", "Temperature Forecasting", "Weather-Energy Relationship", "Future Goals"])
 with t1:
-# if section == "Documentation":
-    # st.title("Documentation")
     st.markdown("""
-# **Weather-Energy Relationship Analysis and Forecasting**
-
-This project explores the relationships between weather patterns (Average Temperature, Cooling Degree Days (CDD), Heating Degree Days (HDD)) and energy consumption across different sectors (Residential, Commercial, Industrial, Transportation, and Total Consumption). It uses various data science techniques, such as Principal Component Analysis (PCA), Random Forests, and XGBoost, to create insights into regional energy consumption patterns based on weather factors. The analysis is visualized using interactive maps, graphs, and charts on a Streamlit-based app.
-
-### **Sources**
-- [**Weather Data**](https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series/): This is official weather data from National Centers for Environmental Information. **Granularity:** Monthly, State. 
-- [**Energy Data**](https://www.eia.gov/state/seds/seds-data-complete.php?sid=MI#Keystatisticsrankings): This is the energy consumption data sourced from U.S. Energy Information Administration. **Granularity:** Yearly, State.
-- [**GeoJSON for Mapping**](https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/us-states.json): MappingAPI's GitHub Repository.
-- There are a few other sources that have not been used but have potential to explore: [**Monthly Energy Consumption - Nationwide**](https://www.eia.gov/totalenergy/data/browser/index.php?tbl=T01.01#/?f=M&start=199701&end=202407&charted=6-7-14-1-2-3-4-8-11-12-13), [**Wildfire Data**](https://www.nifc.gov/fire-information/statistics/wildfires)
-
-The project is divided into three main sections:
-
-### **Section 1: Temperature Forecasting**
-- **Objective**: Forecast average temperatures using time-series analysis. **Forecastable Years**: 2019 to 2024.
-- **Instructions**: Select month, year and state. The forecast temperature and actual temperature should show up. 
-- **Model**: SARIMAX (Seasonal Autoregressive Integrated Moving Average with Exogenous Regressors).
-- **Process**: 
-    - **Data Preparation**: Loading temperature data for different states.
-    - **Granger Causality**: Checking dependencies between temperature and other weather factors.
-    - **Seasonal Decomposition**: Breaking down the temperature data into trend, seasonal, and residual components.
-    - **Forecasting**: Using SARIMAX to predict future temperatures.
-    - **Visualization**: Graphs displaying predicted and actual temperatures, model performance metrics, and seasonal components.
-- This model does not predict further than 2024 for two reasons:
-    - **Error Propagation**: Since the training data is limited to dates until 2018, the model cannot perform well on data in the longer future. Six years is a stretch, as the error propagates with no new information.
-    - **Lack of Validation**: This app was created in November, 2024. The predictive power of this app cannot be validated without future data.
-    - **Room for Improvement**: Our source is constantly updated, but currently, the data is being fed from my [GitHub](https://github.com/Vennamm/Temp-v-Energy/tree/main/collated_data). We can get information straight from the source while simulatenously updating our GitHub.
-
-
-### **Section 2: Weather-Energy Relationships**
-- **Objective**: Investigate how temperature (CDD, HDD, and Average Temperature) influences energy consumption in various sectors across different states.
-- **Techniques**:
-    - **Principal Component Analysis (PCA)**: Used to reduce the dimensionality of the data and identify key components driving energy consumption.
-    - **Clustering**: k-Nearest Neighbors (kNN) clustering algorithm used to assign states to different groups based on their behavior in energy consumption related to weather patterns.
-    - **Feature Importance**: Random Forest, XGBoost and Decision Tree Regression  models were trained to determine which weather-related features (e.g., CDD, HDD) are the most important predictors for energy consumption in each sector.
-    - **Model Selection**: Decision Tree was chosen for three reasons - **deterministic** (not using random state), **robust** (less sensitive to noise when addressed with cross-validation) and **interpretable** (Feature Importances are extracted).
-
-- **Process**:
-    1. **Data Aggregation**: Collating weather data (CDD, HDD) and energy consumption data (Residential, Commercial, Industrial, etc.) for each state.
-    2. **PCA and Clustering**: Reducing dimensionality and grouping states based on similar energy behaviors.
-    3. **Visualization**: 
-        - Cluster-based PCA visualizations are shown on an interactive map with option to edit the number of clusters.
-        - Pie Chart showing the seasonal contributions for a selected sector and state.
-        - Line Graph showing the energy consumption of the sector over the years.
-        - Two Bar Charts: 
-            - Seasonal Contribution like the pie chart, but also which parts of the season (Hot and Cold days of each season).
-            - Monthly Contrubutions of both the hot and cold seasons within the season.
-        - Scatter Plot of PCA Clusters (PC1 vs. PC2) grouped by U.S. Regions.
-        - Feature importance analysis identifies the key weather factors influencing energy consumption.
-    4. **Correlation Analysis**: Checking the relationship between weather variables (Temperature, CDD, HDD) and energy consumption sectors for each state.
-    5. **Modeling**: Using regression models to predict energy consumption and determine feature importance.
-
-### **For the Data Scientist: Advanced Options**
-- **Description**: This window is hidden under an expander. This window holds the data science process behind what the normal user sees on the widgets. 
-""")
+    # **Weather-Energy Relationship Analysis and Forecasting**
+    This project explores the relationships between weather patterns (Average Temperature, Cooling Degree Days (CDD), Heating Degree Days (HDD)) and energy consumption across different sectors (Residential, Commercial, Industrial, Transportation, and Total Consumption). It uses various data science techniques, such as Principal Component Analysis (PCA), Random Forests, and XGBoost, to create insights into regional energy consumption patterns based on weather factors. The analysis is visualized using interactive maps, graphs, and charts on a Streamlit-based app.
+    """)
+    
+    # Sources section in an expander
+    with st.expander("### **Sources**"):
+        st.markdown("""
+        - [**Weather Data**](https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series/): This is official weather data from National Centers for Environmental Information. **Granularity:** Monthly, State. 
+        - [**Energy Data**](https://www.eia.gov/state/seds/seds-data-complete.php?sid=MI#Keystatisticsrankings): This is the energy consumption data sourced from U.S. Energy Information Administration. **Granularity:** Yearly, State.
+        - [**GeoJSON for Mapping**](https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/us-states.json): MappingAPI's GitHub Repository.
+        - There are a few other sources that have not been used but have potential to explore: [**Monthly Energy Consumption - Nationwide**](https://www.eia.gov/totalenergy/data/browser/index.php?tbl=T01.01#/?f=M&start=199701&end=202407&charted=6-7-14-1-2-3-4-8-11-12-13), [**Wildfire Data**](https://www.nifc.gov/fire-information/statistics/wildfires)
+        """)
+    
+    # Section 1: Temperature Forecasting in an expander
+    with st.expander("### **Section 1: Temperature Forecasting**"):
+        st.markdown("""
+        - **Objective**: Forecast average temperatures using time-series analysis. **Forecastable Years**: 2019 to 2024.
+        - **Instructions**: Select Month, Year and State. The forecast temperature and actual temperature should show up. 
+        - **Model**: SARIMAX (Seasonal Autoregressive Integrated Moving Average with Exogenous Regressors).
+        - **Process**: 
+            - **Data Preparation**: Loading temperature data for different states.
+            - **Granger Causality**: Checking dependencies between temperature and other weather factors.
+            - **Seasonal Decomposition**: Breaking down the temperature data into trend, seasonal, and residual components.
+            - **Forecasting**: Using SARIMAX to predict future temperatures.
+            - **Visualization**: Graphs displaying predicted and actual temperatures, model performance metrics, and seasonal components.
+        - This model does not predict further than 2024 for two reasons:
+            - **Error Propagation**: Since the training data is limited to dates until 2018, the model cannot perform well on data in the longer future. Six years is a stretch, as the error propagates with no new information.
+            - **Lack of Validation**: This app was created in November, 2024. The predictive power of this app cannot be validated without future data.
+            - **Room for Improvement**: Our source is constantly updated, but currently, the data is being fed from my [GitHub](https://github.com/Vennamm/Temp-v-Energy/tree/main/collated_data). We can get information straight from the source while simulatenously updating our GitHub.
+        """)
+    
+    # Section 2: Weather-Energy Relationships in an expander
+    with st.expander("### **Section 2: Weather-Energy Relationships**"):
+        st.markdown("""
+        - **Objective**: Investigate how temperature (CDD, HDD, and Average Temperature) influences energy consumption in various sectors across different states.
+        - **Instructions**: 
+            - **Season-Energy Contributions**: Select State and Consumption Sector to see the seasonal and monthly contribution to the energy consumption.
+            - **Cluster-Based PCA Visualization**: Select the number of groups to separate states based on their energy consumption behaviors in different weathers.
+        - **Techniques**:
+            - **Principal Component Analysis (PCA)**: Used to reduce the dimensionality of the data and identify key components driving energy consumption.
+            - **Clustering**: k-Nearest Neighbors (kNN) clustering algorithm used to assign states to different groups based on their behavior in energy consumption related to weather patterns.
+            - **Feature Importance**: Random Forest, XGBoost and Decision Tree Regression models were trained to determine which weather-related features (e.g., CDD, HDD) are the most important predictors for energy consumption in each sector.
+            - **Model Selection**: Decision Tree was chosen for three reasons - **deterministic** (not using random state), **robust** (less sensitive to noise when addressed with cross-validation) and **interpretable** (Feature Importances are extracted).
+    
+        - **Process**:
+            1. **Data Aggregation**: Collating weather data (CDD, HDD) and energy consumption data (Residential, Commercial, Industrial, etc.) for each state.
+            2. **PCA and Clustering**: Reducing dimensionality and grouping states based on similar energy behaviors.
+            3. **Visualization**: 
+                - Cluster-based PCA visualizations are shown on an interactive map with option to edit the number of clusters.
+                - Pie Chart showing the seasonal contributions for a selected sector and state.
+                - Line Graph showing the energy consumption of the sector over the years.
+                - Two Bar Charts: 
+                    - Seasonal Contribution like the pie chart, but also which parts of the season (Hot and Cold days of each season).
+                    - Monthly Contributions of both the hot and cold seasons within the season.
+                - Scatter Plot of PCA Clusters (PC1 vs. PC2) grouped by U.S. Regions.
+                - Feature importance analysis identifies the key weather factors influencing energy consumption.
+            4. **Correlation Analysis**: Checking the relationship between weather variables (Temperature, CDD, HDD) and energy consumption sectors for each state.
+            5. **Modeling**: Using regression models to predict energy consumption and determine feature importance.
+        """)
+    
+    # For data scientists (hidden section)
+    with st.expander("### **For the Data Scientist: Advanced Options**"):
+        st.markdown("""
+        - **Description**: This window is hidden under an expander. This window holds the data science process behind what the normal user sees on the widgets. 
+        """)
 with t2:
 # elif section == "Temperature Forecasting":
     temperature_forecasting()
