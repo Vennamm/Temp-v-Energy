@@ -971,7 +971,7 @@ with t1:
         
     feedback = st.text_area("Enter your feedback here", height=100, value=st.session_state['feedback_text'])
 
-    st.session_state['feedback_text'] = feedback
+    # st.session_state['feedback_text'] = feedback
     
     if st.button('Submit Feedback'):
         if feedback.strip():
