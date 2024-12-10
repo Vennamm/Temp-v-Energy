@@ -1021,4 +1021,58 @@ with t3:
 # elif section == "Weather-Energy Relationship":
     weather_energy_cluster()
 with t4:
-    st.markdown('Future Goals')
+    # st.markdown('Future Goals')
+    st.markdown("The following are the future goals and enhancements planned for the app:")
+
+    # Goal 1
+    with st.expander("1. Streamlined Flow"):
+        st.write("""
+        The original intent of the project was to forecast Cooling Degree Days (CDD), Heating Degree Days (HDD), 
+        along with Average Temperature. These CDD and HDD forecasts would then feed into the weather-energy relationships 
+        to establish an estimated forecast of the year. This estimate would allow stakeholders to make informed decisions 
+        based on energy demand.
+        """)
+    
+    # Goal 2
+    with st.expander("2. Map Clusters"):
+        st.write("""
+        There are various relationships that can be observed beyond weather-energy relationships. Clusters could be formed based on:
+        - Precipitation and average temperatures.
+        - Drought-severity indexes.
+        - Splits in energy consumption (e.g., major consumption sectors).
+        - Primary sources of power consumption (e.g., fossil fuels vs renewables).
+        """)
+    
+    # Goal 3
+    with st.expander("3. Dynamic Data"):
+        st.write("""
+        Currently, the data used for forecasting comes from GitHub, which sources it from a government resource updated monthly. 
+        By dynamically pulling this data directly from the source, predictions could be extended to longer timeframes with lower error rates. 
+        Additionally, forecasts could be refreshed every month to provide more accurate and timely insights.
+        """)
+    
+    # Goal 4
+    with st.expander("4. Additional Data Usage"):
+        st.write("""
+        The app has two additional data sources that could significantly enhance its capabilities:
+        
+        - **US-Wide Energy Consumption Data**:
+          - Granular monthly data for each state could be incorporated to create time-series regression models.
+          - These models would identify how specific states and seasons impact national energy consumption.
+          - Analysis could also show how much of the energy comes from fossil fuels, renewables, or nuclear sources.
+          
+        - **Wildfire Data**:
+          - Wildfires may impact the average temperature of nearby states.
+          - Increased national temperatures may influence wildfire frequency.
+          - An analysis could explore how human efforts have reduced wildfire occurrences and estimate the number of wildfires likely 
+            in later years had there been no intervention.
+        """)
+    
+    # Goal 5
+    with st.expander("5. Visualizations"):
+        st.write("""
+        One planned visualization involves using manually defined weather-energy relationships for each state. 
+        Users could explore scatter plots and observe:
+        - Important years for each state.
+        - Key events or anomalies in those years that led to unusual energy consumption or weather patterns.
+        """)
