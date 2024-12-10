@@ -439,7 +439,7 @@ def aggregate_and_rank(df, df_m, state, target_column):
         energy_rates,
         x="Year",
         y=target_column,
-        title=f"{target_column}'s Energy Consumption over years",
+        title=f"Energy Consumption over years - {target_column.title()",
         labels={"Year": "Year", target_column: "Energy Consumption"},
     )
     
@@ -466,9 +466,9 @@ def aggregate_and_rank(df, df_m, state, target_column):
     if second_contributor_m is not None:
         diff_m = top_contributor_m["Contribution"] - second_contributor_m["Contribution"]
         if diff_m <= co_dominance_threshold:
-            TEXT_m = f"In a monthly perspective, {top_contributor_m['Month']} and {second_contributor_m['Month']} contribute the most."
+            TEXT_m = f"In a monthly perspective, {top_contributor_m['Month']} and {second_contributor_m['Month']} contribute the most to the {target_column.lower()}."
         else:
-            TEXT_m = f"In a monthly perspective, {top_contributor_m['Month']} contributes the most."
+            TEXT_m = f"In a monthly perspective, {top_contributor_m['Month']} contributes the most to the {target_column.lower()}."
     else:
         TEXT_m = f"In a monthly perspective, {top_contributor_m['Month']} is the major contributor to the {target_column.lower()}."
 
@@ -476,14 +476,14 @@ def aggregate_and_rank(df, df_m, state, target_column):
         diff = top_contributor["Contribution"] - second_contributor["Contribution"]
 
         if diff <= co_dominance_threshold_s:
-            TEXT = f"For {state}, {top_contributor['Season']} and {second_contributor['Season']} contribute the most."
+            TEXT = f"For {state}, {top_contributor['Season']} and {second_contributor['Season']} contribute the most to the {target_column.lower()}."
         else:
             TEXT = f"For {state}, {top_contributor['Season']} contributes the most to the {target_column.lower()}."
 
     else:
         TEXT = f"For {state}, {top_contributor['Season']} is the only major contributor to the {target_column.lower()}."
 
-    fig1 = px.pie(season_df, names='Season', values='Contribution', title="Seasonal Energy Consumption Contributions")
+    fig1 = px.pie(season_df, names='Season', values='Contribution', title=f"Seasonal Contributions to Energy Expenditure - {target_column.title()")
     
     df["Category"] = df["Feature"].apply(lambda x: "Hot " + x.split("_")[1] if "cdd" in x else "Cold " + x.split("_")[1])
     
@@ -525,22 +525,22 @@ def aggregate_and_rank(df, df_m, state, target_column):
     fig3.add_trace(go.Bar(
         x=pivot_df["Month"],
         y=pivot_df["cdd"],
-        name="CDD",
+        name="Hot Days of the Month",
         marker_color="red"
     ))
 
     fig3.add_trace(go.Bar(
         x=pivot_df["Month"],
         y=pivot_df["hdd"],
-        name="HDD",
+        name="Cold Days of the Month",
         marker_color="blue"
     ))
 
     fig3.update_layout(
         barmode="stack",
-        title="Stacked Bar Chart of Importance by Month",
+        title=f"Monthly Contributions to Energy Expenditure - {target_column.title()}",
         xaxis_title="Month",
-        yaxis_title="Importance",
+        yaxis_title="Contribution",
         legend_title="Category"
     )
     
@@ -559,7 +559,7 @@ def aggregate_and_rank(df, df_m, state, target_column):
     ))
 
     fig2.update_layout(
-        title="Individual Contributions by Season",
+        title=f"Energy Expenditure by Temperature and Season - {target_column.title()",
         xaxis_title="Season",
         yaxis_title="Importance",
         showlegend=False
