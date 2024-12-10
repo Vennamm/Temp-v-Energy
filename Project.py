@@ -164,6 +164,8 @@ def plot_pca_with_ellipses(corr_df, ellipse=0.95):
     
     pca_df = pd.DataFrame(data=pca_components, columns=['PCA1', 'PCA2'], index=corr_matrix.columns)
     pca_df['Region'] = pca_df.index.map(state_to_region)
+
+    explained_variance = pca.explained_variance_ratio_
     
     # Create scatter plot using Plotly
     fig = go.Figure()
@@ -223,7 +225,7 @@ def plot_pca_with_ellipses(corr_df, ellipse=0.95):
 
     # Update layout
     fig.update_layout(
-        title="PCA Plot with Clustering (Ellipses by Region)",
+        title=f"PCA Plot with Clustering (Ellipses by Region) - Explained Variance: {explained_variance*100}%",
         xaxis_title='PCA Component 1',
         yaxis_title='PCA Component 2',
         showlegend=True,
@@ -266,7 +268,7 @@ def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
     
     pca_df = pd.DataFrame(data=pca_components, columns=['PCA1', 'PCA2'], index=corr_matrix.columns)
     
-    
+    explained_variance = pca.explained_variance_ratio_
     
     if n_clusters==4:
         random_state = 132
