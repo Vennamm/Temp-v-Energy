@@ -646,16 +646,28 @@ def temperature_forecasting():
     if steps_ <=48:
         fc = output_series[output_series.index == forecast_date].values[0]
         ac = weather_data['tavg'][weather_data.index == forecast_date].values[0]
-        st.markdown(f"""
-    <div style="background-color: #D1E8FF; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between;">
-        <div style="font-size: 18px; font-weight: bold;">
-            <strong>Forecasted Temperature:</strong> {fc:.2f} °F
+        with st.expander
+        # st.markdown
+        with st.expander(f"""
+        <div style="background-color: #D1E8FF; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between;">
+            <div style="font-size: 18px; font-weight: bold;">
+                <strong>Forecasted Temperature:</strong> {fc:.2f} °F
+            </div>
+            <div style="font-size: 18px; font-weight: bold;">
+                <strong>Actual Temperature:</strong> {ac:.2f} °F
+            </div>
         </div>
-        <div style="font-size: 18px; font-weight: bold;">
-            <strong>Actual Temperature:</strong> {ac:.2f} °F
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True):
+            st.markdown(f"""
+            <div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
+                <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
+                <div style="font-size: 18px; color: #003366; text-align: center;">
+                    <p><strong>Mean Absolute Error (MAE):</strong> <span style="color: #FF6347;">{mae:.2f} °F</span></p>
+                    <p><strong>Root Mean Squared Error (RMSE):</strong> <span style="color: #32CD32;">{rmse:.2f} °F</span></p>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        
     else:
         fc = output_series[output_series.index == forecast_date].values[0]
         st.markdown(f"""
@@ -674,15 +686,7 @@ def temperature_forecasting():
     fig.add_trace(go.Scatter(x=output_series.index, y=output_series, mode='lines', name='Forecast', line=dict(color='green')))
     st.plotly_chart(fig, use_container_width=True)
 
-    st.markdown(f"""
-    <div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
-        <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
-        <div style="font-size: 18px; color: #003366; text-align: center;">
-            <p><strong>Mean Absolute Error (MAE):</strong> <span style="color: #FF6347;">{mae:.2f} °F</span></p>
-            <p><strong>Root Mean Squared Error (RMSE):</strong> <span style="color: #32CD32;">{rmse:.2f} °F</span></p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    
 
     with st.expander('Advanced Options'):
 
