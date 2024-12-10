@@ -425,12 +425,19 @@ def create_frame3(state, target_column):
     return importance_df_m, state, target_column
 
 @st.cache
-def aggregate_and_rank(df, df_m, state, target_column):
+def aggregate_and_rank(df_m, state, target_column):
+    # season_map = {
+    #     "Winter": ["cdd_Winter", "hdd_Winter"],
+    #     "Spring": ["cdd_Spring", "hdd_Spring"],
+    #     "Summer": ["cdd_Summer", "hdd_Summer"],
+    #     "Fall": ["cdd_Fall", "hdd_Fall"]
+    # }
+
     season_map = {
-        "Winter": ["cdd_Winter", "hdd_Winter"],
-        "Spring": ["cdd_Spring", "hdd_Spring"],
-        "Summer": ["cdd_Summer", "hdd_Summer"],
-        "Fall": ["cdd_Fall", "hdd_Fall"]
+        "Winter": ["December", "January", "February"],
+        "Spring": ["March", "April", "May"],
+        "Summer": ["June", "July", "August"],
+        "Fall": ["September", "October", "November"],
     }
 
     energy_rates = pd.read_csv(f'power_consumption/{state}.csv')
@@ -442,15 +449,20 @@ def aggregate_and_rank(df, df_m, state, target_column):
         title=f"Energy Consumption over years - {target_column.title()}",
         labels={"Year": "Year", target_column: "Energy Consumption"},
     )
-    
-    
-
-    season_totals = {season: df[df["Feature"].isin(features)]["Importance"].sum() for season, features in season_map.items()}
-    season_df = pd.DataFrame(list(season_totals.items()), columns=["Season", "Contribution"]).sort_values(by="Contribution", ascending=False)
 
     month_totals = {month: df_m[df_m["Feature"].str.contains(f"_{month}")]["Importance"].sum() for month in df_m["Feature"].str.split("_").str[1].unique()}
     month_df = pd.DataFrame(list(month_totals.items()), columns=["Month", "Contribution"]).sort_values(by="Contribution", ascending=False)
 
+    season_totals = {season: month_df[month_df["Month"].isin(months)]["Contribution"].sum() for season, months in season_map.items()}
+    season_df = pd.DataFrame(list(season_totals.items()), columns=["Season", "Contribution"]).sort_values(by="Contribution", ascending=False)
+
+    df_m["Type"] = df_m["Feature"].str.split("_").str[0]
+    df_m["Month"] = df_m["Feature"].str.split("_").str[1]
+    df_m["Season"] = df_m["Month"].map({month: season for season, months in season_map.items() for month in months})
+    df_m["Feature"] = df_m["Type"] + "_" + df_m["Season"]
+    df = df_m.groupby("Feature", as_index=False)["Importance"].sum()
+    
+    
     top_contributor = season_df.iloc[0]
     second_contributor = season_df.iloc[1] if len(season_df) > 1 else None
 
@@ -779,7 +791,7 @@ def weather_energy_cluster():
     importance_df, state_name, target_column = create_frame2(state_name, col_name)
     importance_df_m, state_name, target_column = create_frame3(state_name, col_name)
     
-    aggregate_and_rank(importance_df, importance_df_m, state_name, target_column)
+    aggregate_and_rank(importance_df_m, state_name, target_column)
     
     st.subheader("Cluster-Based PCA Visualization on Map")
     st.markdown("""
