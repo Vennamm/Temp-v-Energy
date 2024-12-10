@@ -48,6 +48,8 @@ season_mapping = {
     9: 'Fall', 10: 'Fall', 11: 'Fall'
 }
 
+
+
 def get_season_color(TEXT):
     color = "#f9f9f9"
     if "Spring" in TEXT:
@@ -608,11 +610,27 @@ def aggregate_and_rank(df_m, state, target_column):
     with col2:
         st.plotly_chart(fig4, use_container_width=True)
         st.plotly_chart(fig3, use_container_width=True)
-    
+
+def increment_month():
+    if st.session_state.selected_month_index < len(months) - 1:
+        st.session_state.selected_month_index += 1
+    else:
+        st.session_state.selected_month_index = 0 
+
+def decrement_month():
+    if st.session_state.selected_month_index > 0:
+        st.session_state.selected_month_index -= 1
+    else:
+        st.session_state.selected_month_index = len(months) - 1
 
 def temperature_forecasting():
     # st.title('Temperature Forecasting')
 
+    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    if "selected_month_index" not in st.session_state:
+        st.session_state.selected_month_index = 5
+    
     state_list = [f.replace('.csv', '') for f in os.listdir('collated_data')]
     state = st.selectbox("Select a state:", state_list)
     weather_data, state_name = read_data(state)
@@ -626,7 +644,17 @@ def temperature_forecasting():
         year = st.number_input('Select Year', min_value=2019, max_value=2024, value=2019, step=1)
 
     with col2:
-        month = st.number_input('Select Month', min_value=1, max_value=12, value=6, step=1)
+        col1_, col2_, col3_ = st.columns([1, 4, 1])
+        with col1_:
+            if st.button("◀"):
+                decrement_month()
+        with col2_:
+            st.markdown(f"**{months[st.session_state.selected_month_index]}**", unsafe_allow_html=True)
+        with col3_:
+            if st.button("▶"):
+                increment_month()
+        # month = st.number_input('Select Month', min_value=1, max_value=12, value=6, step=1)
+        month = st.session_state.selected_month_index + 1
     forecast_date = pd.to_datetime(f'{year}-{month:02d}-01') + pd.offsets.MonthEnd(0)
     
     test_size = 48
