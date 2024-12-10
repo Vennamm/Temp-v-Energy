@@ -618,8 +618,6 @@ def temperature_forecasting():
     state = st.selectbox("Select a state:", state_list)
     weather_data, state_name = read_data(state)
     
-    st.write(f"Displaying data for {state_name}:")
-
     test_size = 48
     train_data, test_data, cleaned_data, seasonal_result = seasonal_dc(weather_data, 'tavg', state_name, test_size=test_size)
 
