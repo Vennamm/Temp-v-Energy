@@ -680,7 +680,7 @@ def temperature_forecasting():
         """)
 
         st.markdown("                                          ")
-        col1, col2, col3, col4, col5 = st.columns([1, 3, 1, 3, 2])
+        col1, col2, col3, col4, col5 = st.columns([1, 5, 1, 5, 2])
         with col1:
             st.markdown("<div style='text-align: right; font-weight: bold;'>Will</div>", unsafe_allow_html=True)
         
