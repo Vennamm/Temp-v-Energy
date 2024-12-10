@@ -66,7 +66,41 @@ Make sure you have the following installed:
    ```python
    token = st.secrets["github"]["GITHUB_TOKEN"]
    owner = st.secrets["github"]["REPO_OWNER"]
-   repo = st.secrets["github"]["REPO_NAME
+   repo = st.secrets["github"]["REPO_NAME"]
 
 ---
+
+# Usage Instructions
+
+This section provides a step-by-step guide on how users can interact with your app. We will break it down by key features and their usage:
+
+## 1. Accessing the App
+- To use the app, open it in a web browser. You will be presented with the main dashboard or home page.
+- The app is hosted on [Streamlit Cloud](https://share.streamlit.io/), so you can simply visit the link to start using it.
+
+## 2. Temperature Forecasting (SARIMAX Model)
+- On this page, you can select the **state** and **month** for which you want to forecast the average temperature.
+- **Step 1**: Select the state from the dropdown list.
+- **Step 2**: Choose the year and month for which you want the temperature forecast.
+- **Step 3**: Press the **Forecast** button to generate the temperature forecast for the selected period.
+- The forecast will be shown, including the actual values if available.
+
+## 3. Weather-Energy Clustering
+- This section visualizes weather-energy consumption clusters based on Cooling Degree Days (CDD), Heating Degree Days (HDD), and energy consumption data.
+- **Step 1**: View the clustering map, which shows how different states are grouped based on their weather-energy consumption patterns.
+- **Step 2**: You can explore the relationships between energy consumption sectors and temperature by selecting different weather features like CDD, HDD, or TAVG.
+- **Step 3**: Choose a state to see the specific energy consumption by sector and the relationship to seasonal weather patterns.
+
+## 4. Season/Month-Energy Relationships
+- This section allows you to analyze how different months or seasons impact energy consumption in each state.
+- **Step 1**: Select a state from the dropdown.
+- **Step 2**: Choose the month or season you want to analyze.
+- **Step 3**: The app will display how energy consumption varies across different sectors, with visualizations for the impact of HDD, CDD, and temperature.
+
+## 5. Feedback System
+- Users can leave feedback regarding the app through the **Feedback** section.
+- **Step 1**: Type your feedback into the text box.
+- **Step 2**: Press the **Submit Feedback** button to send your comments.
+- **Note**: Your feedback is stored securely on GitHub, and the app will show a success message once the feedback has been successfully submitted.
+
 
