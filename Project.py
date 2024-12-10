@@ -455,12 +455,13 @@ def aggregate_and_rank(df_m, state, target_column):
 
     season_totals = {season: month_df[month_df["Month"].isin(months)]["Contribution"].sum() for season, months in season_map.items()}
     season_df = pd.DataFrame(list(season_totals.items()), columns=["Season", "Contribution"]).sort_values(by="Contribution", ascending=False)
-
-    df_m["Type"] = df_m["Feature"].str.split("_").str[0]
-    df_m["Month"] = df_m["Feature"].str.split("_").str[1]
-    df_m["Season"] = df_m["Month"].map({month: season for season, months in season_map.items() for month in months})
-    df_m["Feature"] = df_m["Type"] + "_" + df_m["Season"]
-    df = df_m.groupby("Feature", as_index=False)["Importance"].sum()
+    
+    df = df_m.copy()
+    df["Type"] = df["Feature"].str.split("_").str[0]
+    df["Month"] = df["Feature"].str.split("_").str[1]
+    df["Season"] = df["Month"].map({month: season for season, months in season_map.items() for month in months})
+    df["Feature"] = df["Type"] + "_" + df["Season"]
+    df = df.groupby("Feature", as_index=False)["Importance"].sum()
     
     
     top_contributor = season_df.iloc[0]
