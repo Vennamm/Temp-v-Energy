@@ -667,6 +667,26 @@ def temperature_forecasting():
     st.markdown(" ")
 
     with st.expander(f"Model Performance Metrics for {state_name}"):
+        st.markdown(
+            f"""
+            <style>
+            .streamlit-expanderHeader {{
+                background-color: #003366;
+                color: white;
+                padding: 10px;
+                border-radius: 5px;
+                font-size: 18px;
+            }}
+            .streamlit-expanderContent {{
+                background-color: #F0F8FF;
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
         st.markdown(f"""
         <div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
             <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
