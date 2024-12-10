@@ -225,7 +225,7 @@ def plot_pca_with_ellipses(corr_df, ellipse=0.95):
 
     # Update layout
     fig.update_layout(
-        title=f"PCA Plot with Clustering (Ellipses by Region) - Explained Variance: {explained_variance*100}%",
+        title=f"PCA Plot with Clustering (Ellipses by Region) - Explained Variance: {explained_variance.sum()*100}%",
         xaxis_title='PCA Component 1',
         yaxis_title='PCA Component 2',
         showlegend=True,
