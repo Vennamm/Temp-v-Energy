@@ -622,17 +622,6 @@ def temperature_forecasting():
     train_data, test_data, cleaned_data, seasonal_result = seasonal_dc(weather_data, 'tavg', state_name, test_size=test_size)
 
     sarimax_fitted, forecast_series, mae, rmse = forecast_weather(train_data, test_data, 'tavg', steps=len(test_data))
-    
-    with st.expander(f"Model Performance Metrics for {state_name}"):
-        st.markdown(f"""
-        <div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
-            <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
-            <div style="font-size: 18px; color: #003366; text-align: center;">
-                <p><strong>Mean Absolute Error (MAE):</strong> <span style="color: #FF6347;">{mae:.2f} °F</span></p>
-                <p><strong>Root Mean Squared Error (RMSE):</strong> <span style="color: #32CD32;">{rmse:.2f} °F</span></p>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
 
@@ -663,9 +652,7 @@ def temperature_forecasting():
             <strong>Actual Temperature:</strong> {ac:.2f} °F
         </div>
         </div>
-        """, unsafe_allow_html=True)
-        
-        
+        """, unsafe_allow_html=True) 
         
     else:
         fc = output_series[output_series.index == forecast_date].values[0]
@@ -676,6 +663,19 @@ def temperature_forecasting():
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    st.markdown(" ")
+
+    with st.expander(f"Model Performance Metrics for {state_name}"):
+        st.markdown(f"""
+        <div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
+            <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
+            <div style="font-size: 18px; color: #003366; text-align: center;">
+                <p><strong>Mean Absolute Error (MAE):</strong> <span style="color: #FF6347;">{mae:.2f} °F</span></p>
+                <p><strong>Root Mean Squared Error (RMSE):</strong> <span style="color: #32CD32;">{rmse:.2f} °F</span></p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Row 2: Actual Data Trend + Forecast
     st.subheader('Actual Data Trend + Forecast')
