@@ -62,7 +62,7 @@ def get_season_color(TEXT):
         color = "#ff7043"
     return color
 
-@st.cache
+@st.cache_data
 def create_frame(state):
     weather = pd.read_csv(f'collated_data/{state}.csv')
     energy = pd.read_csv(f'power_consumption/{state}.csv')
@@ -72,7 +72,7 @@ def create_frame(state):
     weathergy = pd.concat([weatherly[['tavg','cdd','hdd','tmax','tmin']], energy], axis=1)
     return weathergy
 
-@st.cache
+@st.cache_data
 def read_data(state):
     weather = pd.read_csv(f'collated_data/{state}.csv')
     weather['Date'] = pd.to_datetime(weather['Date'].astype(str), format='%Y%m')
@@ -81,7 +81,7 @@ def read_data(state):
     weather = weather.asfreq('ME')
     return weather, state
 
-@st.cache
+@st.cache_data
 def seasonal_dc(weather, column, state, test_size=48):
     train_size = len(weather) - test_size
     train = weather[column][:train_size]
@@ -102,7 +102,7 @@ def seasonal_dc(weather, column, state, test_size=48):
     
     return train, test, cleaned, result
 
-@st.cache
+@st.cache_data
 def forecast_weather(train, test, col, steps=None, seasonality=12, p=1, d=0, q=1, P=1, D=0, Q=1):
     sarimax_model = SARIMAX(train, 
                             order=(p, d, q),  # AR, I, MA orders
@@ -124,7 +124,7 @@ def forecast_weather(train, test, col, steps=None, seasonality=12, p=1, d=0, q=1
     
     return sarimax_fitted, forecast_series, mae, rmse
 
-@st.cache
+@st.cache_data
 def compute_spearmanr(weather_stats, consumption_stats):
     results = []
     for state in os.listdir('collated_data'):
@@ -139,7 +139,7 @@ def compute_spearmanr(weather_stats, consumption_stats):
         results.append(row)
     return pd.DataFrame(results)
 
-@st.cache
+@st.cache_data
 def add_ellipse(ax, data, color):
     # Covariance matrix and mean calculation
     cov_matrix = np.cov(data.T)
@@ -161,7 +161,7 @@ def add_ellipse(ax, data, color):
                                          angle=angle, color=color, fill=False, linewidth=2)
     ax.add_patch(ell)
 
-@st.cache
+@st.cache_data
 def plot_pca_with_ellipses(corr_df, ellipse=0.95):
     corr_matrix = corr_df.set_index('state').transpose()
     corr_matrix_values = corr_matrix.values
@@ -240,7 +240,7 @@ def plot_pca_with_ellipses(corr_df, ellipse=0.95):
 
     st.plotly_chart(fig, use_container_width=True)
 
-@st.cache
+@st.cache_data
 def visualize_corr(corr_df):
     melt_df = corr_df.melt(id_vars='state', var_name='Pair', value_name='Correlation')
 
@@ -264,7 +264,7 @@ def visualize_corr(corr_df):
     plt.show()
     st.pyplot(plt)
 
-@st.cache
+@st.cache_data
 def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
 
     corr_matrix = corr_df.set_index('state').transpose()  
@@ -326,7 +326,7 @@ def plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters=4):
     # fig.show()
     st.plotly_chart(fig, use_container_width=True)
 
-@st.cache
+@st.cache_data
 def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -417,7 +417,7 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
     st.plotly_chart(fig, use_container_width=True)
 
 
-@st.cache
+@st.cache_data
 def create_frame3(state, target_column):
     importance_df_m = pd.read_csv('feature_importances/feature_importance_results_DecisionTree.csv')
     importance_df_m = importance_df_m[(importance_df_m['State'] == state) & (importance_df_m['Target Column'] == target_column)]
@@ -425,7 +425,7 @@ def create_frame3(state, target_column):
 
     return importance_df_m, state, target_column
 
-@st.cache
+@st.cache_data
 def aggregate_and_rank(df_m, state, target_column):
     # season_map = {
     #     "Winter": ["cdd_Winter", "hdd_Winter"],
