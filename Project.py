@@ -644,17 +644,20 @@ def temperature_forecasting():
         year = st.number_input('Select Year', min_value=2019, max_value=2024, value=2019, step=1)
 
     with col2:
-        col1_, col2_, col3_ = st.columns([1, 4, 1])
-        with col1_:
-            if st.button("◀"):
-                decrement_month()
-        with col2_:
-            st.markdown(f"**{months[st.session_state.selected_month_index]}**", unsafe_allow_html=True)
-        with col3_:
-            if st.button("▶"):
-                increment_month()
+        with st.container():
+            st.markdown("<div style='border: 2px solid #0099ff; padding: 10px; border-radius: 10px;'>", unsafe_allow_html=True)
+            col1_, col2_, col3_ = st.columns([1, 4, 1])
+            with col1_:
+                if st.button("◀"):
+                    decrement_month()
+            with col2_:
+                st.markdown(f"<h3 style='text-align: center;'>**{months[st.session_state.selected_month_index]}**</h3>", unsafe_allow_html=True)
+            with col3_:
+                if st.button("▶"):
+                    increment_month()
+            st.markdown("</div>", unsafe_allow_html=True)
         # month = st.number_input('Select Month', min_value=1, max_value=12, value=6, step=1)
-        month = st.session_state.selected_month_index + 1
+        month = st.session_state.selected_month_index
     forecast_date = pd.to_datetime(f'{year}-{month:02d}-01') + pd.offsets.MonthEnd(0)
     
     test_size = 48
