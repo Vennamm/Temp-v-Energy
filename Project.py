@@ -21,7 +21,7 @@ from xgboost import XGBRegressor
 import warnings
 import requests
 import base64
-import datetime
+from datetime import datetime
 
 
 state_to_region = {
