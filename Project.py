@@ -646,7 +646,6 @@ def temperature_forecasting():
     if steps_ <=48:
         fc = output_series[output_series.index == forecast_date].values[0]
         ac = weather_data['tavg'][weather_data.index == forecast_date].values[0]
-        with st.expander
         # st.markdown
         with st.expander(f"""
         <div style="background-color: #D1E8FF; padding: 10px; border-radius: 10px; display: flex; justify-content: space-between;">
