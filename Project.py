@@ -19,6 +19,7 @@ from sklearn.mixture import GaussianMixture
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 import warnings
+import requests
 
 
 state_to_region = {
@@ -949,20 +950,42 @@ with t1:
     repo_owner = st.secrets["github"]["REPO_OWNER"]
     repo_name = st.secrets["github"]["REPO_NAME"]
 
-    st.markdown(repo_owner)
+    file_path = "feedback.txt"
+    branch = "main"
+    url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{file_path}"
+
+    headers = {"Authorization": f"token {token}"}
+    
     st.markdown("""
     ---
     
     ### **Leave your feedback here:**
     """)
-    feedback = st.text_area("Enter your feedback here:", height=200)
+    feedback = st.text_area("", placeholder="Enter your feedback here", height=100)
     if st.button('Submit Feedback'):
-        if feedback:
-            with open("feedback.txt", "a") as f:
-                f.write(f"Feedback: {feedback}\n\n")
-            st.success("Thank you for your feedback!")
+        if feedback.strip():
+            response = requests.get(url, headers=headers)
+            if response.status_code == 200:
+                response_json = response.json()
+                sha = response_json["sha"]
+                current_content = base64.b64decode(response_json["content"]).decode("utf-8")
+                updated_content = f"{current_content}\n\n{feedback}"
+                content_encoded = base64.b64encode(updated_content.encode("utf-8")).decode("utf-8")
+                data = {
+                    "message": "User feedback submission",
+                    "content": content_encoded,
+                    "branch": branch,
+                    "sha": sha
+                }
+                update_response = requests.put(url, headers=headers, json=data
+                if update_response.status_code == 200:
+                    st.success("Thank you! Your feedback has been submitted.")
+                else:
+                    st.error("Failed to submit feedback. Please try again later.")
+            else:
+                st.error("Could not retrieve feedback file. Ensure it exists in the repository.")
         else:
-            st.warning("Please enter some feedback.")
+            st.warning("Feedback cannot be empty. Please write something before submitting.")
     
 with t2:
 # elif section == "Temperature Forecasting":
