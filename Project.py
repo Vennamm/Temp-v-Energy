@@ -20,6 +20,7 @@ from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 import warnings
 import requests
+import base64
 
 
 state_to_region = {
