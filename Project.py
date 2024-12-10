@@ -818,7 +818,7 @@ There is a lot of process behind this. But let me make it straightforward:
 
     
     
-    with st.expander('Advanced Options'):
+    with st.expander('### Advanced Options'):
         st.subheader("Weather-Energy Correlation Matrix")   
         st.markdown("""
     Well, how do I explain this? You see the really cool map at the beginning? So for that to happen, it was a two-step process. 
