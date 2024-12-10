@@ -970,7 +970,14 @@ with t1:
     
     if st.button('Submit Feedback'):
         if feedback.strip():
-            feedback = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' - ' + feedback
+            utc_now = datetime.utcnow()
+            current_month = utc_now.month
+            if current_month > 3 and current_month < 11:
+                michigan_time = utc_now - timedelta(hours=4)
+            else:
+                michigan_time = utc_now - timedelta(hours=5)
+            michigan_time_str = michigan_time.strftime("%Y-%m-%d %H:%M:%S")
+            feedback = michigan_time_str + ' - ' + feedback
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
                 response_json = response.json()
