@@ -47,25 +47,25 @@
   Three models were implemented:  
   1. SARIMAX (time-series model) for weather forecast.  
   2. LSTM (deep learning model) for predicting CDD and HDD based on Average Temperature to determine the impact of exogenous variables.  
-  3. XGBoost (ensemble model) for understanding feature importances in the seasonal analysis to determine which seasons were mostly responsible for the energy consumption.
+  3. Random Forest, XGBoost, and Decision Tree Regression models for understanding feature importances in the seasonal analysis to determine which seasons were mostly responsible for the energy consumption.
 
 - **Perform thorough model evaluation and comparison**:  
-  Evaluation metrics include MAE and RMSE for SARIMAX and LSTM models. Parameter tuning for XGBoost was planned using GridSearch.
+  Evaluation metrics include MAE and RMSE for SARIMAX and LSTM models. Parameter tuning for regressions was performed using GridSearch.
 
 - **Demonstrate understanding of model selection and validation techniques**:  
-  Model selection was based on suitability for time-series forecasting. Evaluation was performed using MAE and RMSE for model validation. Cross-validation was not applied to SARIMAX due to its state-by-state nature, but this was justified.
+  Model selection was based on suitability for time-series forecasting. Evaluation was performed using MAE and RMSE for model validation. Cross-validation was not applied to SARIMAX due to its state-by-state nature, but this was justified. Cross-Validation was done for regression models
 
 ---
 
 ## 5. Streamlit App Development
 - **Create a comprehensive Streamlit app with at least 5 interactive elements**:  
-  Except for Documentation and Correlation Heatmap, every element is interactive.
+  Except for Future Goals and Correlation Heatmap, every element is interactive.
 
 - **Include detailed documentation and user guide within the app**:  
-  Includes a tutorial, tooltips, and detailed documentation for user guidance.
+  Includes instructions and detailed documentation for user guidance.
 
 - **Implement advanced Streamlit features (e.g., caching, session-state)**:  
-  `st.cache` has been implemented for performance optimization, with `st.session_state` not being required.
+  `st.cache_data` has been implemented for performance optimization, with `st.session_state` not being required.
 
 - **Deploy the app and ensure it's robust and user-friendly**:  
   I tried my best to ensure it is.
@@ -83,7 +83,7 @@
   High-performance computing techniques, such as parallel processing or cloud computing, were not implemented since there is no intent to scale the application for larger data. While I intend to make the app scalable, the older data will be replaced with new data. In case of weather data and energy data, older data loses its significance. 
 
 - **Real World Application and Impact**:  
-  The main intent of the project is to be able to estimate the energy demand for each state for the future. The initial idea involved a pipeline where the information from the forecast will be forwarded to make an estimate of how much yearly and seasonal energy demand one can expect to ensure the systems can handle a hotter summer or a colder winter based on the forecasted energy. The project still does a good estimate by telling the user that a certain season's hot or cold weather has the highest impact on the state's energy consumption. 
+  The main intent of the project is to be able to estimate the energy demand for each state for the future. The initial idea involved a pipeline where the information from the forecast will be forwarded to make an estimate of how much yearly and seasonal energy demand one can expect to ensure the systems can handle a hotter summer or a colder winter based on the forecasted energy consumption. The project still does a good estimate by telling the user that a certain season's hot or cold weather has the highest impact on the state's energy consumption preparing the stakeholders to brace for a harsher weather. 
 
 - **Exceptional Presentation and Visualization**:  
   Advanced and interactive visualizations have been created. Publication-quality visualizations can be further enhanced for better aesthetics and interactivity.
@@ -91,9 +91,7 @@
 ---
 
 ## 7. To-Do List
-- **PCA Variance**: Add the percentage of variance explained in PCA to provide more insights into the dimensionality reduction process.
 - **Scatter Plot Relationship with Regression Line**: Allow users to explore the relationship between two variables with regression lines and provide insights on interesting years.
-- **Future Goals Section**: Add a section for future improvements and potential developments.
 
 ---
 
