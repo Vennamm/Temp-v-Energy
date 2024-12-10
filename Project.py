@@ -408,17 +408,10 @@ def plot_granger_causality(df, col1, col2, max_lag=12, axes=None):
     # fig.show()
     st.plotly_chart(fig, use_container_width=True)
 
-@st.cache
-def create_frame2(state, target_column):
-    importance_df = pd.read_csv('feature_importance_results.csv')
-    importance_df = importance_df[(importance_df['State'] == state) & (importance_df['Target Column'] == target_column)]
-    importance_df = importance_df[['Feature','Importance']]
-    
-    return importance_df, state, target_column
 
 @st.cache
 def create_frame3(state, target_column):
-    importance_df_m = pd.read_csv('feature_importance_results_monthly.csv')
+    importance_df_m = pd.read_csv('feature_importances/feature_importance_results_DecisionTree.csv')
     importance_df_m = importance_df_m[(importance_df_m['State'] == state) & (importance_df_m['Target Column'] == target_column)]
     importance_df_m = importance_df_m[['Feature', 'Importance']]
 
@@ -789,7 +782,6 @@ def weather_energy_cluster():
     else:
         col_name = 'Total consumption'
 
-    importance_df, state_name, target_column = create_frame2(state_name, col_name)
     importance_df_m, state_name, target_column = create_frame3(state_name, col_name)
     
     aggregate_and_rank(importance_df_m, state_name, target_column)
