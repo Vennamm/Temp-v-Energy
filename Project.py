@@ -638,6 +638,16 @@ def temperature_forecasting():
     train_end_date = train_data.index[-1]
     steps_ = (forecast_date.year - train_end_date.year) * 12 + (forecast_date.month - train_end_date.month)
     # st.write(steps_)
+
+    st.markdown(f"""
+    <div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
+        <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
+        <div style="font-size: 18px; color: #003366; text-align: center;">
+            <p><strong>Mean Absolute Error (MAE):</strong> <span style="color: #FF6347;">{mae:.2f} °F</span></p>
+            <p><strong>Root Mean Squared Error (RMSE):</strong> <span style="color: #32CD32;">{rmse:.2f} °F</span></p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     output_series = sarimax_fitted.forecast(steps= steps_)
 
     if steps_ <=48:
@@ -665,38 +675,9 @@ def temperature_forecasting():
     """, unsafe_allow_html=True)
 
     st.markdown(" ")
+    
 
-    with st.expander(f"Model Performance Metrics for {state_name}"):
-        st.markdown(
-        f"""
-        <style>
-        .expander-header {{
-            background-color: #003366;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 18px;
-            font-weight: bold;
-        }}
-        .expander-content {{
-            background-color: #F0F8FF;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }}
-        </style>
-        <div class="expander-header">
-            Model Performance Metrics for {state_name}
-        </div>
-        <div class="expander-content">
-            <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
-            <div style="font-size: 18px; color: #003366; text-align: center;">
-                <p><strong>Mean Absolute Error (MAE):</strong> <span style="color: #FF6347;">{mae:.2f} °F</span></p>
-                <p><strong>Root Mean Squared Error (RMSE):</strong> <span style="color: #32CD32;">{rmse:.2f} °F</span></p>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True)
+    
         
     
     # Row 2: Actual Data Trend + Forecast
