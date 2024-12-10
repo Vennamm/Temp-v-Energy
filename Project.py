@@ -944,6 +944,12 @@ with t1:
     
     I am happy to connect and assist with any inquiries! You are free to leave any anonymous feedback below as well.
     """)
+
+    token = st.secrets["github"]["GITHUB_TOKEN"]
+    repo_owner = st.secrets["github"]["REPO_OWNER"]
+    repo_name = st.secrets["github"]["REPO_NAME"]
+
+    st.markdown(repo_owner)
     st.markdown("""
     ---
     
