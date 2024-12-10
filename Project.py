@@ -968,7 +968,8 @@ with t1:
 
     if "feedback_text" not in st.session_state:
         st.session_state.feedback_text = ""
-    feedback = st.text_area("", placeholder="Enter your feedback here", height=100, value=st.session_state.feedback_text, key="feedback_text")
+        
+    feedback = st.text_area("Enter your feedback here", height=100, value=st.session_state.feedback_text, key="feedback_text")
     
     if st.button('Submit Feedback'):
         if feedback.strip():
