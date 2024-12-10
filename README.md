@@ -96,6 +96,42 @@ This section provides a step-by-step guide on how users can interact with the ap
 - **Note**: Your feedback is stored securely on GitHub, and the app will show a success message once the feedback has been successfully submitted.
 
 ---
+## Project File Map
+
+Below is the list of files and folders within this project, organized by relevance:
+
+### Main Project Files
+
+- **[Project.py](./Project.py)** - The main Streamlit application script.
+- **[requirements.txt](./requirements.txt)** - Lists all dependencies required for the app to run smoothly.
+- **[feedback.txt](./feedback.txt)** - Stores feedback received from users within the app.
+- **[Rubric Match.md](./Rubric%20Match.md)** - Contains validations against the requirements of the project.
+- **[us-states.json](./us-states.json)** - The GeoMappingAPI's GeoJSON file used for mapping in the Streamlit app.
+
+### Data Folders
+
+- **`collated_data/`** - Contains weather data for each state for each month.
+  - Includes weather-related datasets for all U.S. states.
+
+- **`power_consumption/`** - Contains energy consumption data for each state over a year.
+  - Energy consumption data for Residential, Commercial, Industrial, and Transport sectors.
+
+- **`feature_importances/`** - Contains feature importances derived from three models: Decision Tree Regressor, XGB Regressor, and Random Forest Regressor.
+  - Includes monthly energy contributions for each state and sector.
+ 
+- **`power_relationships/`** - Contains manually defined valid power relationships for each state.
+  - Includes energy consumption patterns and correlations with weather data.
+
+### Additional Sources
+
+- **`Notebooks/`** - Contains all the analysis and work done before they were imported onto Streamlit.
+  - Includes Jupyter Notebooks with exploratory data analysis (EDA) and model building.
+
+- **`Additional Sources/`** - Contains raw data from additional sources, which have the potential to be used in future versions of the app.
+
+- **`additional_power_data/`** - Contains cleaned additional sources that are currently unused in the app.
+
+---
 
 
 
