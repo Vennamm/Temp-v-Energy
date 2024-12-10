@@ -977,7 +977,7 @@ with t1:
                     "branch": branch,
                     "sha": sha
                 }
-                update_response = requests.put(url, headers=headers, json=data
+                update_response = requests.put(url, headers=headers, json=data)
                 if update_response.status_code == 200:
                     st.success("Thank you! Your feedback has been submitted.")
                 else:
