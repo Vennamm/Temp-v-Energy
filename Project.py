@@ -994,7 +994,7 @@ with t1:
                 update_response = requests.put(url, headers=headers, json=data)
                 if update_response.status_code == 200:
                     st.success("Thank you! Your feedback has been submitted.")
-                    st.session_state["text_input"] = ""
+                    # st.session_state["text_input"] = ""
                     time.sleep(3)
                     
                 else:
