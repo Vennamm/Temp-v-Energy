@@ -891,7 +891,7 @@ The project is divided into three main sections:
 
 ### **For the Data Scientist: Advanced Options**
 - **Description**: This window is hidden under an expander. This window holds the data science process behind what the normal user sees on the widgets. 
-
+""")
 with t2:
 # elif section == "Temperature Forecasting":
     temperature_forecasting()
