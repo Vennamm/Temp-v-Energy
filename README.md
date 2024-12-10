@@ -33,12 +33,11 @@ Make sure you have the following installed:
    ```bash
    pip install -r requirements.txt
 
-3. **Environment Variables Setup:**
-  ### **GitHub Token for Feedback System**
+3. **GitHub Token for Feedback System:**
 
    To enable the feedback system in the app, you’ll need to provide a **GitHub Token**. This token is required for reading and writing to your `feedback.txt` file in a GitHub repository. Here's how you can set it up securely in **Streamlit Cloud**:
    
-   #### **Setting Up on Streamlit Cloud:**
+   **Setting Up on Streamlit Cloud:**
    
    1. **Navigate to Your App Settings**:
       - Go to **My Apps** and find your deployed app.
@@ -57,7 +56,7 @@ Make sure you have the following installed:
    3. **Why Use Secrets?**  
       Streamlit ensures that your GitHub token is securely stored and is not exposed, preventing misuse. You can now use these secrets in your app.
    
-   #### **Accessing the GitHub Token in Your Code:**
+   **Accessing the GitHub Token in Your Code:**
    
    In your app code, you can retrieve the token, owner, and repository name like this:
    ```python
@@ -65,7 +64,7 @@ Make sure you have the following installed:
    owner = st.secrets["github"]["REPO_OWNER"]
    repo = st.secrets["github"]["REPO_NAME"]
 
-5. **Run the app**:
+4. **Run the app**:
    ```bash
    streamlit run Project.py
 
