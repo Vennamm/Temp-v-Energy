@@ -611,18 +611,6 @@ def aggregate_and_rank(df_m, state, target_column):
         st.plotly_chart(fig4, use_container_width=True)
         st.plotly_chart(fig3, use_container_width=True)
 
-def increment_month():
-    if st.session_state.selected_month_index < len(months) - 1:
-        st.session_state.selected_month_index += 1
-    else:
-        st.session_state.selected_month_index = 0 
-
-def decrement_month():
-    if st.session_state.selected_month_index > 0:
-        st.session_state.selected_month_index -= 1
-    else:
-        st.session_state.selected_month_index = len(months) - 1
-
 def temperature_forecasting():
     # st.title('Temperature Forecasting')
 
@@ -643,22 +631,8 @@ def temperature_forecasting():
     with col1:
         year = st.number_input('Select Year', min_value=2019, max_value=2024, value=2019, step=1)
 
-    with col2:
-        with st.container():
-            
-            col1_, col2_, col3_ = st.columns([1, 4, 1])
-            with col1_:
-                if st.button("◀"):
-                    decrement_month()
-            with col2_:
-                st.markdown(f"<div style='text-align: center; border: 2px solid #0099ff; padding: 0px; border-radius: 10px;'><h3 style='font-weight: bold;'>{months[st.session_state.selected_month_index]}</h3></div>", unsafe_allow_html=True)
-                
-            with col3_:
-                if st.button("▶"):
-                    increment_month()
-            
-        # month = st.number_input('Select Month', min_value=1, max_value=12, value=6, step=1)
-        month = st.session_state.selected_month_index
+    with col2:    
+        month = st.number_input('Select Month', min_value=1, max_value=12, value=6, step=1)
     forecast_date = pd.to_datetime(f'{year}-{month:02d}-01') + pd.offsets.MonthEnd(0)
     
     test_size = 48
