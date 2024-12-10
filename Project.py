@@ -676,17 +676,24 @@ def temperature_forecasting():
 
         st.markdown("""Granger Causality checks where one variable causes the other variable in a timeseries. But the issue is that true causality is a hard thing to prove even with such a test.
         But it gives us insight on how each state behaves. The following graph shows if last month's column $\\rho=1$ causes effects in current month's another column.""")
-        col1, col2 = st.columns(2)
+        col1, col2, col3, col4, col5 = st.columns([1, 3, 1, 3, 2])
         with col1:
             st.markdown("**Will**")
-            var1 = st.selectbox("", options=['tavg','cdd','hdd'], index=0)
         with col2:
+            var1 = st.selectbox("", options=['tavg', 'cdd', 'hdd'], index=0)
+        with col3:
             st.markdown("**Cause**")
-            var2 = st.selectbox("", options=['tavg','cdd','hdd'], index=1)
-            st.markdown("**or vice-versa?")
-            
+        with col4:
+            var2 = st.selectbox("", options=['tavg', 'cdd', 'hdd'], index=1) 
+        with col5:
+            st.markdown("**or vice-versa?**")
+        var3_selected = False
+        if (var1 == var2):
+            st.warning(f"To see if past values of {var1} has impact on itself, you need to look at the Auto-Correlation and Partial Auto-Correlation Graphs (they are below)")
+            var3_selected = True
         if (var1!=var2):
             plot_granger_causality(weather_data, var1, var2)
+            var3_selected = False
         
         
         # Row 3: Seasonal Decomposition
@@ -717,10 +724,15 @@ def temperature_forecasting():
         st.markdown("""Earlier, we check if a previous foreign variable had any impact on the current predictor variable. Now, we are looking if previous values of our predictor variable have any impact on our current values. 
         We need to look at the Auto-Correlation and Partial Auto-Correlation Functions to understand the seasonality of the temperature data so that we can train our model on it. 
         The graph shows that the functions repeat themselves after every 12 months approximately. That is to say that last year's temperature have an impact on current year's average temperature.""")
-        
+
+        if var3_selected:
+            var3 = var1
+        else:
+            var3 = st.selectbox("Will the variable cause itself?", options=['cdd','hdd','tavg'], index=2)
+            var3_selected=False
         fig_y, ax = plt.subplots(2, 1, figsize=(12, 6))
-        plot_acf(train_data, lags=48, ax=ax[0])
-        plot_pacf(train_data, lags=48, ax=ax[1])
+        plot_acf(weather_data[var3], lags=48, ax=ax[0])
+        plot_pacf(weather_data[var3], lags=48, ax=ax[1])
         st.pyplot(fig_y)
 
         st.markdown("""We worked with a SARIMAX model with the common values as $p=1, d=0, q=1, P=1, D=0, Q=0,\\text{ and seasonality}=12$. In a complex scenario, the PACF and ACF graphs help us determine more than just the seasonality 
