@@ -635,15 +635,6 @@ def temperature_forecasting():
 
     sarimax_fitted, forecast_series, mae, rmse = forecast_weather(train_data, test_data, 'tavg', steps=len(test_data))
 
-    st.markdown(f"""
-<div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
-    <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
-    <div style="font-size: 18px; color: #003366; text-align: center;">
-        <p><strong>Mean Absolute Error (MAE):</strong> <span style="color: #FF6347;">{mae:.2f} °F</span></p>
-        <p><strong>Root Mean Squared Error (RMSE):</strong> <span style="color: #32CD32;">{rmse:.2f} °F</span></p>
-    </div>
-</div>
-""", unsafe_allow_html=True)
 
     # Row 1: Predicted and Actual Temperatures
     st.subheader('Predicted and Actual Temperatures')
@@ -682,6 +673,16 @@ def temperature_forecasting():
     fig.add_trace(go.Scatter(x=test_data.index, y=test_data, mode='lines', name='Test Data', line=dict(color='orange')))
     fig.add_trace(go.Scatter(x=output_series.index, y=output_series, mode='lines', name='Forecast', line=dict(color='green')))
     st.plotly_chart(fig, use_container_width=True)
+
+    st.markdown(f"""
+    <div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
+        <h3 style="font-size: 22px; font-weight: bold; color: #003366; text-align: center;">Model Performance Metrics for {state_name}</h3>
+        <div style="font-size: 18px; color: #003366; text-align: center;">
+            <p><strong>Mean Absolute Error (MAE):</strong> <span style="color: #FF6347;">{mae:.2f} °F</span></p>
+            <p><strong>Root Mean Squared Error (RMSE):</strong> <span style="color: #32CD32;">{rmse:.2f} °F</span></p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     with st.expander('Advanced Options'):
 
