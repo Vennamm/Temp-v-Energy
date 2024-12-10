@@ -791,14 +791,14 @@ def weather_energy_cluster():
 As you can see from the above visualization, each state behaves differently. But there is a pattern within the states. I collated all of these patterns and put them on a map. But how?
 
 There is a lot of process behind this. But let me make it straightforward:
-- We analyzed the relationships between 'Average Temperature', 'Cooling Degree Days', and 'Heating Degree Days' to see their impact on all types of energy consumption (Residential, Commercial, Industrial, Transportation, and all combined).
-- We captured similar behaviors (energy consumption vs temperature) between the states and projected those behaviors onto a map, by dividing these behaviors into different groups.
-- And voila, these behaviors formed these interesting borders, indicating that there is a regional pattern in energy consumption.
+- I analyzed the relationships between 'Average Temperature', 'Cooling Degree Days', and 'Heating Degree Days' to see their impact on all types of energy consumption (Residential, Commercial, Industrial, Transportation, and all combined).
+- And then, I captured similar behaviors (energy consumption vs temperature) between the states and projected those behaviors onto a map, by dividing these behaviors into different groups.
+- And voila, these behaviors formed these interesting borders, indicating a similar pattern in energy consumption, as I said earlier.
 - I ideally would love the divided groups to be 4, but I would love for you to play around and see what happens if you split these behaviors into 3, 5, or 6 groups. :)
 """)
     geojson_path = 'us-states.json'
 
-    n_clusters = st.selectbox("Select Number of Groups", options=[3, 4, 5, 6], index=0)
+    n_clusters = st.selectbox("Select Number of Groups", options=[3, 4, 5, 6], index=1)
     plot_pca_choropleth_on_map(corr_df, geojson_path, n_clusters)
 
     
