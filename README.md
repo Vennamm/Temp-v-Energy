@@ -26,17 +26,46 @@ Make sure you have the following installed:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/your-repository.git
+   git clone https://github.com/Vennamm/Temp-v-Energy.git
    cd your-repository
 
 2. **Install the dependencies:**
    ```bash
    pip install -r requirements.txt
 
-3. **Run the app**:
+3. **Environment Variables Setup:**
+  ### **GitHub Token for Feedback System**
+
+   To enable the feedback system in the app, you’ll need to provide a **GitHub Token**. This token is required for reading and writing to your `feedback.txt` file in a GitHub repository. Here's how you can set it up securely in **Streamlit Cloud**:
+   
+   #### **Setting Up on Streamlit Cloud:**
+   
+   1. **Navigate to Your App Settings**:
+      - Go to **My Apps** and find your deployed app.
+      - Click on the gear icon in the top-right corner to access the settings.
+   
+   2. **Access Secrets**:
+      - In the settings menu, find the **Secrets** section.
+      - Add the following code in the **Secrets** section:
+        ```toml
+        [github]
+        GITHUB_TOKEN = "your-github-token"
+        REPO_OWNER = "your_username"
+        REPO_NAME = "your_reponame"
+        ```
+   
+   3. **Why Use Secrets?**  
+      Streamlit ensures that your GitHub token is securely stored and is not exposed, preventing misuse. You can now use these secrets in your app.
+   
+   #### **Accessing the GitHub Token in Your Code:**
+   
+   In your app code, you can retrieve the token, owner, and repository name like this:
+   ```python
+   token = st.secrets["github"]["GITHUB_TOKEN"]
+   owner = st.secrets["github"]["REPO_OWNER"]
+   repo = st.secrets["github"]["REPO_NAME"]
+
+5. **Run the app**:
    ```bash
    streamlit run Project.py
-
-
-
 
