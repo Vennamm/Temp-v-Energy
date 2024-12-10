@@ -691,7 +691,7 @@ def temperature_forecasting():
 
     
 
-    with st.expander('Advanced Options'):
+    with st.expander(###'Advanced Options'):
 
         st.subheader("Granger Causality:")
 
