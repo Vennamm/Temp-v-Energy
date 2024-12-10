@@ -655,7 +655,7 @@ def temperature_forecasting():
             <strong>Actual Temperature:</strong> {ac:.2f} °F
         </div>
         </div>
-        """, unsafe_allow_html=True):
+        """, unsafe_allow_html=True)
         
         with st.expander(f"Model Performance Metrics for {state_name}"):
         
