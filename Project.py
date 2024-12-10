@@ -645,13 +645,13 @@ def temperature_forecasting():
 
     with col2:
         with st.container():
-            st.markdown("<div style='border: 2px solid #0099ff; padding: 10px; border-radius: 10px;'>", unsafe_allow_html=True)
+            st.markdown("<div style='border: 2px solid #0099ff; padding: 10px; border-radius: 10px; text-align: center;'>", unsafe_allow_html=True)
             col1_, col2_, col3_ = st.columns([1, 4, 1])
             with col1_:
                 if st.button("◀"):
                     decrement_month()
             with col2_:
-                st.markdown(f"<h3 style='text-align: center;'>**{months[st.session_state.selected_month_index]}**</h3>", unsafe_allow_html=True)
+                st.markdown(f"<h3 style='font-weight: bold;'>**{months[st.session_state.selected_month_index]}**</h3>", unsafe_allow_html=True)
             with col3_:
                 if st.button("▶"):
                     increment_month()
