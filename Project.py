@@ -788,6 +788,8 @@ def weather_energy_cluster():
     
     st.subheader("Cluster-Based PCA Visualization on Map")
     st.markdown("""
+As you can see from the above visualization, each state behaves differently. But there is a pattern within the states. I collated all of these patterns and put them on a map. But how?
+
 There is a lot of process behind this. But let me make it straightforward:
 - We analyzed the relationships between 'Average Temperature', 'Cooling Degree Days', and 'Heating Degree Days' to see their impact on all types of energy consumption (Residential, Commercial, Industrial, Transportation, and all combined).
 - We captured similar behaviors (energy consumption vs temperature) between the states and projected those behaviors onto a map, by dividing these behaviors into different groups.
