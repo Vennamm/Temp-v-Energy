@@ -929,6 +929,36 @@ with t1:
         st.markdown("""
         - **Description**: This window is hidden under an expander. This window holds the data science process behind what the normal user sees on the widgets. 
         """)
+    st.markdown("""
+    I would love to hear your thoughts on this project. Please feel free to leave your feedback below.
+
+    - **How to leave feedback**: 
+        - You can send feedback through the app or contact me directly via email. 
+        - If you wish to leave specific comments, suggestions, or issues, please write them down in the text box below.
+
+    ### **Leave your feedback here:**
+    """)
+    feedback = st.text_area("Enter your feedback here:", height=200)
+    if st.button('Submit Feedback'):
+        if feedback:
+            with open("feedback.txt", "a") as f:
+                f.write(f"Feedback: {feedback}\n\n")
+            st.success("Thank you for your feedback!")
+        else:
+            st.warning("Please enter some feedback.")
+    st.markdown("""
+    ---
+    
+    ### **Contact Information**:
+    
+    If you have any questions, need assistance, or would like to discuss this project further, feel free to reach out to me.
+    
+    - **Email**: [your.email@example.com](mailto:your.email@example.com)
+    - **GitHub**: [https://github.com/Vennamm](https://github.com/Vennamm)
+    - **LinkedIn**: [https://www.linkedin.com/in/your-profile](https://www.linkedin.com/in/your-profile)
+    
+    I am happy to connect and assist with any inquiries!
+    """)
 with t2:
 # elif section == "Temperature Forecasting":
     temperature_forecasting()
