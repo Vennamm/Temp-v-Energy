@@ -1041,7 +1041,7 @@ with t4:
     # Goal 2
     with st.expander("**2. Map Clusters**"):
         st.write("""
-        -There are various relationships that can be observed beyond weather-energy relationships. Clusters could be formed based on:
+        - There are various relationships that can be observed beyond weather-energy relationships. Clusters could be formed based on:
             - Precipitation and average temperatures.
             - Drought-severity indexes.
             - Splits in energy consumption (e.g., major consumption sectors).
