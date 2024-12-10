@@ -964,9 +964,9 @@ with t1:
     ### **Leave your feedback here:**
     """)
 
-    if "feedback_text" not in st.session_state:
-        st.session_state.feedback_text = ""
-    feedback = st.text_area("", placeholder="Enter your feedback here", height=100, value=st.session_state.feedback_text, key="feedback_input")
+    if 'feedback' not in st.session_state:
+        st.session_state['feedback'] = ''
+    feedback = st.text_area("", placeholder="Enter your feedback here", height=100, value=st.session_state['feedback'])
     
     if st.button('Submit Feedback'):
         if feedback.strip():
@@ -994,7 +994,9 @@ with t1:
                 update_response = requests.put(url, headers=headers, json=data)
                 if update_response.status_code == 200:
                     st.success("Thank you! Your feedback has been submitted.")
-                    st.session_state.feedback_text = ""
+                    time.sleep(3)
+                    st.session_state['feedback'] = ''
+                    st.experimental_rerun()
                 else:
                     st.error("Failed to submit feedback. Please try again later.")
             else:
