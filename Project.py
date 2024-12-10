@@ -439,7 +439,7 @@ def aggregate_and_rank(df, df_m, state, target_column):
         energy_rates,
         x="Year",
         y=target_column,
-        title=f"Energy Consumption over years - {target_column.title()",
+        title=f"Energy Consumption over years - {target_column.title()}",
         labels={"Year": "Year", target_column: "Energy Consumption"},
     )
     
@@ -483,7 +483,7 @@ def aggregate_and_rank(df, df_m, state, target_column):
     else:
         TEXT = f"For {state}, {top_contributor['Season']} is the only major contributor to the {target_column.lower()}."
 
-    fig1 = px.pie(season_df, names='Season', values='Contribution', title=f"Seasonal Contributions to Energy Expenditure - {target_column.title()")
+    fig1 = px.pie(season_df, names='Season', values='Contribution', title=f"Seasonal Contributions to Energy Expenditure - {target_column.title()}")
     
     df["Category"] = df["Feature"].apply(lambda x: "Hot " + x.split("_")[1] if "cdd" in x else "Cold " + x.split("_")[1])
     
@@ -559,7 +559,7 @@ def aggregate_and_rank(df, df_m, state, target_column):
     ))
 
     fig2.update_layout(
-        title=f"Energy Expenditure by Temperature and Season - {target_column.title()",
+        title=f"Energy Expenditure by Temperature and Season - {target_column.title()}",
         xaxis_title="Season",
         yaxis_title="Importance",
         showlegend=False
