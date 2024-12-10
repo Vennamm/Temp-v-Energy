@@ -929,13 +929,24 @@ with t1:
         st.markdown("""
         - **Description**: This window is hidden under an expander. This window holds the data science process behind what the normal user sees on the widgets. 
         """)
+
     st.markdown("""
-    I would love to hear your thoughts on this project. Please feel free to leave your feedback below.
-
-    - **How to leave feedback**: 
-        - You can send feedback through the app or contact me directly via email. 
-        - If you wish to leave specific comments, suggestions, or issues, please write them down in the text box below.
-
+    ---
+    
+    ### **Contact Information**:
+    
+    If you have any questions, need assistance, or would like to discuss this project further, feel free to reach out to me. I am also looking for additional datasets that can work together 
+    with weather and energy consumption data, and it would be great if you have or know datasets that I can add to my application and could mail it to me.
+    
+    - **Email**: [vennamva@msu.edu](mailto:vennamva@msu.edu)
+    - **GitHub**: [https://github.com/Vennamm](https://github.com/Vennamm)
+    - **LinkedIn**: [https://www.linkedin.com/in/vaibhavvennam](https://www.linkedin.com/in/vaibhavvennam)
+    
+    I am happy to connect and assist with any inquiries! You are free to leave any anonymous feedback below as well.
+    """)
+    st.markdown("""
+    ---
+    
     ### **Leave your feedback here:**
     """)
     feedback = st.text_area("Enter your feedback here:", height=200)
@@ -946,19 +957,7 @@ with t1:
             st.success("Thank you for your feedback!")
         else:
             st.warning("Please enter some feedback.")
-    st.markdown("""
-    ---
     
-    ### **Contact Information**:
-    
-    If you have any questions, need assistance, or would like to discuss this project further, feel free to reach out to me.
-    
-    - **Email**: [your.email@example.com](mailto:your.email@example.com)
-    - **GitHub**: [https://github.com/Vennamm](https://github.com/Vennamm)
-    - **LinkedIn**: [https://www.linkedin.com/in/your-profile](https://www.linkedin.com/in/your-profile)
-    
-    I am happy to connect and assist with any inquiries!
-    """)
 with t2:
 # elif section == "Temperature Forecasting":
     temperature_forecasting()
