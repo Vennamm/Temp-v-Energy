@@ -21,6 +21,7 @@ from xgboost import XGBRegressor
 import warnings
 import requests
 import base64
+import datetime
 
 
 state_to_region = {
@@ -962,15 +963,20 @@ with t1:
     
     ### **Leave your feedback here:**
     """)
-    feedback = st.text_area("", placeholder="Enter your feedback here", height=100)
+
+    if "feedback_text" not in st.session_state:
+        st.session_state.feedback_text = ""
+    feedback = st.text_area("", placeholder="Enter your feedback here", height=100, value=st.session_state.feedback_text)
+    
     if st.button('Submit Feedback'):
         if feedback.strip():
+            feedback = datetime.now().strftime("%Y-%m-%d %H:%M:%S") + ' - ' + feedback
             response = requests.get(url, headers=headers)
             if response.status_code == 200:
                 response_json = response.json()
                 sha = response_json["sha"]
                 current_content = base64.b64decode(response_json["content"]).decode("utf-8")
-                updated_content = f"{current_content}\n\n{feedback}"
+                updated_content = f"{current_content}\n{feedback}"
                 content_encoded = base64.b64encode(updated_content.encode("utf-8")).decode("utf-8")
                 data = {
                     "message": "User feedback submission",
@@ -981,6 +987,7 @@ with t1:
                 update_response = requests.put(url, headers=headers, json=data)
                 if update_response.status_code == 200:
                     st.success("Thank you! Your feedback has been submitted.")
+                    st.session_state.feedback_text = ""
                 else:
                     st.error("Failed to submit feedback. Please try again later.")
             else:
