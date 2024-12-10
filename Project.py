@@ -676,7 +676,10 @@ def temperature_forecasting():
 
         st.markdown("""Granger Causality checks where one variable causes the other variable in a timeseries. But the issue is that true causality is a hard thing to prove even with such a test.
         But it gives us insight on how each state behaves. The following graph shows if last month's column $\\rho=1$ causes effects in current month's another column. The values where you see a blue or red point means 
-        that we can say with a 95% confidence (p<0.05) that there is Granger Causality (again, not true causality).""")
+        that we can say with a 95% confidence (p<0.05) that there is Granger Causality (again, not true causality).
+        
+        
+        """)
         col1, col2, col3, col4, col5 = st.columns([1, 3, 1, 3, 2])
         with col1:
             st.markdown("<div style='text-align: right; font-weight: bold;'>Will</div>", unsafe_allow_html=True)
