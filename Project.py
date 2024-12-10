@@ -211,8 +211,8 @@ def plot_pca_with_ellipses(corr_df, ellipse=0.95):
 
         # Parametric equation for the ellipse path
         t = np.linspace(0, 2 * np.pi, 100)
-        x_ellipse = mean.iloc[0] + axis_length.iloc[0] * np.cos(t) * np.cos(np.radians(angle)) - axis_length.iloc[1] * np.sin(t) * np.sin(np.radians(angle))
-        y_ellipse = mean.iloc[1] + axis_length.iloc[0] * np.cos(t) * np.sin(np.radians(angle)) + axis_length.iloc[1] * np.sin(t) * np.cos(np.radians(angle))
+        x_ellipse = mean.iloc[0] + axis_length[0] * np.cos(t) * np.cos(np.radians(angle)) - axis_length[1] * np.sin(t) * np.sin(np.radians(angle))
+        y_ellipse = mean.iloc[1] + axis_length[0] * np.cos(t) * np.sin(np.radians(angle)) + axis_length[1] * np.sin(t) * np.cos(np.radians(angle))
         
         # Convert color to RGB format
         region_color = sns.color_palette('Set1')[list(pca_df['Region'].unique()).index(region)]
