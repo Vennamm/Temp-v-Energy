@@ -868,16 +868,14 @@ with t1:
     This project explores the relationships between weather patterns (Average Temperature, Cooling Degree Days (CDD), Heating Degree Days (HDD)) and energy consumption across different sectors (Residential, Commercial, Industrial, Transportation, and Total Consumption). It uses various data science techniques, such as Principal Component Analysis (PCA), Random Forests, and XGBoost, to create insights into regional energy consumption patterns based on weather factors. The analysis is visualized using interactive maps, graphs, and charts on a Streamlit-based app.
     """)
     
-    # Sources section in an expander
-    with st.expander("### **Sources**"):
-        st.markdown("""
-        - [**Weather Data**](https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series/): This is official weather data from National Centers for Environmental Information. **Granularity:** Monthly, State. 
-        - [**Energy Data**](https://www.eia.gov/state/seds/seds-data-complete.php?sid=MI#Keystatisticsrankings): This is the energy consumption data sourced from U.S. Energy Information Administration. **Granularity:** Yearly, State.
-        - [**GeoJSON for Mapping**](https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/us-states.json): MappingAPI's GitHub Repository.
-        - There are a few other sources that have not been used but have potential to explore: [**Monthly Energy Consumption - Nationwide**](https://www.eia.gov/totalenergy/data/browser/index.php?tbl=T01.01#/?f=M&start=199701&end=202407&charted=6-7-14-1-2-3-4-8-11-12-13), [**Wildfire Data**](https://www.nifc.gov/fire-information/statistics/wildfires)
-        """)
+    st.markdown("### **Sources**"):
+    st.markdown("""
+    - [**Weather Data**](https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/statewide/time-series/): This is official weather data from National Centers for Environmental Information. **Granularity:** Monthly, State. 
+    - [**Energy Data**](https://www.eia.gov/state/seds/seds-data-complete.php?sid=MI#Keystatisticsrankings): This is the energy consumption data sourced from U.S. Energy Information Administration. **Granularity:** Yearly, State.
+    - [**GeoJSON for Mapping**](https://github.com/PublicaMundi/MappingAPI/blob/master/data/geojson/us-states.json): MappingAPI's GitHub Repository.
+    - There are a few other sources that have not been used but have potential to explore: [**Monthly Energy Consumption - Nationwide**](https://www.eia.gov/totalenergy/data/browser/index.php?tbl=T01.01#/?f=M&start=199701&end=202407&charted=6-7-14-1-2-3-4-8-11-12-13), [**Wildfire Data**](https://www.nifc.gov/fire-information/statistics/wildfires)
+    """)
     
-    # Section 1: Temperature Forecasting in an expander
     with st.expander("### **Section 1: Temperature Forecasting**"):
         st.markdown("""
         - **Objective**: Forecast average temperatures using time-series analysis. **Forecastable Years**: 2019 to 2024.
@@ -895,7 +893,6 @@ with t1:
             - **Room for Improvement**: Our source is constantly updated, but currently, the data is being fed from my [GitHub](https://github.com/Vennamm/Temp-v-Energy/tree/main/collated_data). We can get information straight from the source while simulatenously updating our GitHub.
         """)
     
-    # Section 2: Weather-Energy Relationships in an expander
     with st.expander("### **Section 2: Weather-Energy Relationships**"):
         st.markdown("""
         - **Objective**: Investigate how temperature (CDD, HDD, and Average Temperature) influences energy consumption in various sectors across different states.
@@ -924,11 +921,10 @@ with t1:
             5. **Modeling**: Using regression models to predict energy consumption and determine feature importance.
         """)
     
-    # For data scientists (hidden section)
-    with st.expander("### **For the Data Scientist: Advanced Options**"):
-        st.markdown("""
-        - **Description**: This window is hidden under an expander. This window holds the data science process behind what the normal user sees on the widgets. 
-        """)
+    st.markdown("### **For the Data Scientist: Advanced Options**"):
+    st.markdown("""
+    - **Description**: This window is hidden under an expander. This window holds the data science process behind what the normal user sees on the widgets. 
+    """)
 with t2:
 # elif section == "Temperature Forecasting":
     temperature_forecasting()
