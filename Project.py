@@ -618,8 +618,13 @@ def temperature_forecasting():
     state = st.selectbox("Select a state:", state_list)
     weather_data, state_name = read_data(state)
     
-    # st.write(f"Displaying data for {state_name}:")
+    st.write(f"Displaying data for {state_name}:")
 
+    test_size = 48
+    train_data, test_data, cleaned_data, seasonal_result = seasonal_dc(weather_data, 'tavg', state_name, test_size=test_size)
+
+    sarimax_fitted, forecast_series, mae, rmse = forecast_weather(train_data, test_data, 'tavg', steps=len(test_data))
+    
     with st.expander(f"Model Performance Metrics for {state_name}"):
         st.markdown(f"""
         <div style="background-color: #F0F8FF; padding: 20px; border-radius: 15px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);">
@@ -630,7 +635,6 @@ def temperature_forecasting():
             </div>
         </div>
         """, unsafe_allow_html=True)
-    
 
     col1, col2 = st.columns(2)
 
@@ -640,11 +644,6 @@ def temperature_forecasting():
     with col2:    
         month = st.number_input('Select Month', min_value=1, max_value=12, value=6, step=1)
     forecast_date = pd.to_datetime(f'{year}-{month:02d}-01') + pd.offsets.MonthEnd(0)
-    
-    test_size = 48
-    train_data, test_data, cleaned_data, seasonal_result = seasonal_dc(weather_data, 'tavg', state_name, test_size=test_size)
-
-    sarimax_fitted, forecast_series, mae, rmse = forecast_weather(train_data, test_data, 'tavg', steps=len(test_data))
 
 
     # Row 1: Predicted and Actual Temperatures
