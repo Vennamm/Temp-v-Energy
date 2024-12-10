@@ -67,7 +67,7 @@ Make sure you have the following installed:
    token = st.secrets["github"]["GITHUB_TOKEN"]
    owner = st.secrets["github"]["REPO_OWNER"]
    repo = st.secrets["github"]["REPO_NAME"]
-
+   ```
 ---
 
 # Usage Instructions
