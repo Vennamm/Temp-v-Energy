@@ -613,11 +613,6 @@ def aggregate_and_rank(df_m, state, target_column):
 
 def temperature_forecasting():
     # st.title('Temperature Forecasting')
-
-    
-
-    if "selected_month_index" not in st.session_state:
-        st.session_state.selected_month_index = 5
     
     state_list = [f.replace('.csv', '') for f in os.listdir('collated_data')]
     state = st.selectbox("Select a state:", state_list)
@@ -629,7 +624,7 @@ def temperature_forecasting():
     col1, col2 = st.columns(2)
 
     with col1:
-        year = st.number_input('Select Year', min_value=2019, max_value=2024, value=2019, step=1)
+        year = st.number_input('Select Year', min_value=2019, max_value=2026, value=2019, step=1)
 
     with col2:    
         month = st.number_input('Select Month', min_value=1, max_value=12, value=6, step=1)
