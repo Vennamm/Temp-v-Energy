@@ -48,7 +48,7 @@ season_mapping = {
     9: 'Fall', 10: 'Fall', 11: 'Fall'
 }
 
-
+months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 def get_season_color(TEXT):
     color = "#f9f9f9"
@@ -626,7 +626,7 @@ def decrement_month():
 def temperature_forecasting():
     # st.title('Temperature Forecasting')
 
-    months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    
 
     if "selected_month_index" not in st.session_state:
         st.session_state.selected_month_index = 5
