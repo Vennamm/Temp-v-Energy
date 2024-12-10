@@ -967,11 +967,9 @@ with t1:
     """)
 
     
-    st.session_state['feedback_text'] = ""
+    
         
-    feedback = st.text_area("Enter your feedback here", height=100, value=st.session_state['feedback_text'])
-
-    # st.session_state['feedback_text'] = feedback
+    feedback = st.text_area(".", placeholder="Enter your feedback here", height=100, label_visibility="collapsed")
     
     if st.button('Submit Feedback'):
         if feedback.strip():
@@ -999,10 +997,6 @@ with t1:
                 update_response = requests.put(url, headers=headers, json=data)
                 if update_response.status_code == 200:
                     st.success("Thank you! Your feedback has been submitted.")
-                    feedback = ""
-                    st.session_state['feedback_text'] = ""
-                    time.sleep(3)
-                    
                 else:
                     st.error("Failed to submit feedback. Please try again later.")
             else:
