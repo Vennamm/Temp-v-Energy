@@ -691,7 +691,7 @@ def temperature_forecasting():
 
     
 
-    with st.expander('### **Advanced Options**'):
+    with st.expander('**Advanced Options**'):
 
         st.subheader("Granger Causality:")
 
@@ -818,7 +818,7 @@ There is a lot of process behind this. But let me make it straightforward:
 
     
     
-    with st.expander('### Advanced Options'):
+    with st.expander('**Advanced Options**'):
         st.subheader("Weather-Energy Correlation Matrix")   
         st.markdown("""
     Well, how do I explain this? You see the really cool map at the beginning? So for that to happen, it was a two-step process. 
@@ -1025,34 +1025,32 @@ with t4:
     st.markdown("The following are the future goals and enhancements planned for the app:")
 
     # Goal 1
-    with st.expander("1. Streamlined Flow"):
+    with st.expander("**1. Streamlined Flow and Dynamic Data**"):
         st.write("""
-        The original intent of the project was to forecast Cooling Degree Days (CDD), Heating Degree Days (HDD), 
-        along with Average Temperature. These CDD and HDD forecasts would then feed into the weather-energy relationships 
-        to establish an estimated forecast of the year. This estimate would allow stakeholders to make informed decisions 
+        - The original intent of the project was to forecast Cooling Degree Days (CDD), Heating Degree Days (HDD), 
+        along with Average Temperature. 
+        - These CDD and HDD forecasts would then feed into the weather-energy relationships 
+        to establish an estimated forecast of the year. 
+        - This estimate would allow stakeholders to make informed decisions 
         based on energy demand.
+        - Currently, the data used for forecasting comes from my GitHub, which I sourced from a government resource that is updated monthly. 
+        - By dynamically pulling this data directly from the source, predictions could be extended to longer timeframes with lower error rates. 
+        - Additionally, forecasts could be refreshed every month to provide more accurate and timely insights.
         """)
     
     # Goal 2
-    with st.expander("2. Map Clusters"):
+    with st.expander("**2. Map Clusters**"):
         st.write("""
-        There are various relationships that can be observed beyond weather-energy relationships. Clusters could be formed based on:
-        - Precipitation and average temperatures.
-        - Drought-severity indexes.
-        - Splits in energy consumption (e.g., major consumption sectors).
-        - Primary sources of power consumption (e.g., fossil fuels vs renewables).
-        """)
-    
-    # Goal 3
-    with st.expander("3. Dynamic Data"):
-        st.write("""
-        Currently, the data used for forecasting comes from GitHub, which sources it from a government resource updated monthly. 
-        By dynamically pulling this data directly from the source, predictions could be extended to longer timeframes with lower error rates. 
-        Additionally, forecasts could be refreshed every month to provide more accurate and timely insights.
+        -There are various relationships that can be observed beyond weather-energy relationships. Clusters could be formed based on:
+            - Precipitation and average temperatures.
+            - Drought-severity indexes.
+            - Splits in energy consumption (e.g., major consumption sectors).
+            - Primary sources of power consumption (e.g., fossil fuels vs renewables).
+        - I could allow the user to cycle through each type of segregation to see how the borders change based on the type of relationship we are exploring.
         """)
     
     # Goal 4
-    with st.expander("4. Additional Data Usage"):
+    with st.expander("**3. Additional Data Usage**"):
         st.write("""
         The app has two additional data sources that could significantly enhance its capabilities:
         
@@ -1069,7 +1067,7 @@ with t4:
         """)
     
     # Goal 5
-    with st.expander("5. Visualizations"):
+    with st.expander("**4. Visualizations**"):
         st.write("""
         One planned visualization involves using manually defined weather-energy relationships for each state. 
         Users could explore scatter plots and observe:
